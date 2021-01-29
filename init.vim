@@ -186,20 +186,22 @@ let g:which_key_map.t = {
   \ }
 nnoremap <leader>gc :Git commit<cr>
 nnoremap <leader>gl :Git log<cr>
+nnoremap <leader>g<S-s> :Gwrite<cr>
 " consider <leader>g<S-p> :Git push<cr>
 let g:which_key_map.g = {
-  \ 'name' : '+git (TODO)',
+  \ 'name' : '+git',
   \ '[' : ['GitGutterPrevHunk', 'goto-previous-hunk'],
   \ ']' : ['GitGutterNextHunk', 'goto-next-hunk'],
   \ 'c' : 'commit',
-  \ 'd' : ['GDiffsplit', 'diff-split'],
-  \ 'g' : ['Git', 'fugitive-dispatch'],
+  \ 'd' : ['Gdiffsplit', 'git-diff-split'],
+  \ 'g' : ['Git', 'git'],
   \ 'l' : 'log',
   \ 'p' : ['GitGutterPreviewHunk', 'preview-hunk'],
   \ 's' : ['GitGutterStageHunk', 'stage-hunk'],
+  \ 'S' : 'stage-file',
   \ 'u' : ['GitGutterUndoHunk', 'undo-hunk'],
   \ }
-" easymotion times out before which-key even triggers. But this label is
+" easymotion times out before which-key triggers. But this label is
 " useful for remembering.
 let g:which_key_map['<space>'] = 'easymotion'
 
@@ -229,3 +231,4 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+" TODO: More CoC configuration
