@@ -40,6 +40,10 @@ inoremap jk <Esc>
 " disable accidentally pressing C-z to suspend
 nnoremap <C-z> <Nop>
 
+" snappier response time (default 1000ms)
+" Make sure to not set notimeout
+set timeoutlen=500
+
 " Recommended for coc
 set hidden
 set nobackup
@@ -53,19 +57,12 @@ set shortmess+=c
 " Leader key should be set before plugins in case they use leader key mappings
 " map the leader and localleader to space (default is '\')
 let mapleader=' '
+" TODO: Should localleader be ','? If this is changed we must edit the
+" which-key config as well.
 let maplocalleader=' '
 " additional keybindings go below:
 " Comfortable access to window menu
 " TODO: Consider mapping <C-j> to <C-w>j, for instance
-nnoremap <leader>w <C-w>
-" one we use vim-which-key we can define it as such:
-" There's more to do; see vim-which-key documentation for info.
-" let g:which_key_map.w = { 'name' : '+window' }
-
-""" List of plugins to consider:
-" * vim-which-key
-" * deoplete for completion (requires python3 support in neovim)
-"     Should coc.vim be used instead?
 
 " Run :PlugInstall and :PlugUpdate to install and update plugins.
 
@@ -77,6 +74,7 @@ Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
+Plug 'liuchengxu/vim-which-key'
 Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeToggleVCS'] }
 Plug 'vim-airline/vim-airline'
@@ -95,27 +93,117 @@ call plug#end()
 let g:airline_theme = 'angr'
 let g:airline_powerline_fonts = 1
 
-" fzf shortcut(s)
-" TODO: How to quit the window?
-" General find file
-nnoremap <leader>ff :Files<cr>
-" Files in project
-nnoremap <leader>fp :GFiles<cr>
-" Search directory (?)
-nnoremap <leader>sd :Rg<cr>
-" switch buffers
-nnoremap <leader>bb :Buffers<cr>
-" TODO: tags :Tags, :BTags. Probably needs ctags.
-" TODO: see more in fzf
+" which-key config
+call which_key#register('<Space>', "g:which_key_map")
+nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<cr>
+" If localleader is comma, then:
+" nnoremap <silent> <localleader> :<c-u>WhichKey ','<cr>
+vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<cr>
+" We can use which-key on g-commands too. Presumably another dictionary can be
+" registered as above if we want to edit and document these commands.
+nnoremap <silent> g :<c-u>WhichKey 'g'<cr>
+vnoremap <silent> g :<c-u>WhichKeyVisual 'g'<cr>
+" We don't have anything bound to the 'z' prefix right now.
+" nnoremap <silent> z :<c-u>WhichKey 'z'<cr>
+" vnoremap <silent> z :<c-u>WhichKeyVisual 'z'<cr>
+nnoremap <silent> ] :<c-u>WhichKey ']'<cr>
+nnoremap <silent> [ :<c-u>WhichKey '['<cr>
+vnoremap <silent> ] :<c-u>WhichKeyVisual ']'<cr>
+vnoremap <silent> [ :<c-u>WhichKeyVisual '['<cr>
+" This lets us not mask built-in combos like gj, although they will not be
+" listed in the which-key menu (try :help g)
+let g:which_key_fallback_to_native_key = 1
+let g:which_key_map = {}
+" This procedure defines keybindings as well as the which-key info.
+" Complicated commands will need to be defined separately as usual, then the
+" value in which_key_map set to a string.
+" The format is recursive, so additional layers in the command tree can be
+" added in the obvious way.
+" Modified keys (e.g. <C-h>) don't seem to work naively in the command tree.
+let g:which_key_map.w = {
+  \ 'name'  : '+window',
+  \ 'w'     : ['<C-w>w'    , 'other-window'],
+  \ 'd'     : ['<C-w>c'    , 'delete-window'],
+  \ 'o'     : ['<C-w>o'    , 'focus-window'],
+  \ '-'     : ['<C-w>s'    , 'split-window-below'],
+  \ '|'     : ['<C-w>v'    , 'split-window-right'],
+  \ '2'     : ['<C-w>v'    , 'layout-double-columns'],
+  \ 'h'     : ['<C-w>h'    , 'window-left'],
+  \ 'j'     : ['<C-w>j'    , 'window-below'],
+  \ 'l'     : ['<C-w>l'    , 'window-right'],
+  \ 'k'     : ['<C-w>k'    , 'window-up'],
+  \ 'H'     : ['<C-w>H'    , 'move-window-left'],
+  \ 'J'     : ['<C-w>J'    , 'move-window-down'],
+  \ 'K'     : ['<C-w>K'    , 'move-window-up'],
+  \ 'L'     : ['<C-w>L'    , 'move-window-right'],
+  \ '='     : ['<C-w>='    , 'balance-window'],
+  \ 's'     : ['<C-w>s'    , 'split-window-below'],
+  \ 'v'     : ['<C-w>v'    , 'split-window-below'],
+  \ 'e'     : {
+  \   'name' : '+expand',
+  \   'h' : ['<C-w>5<'   , 'expand-window-left'],
+  \   'j' : [':resize +5', 'expand-window-below'],
+  \   'l' : ['<C-w>5>'   , 'expand-window-right'],
+  \   'k' : [':resize -5', 'expand-window-up'],
+  \   },
+  \ '?'     : ['Windows'   , 'fzf-window'],
+  \ }
+let g:which_key_map.b = {
+  \ 'name' : '+buffer',
+  \ 'b' : ['Buffers'  , 'switch-buffer'],
+  \ 'd' : ['bd'       , 'delete-buffer'],
+  \ 'h' : ['bfirst'   , 'first-buffer'],
+  \ 'j' : ['bnext'    , 'next-buffer'],
+  \ 'k' : ['bprevious', 'previous-buffer'],
+  \ 'l' : ['blast'    , 'last-buffer'],
+  \ }
+let g:which_key_map.f = {
+  \ 'name' : '+file',
+  \ 'c' : ['GFiles?', 'project-find-changed-file'],
+  \ 'f' : ['Files' , 'find-file'],
+  \ 'p' : ['GFiles', 'project-find-file'],
+  \ 's' : ['update', 'save-file'],
+  \ }
+" TODO: Tags and BTags when using ctags? is there a coc alternative?
+let g:which_key_map.s = {
+  \ 'name' : '+search',
+  \ ':' : ['Commands', 'search-commands'],
+  \ 'b' : ['BLines', 'search-buffer'],
+  \ 'c' : ['Commits', 'search-commits'],
+  \ 'k' : ['Marks', 'search-marks'],
+  \ 'm' : ['Maps', 'search-normal-mappings'],
+  \ 'o' : ['Lines', 'search-open-buffers'],
+  \ 'p' : ['Rg', 'search-project'],
+  \ 's' : ['Snippets', 'search-snippets'],
+  \ 't' : ['Tags', 'search-tags'],
+  \ }
+let g:which_key_map.c = {
+  \ 'name' : '+comment',
+  \ }
+let g:which_key_map.t = {
+  \ 'name' : '+toggle',
+  \ 't' : ['NERDTreeToggleVCS', 'toggle-project-tree'],
+  \ }
+let g:which_key_map.g = {
+  \ 'name' : '+git (TODO)',
+  \ '[' : ['GitGutterPrevHunk', 'goto-previous-hunk'],
+  \ ']' : ['GitGutterNextHunk', 'goto-next-hunk'],
+  \ 'p' : ['GitGutterPreviewHunk', 'preview-hunk'],
+  \ 's' : ['GitGutterStageHunk', 'stage-hunk'],
+  \ 'u' : ['GitGutterUndoHunk', 'undo-hunk'],
+  \ }
+" easymotion times out before which-key even triggers. But this label is
+" useful for remembering.
+let g:which_key_map['<space>'] = 'easymotion'
 
 " NERDCommenter config
 let g:NERDSpaceDelims = 1
 
 " NERDTree config and keybinds
 let NERDTreeIgnore = ['^__pycache__$', 'egg-info$']
-nnoremap <leader>tt :NERDTreeToggleVCS<cr>
 
-" TODO: use gitgutter to stage hunks
+" Turn off gitgutter default mappings in leiu of our git command tree
+let g:gitgutter_map_keys = 0
 
 " Use nerd font icons for nerdtree-git
 " This doesn't seem to work
