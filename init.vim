@@ -184,10 +184,17 @@ let g:which_key_map.t = {
   \ 'name' : '+toggle',
   \ 't' : ['NERDTreeToggleVCS', 'toggle-project-tree'],
   \ }
+nnoremap <leader>gc :Git commit<cr>
+nnoremap <leader>gl :Git log<cr>
+" consider <leader>g<S-p> :Git push<cr>
 let g:which_key_map.g = {
   \ 'name' : '+git (TODO)',
   \ '[' : ['GitGutterPrevHunk', 'goto-previous-hunk'],
   \ ']' : ['GitGutterNextHunk', 'goto-next-hunk'],
+  \ 'c' : 'commit',
+  \ 'd' : ['GDiffsplit', 'diff-split'],
+  \ 'g' : ['Git', 'fugitive-dispatch'],
+  \ 'l' : 'log',
   \ 'p' : ['GitGutterPreviewHunk', 'preview-hunk'],
   \ 's' : ['GitGutterStageHunk', 'stage-hunk'],
   \ 'u' : ['GitGutterUndoHunk', 'undo-hunk'],
