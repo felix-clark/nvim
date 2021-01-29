@@ -78,6 +78,8 @@ Install node if not already present.
 curl -sL install-node.now.sh/lts | bash
 ```
 
+Configuration settings are in `coc-settings.json`. It can be opened with `:CocConfig`.
+
 #### Language-specific
 
 Language servers must be installed with `:CocInstall`. They often have prerequisites.

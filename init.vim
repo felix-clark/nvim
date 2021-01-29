@@ -34,10 +34,20 @@ set showmatch
 inoremap jk <Esc>
 " something similar for terminal (?)
 " tnoremap jk <C-\><C-n>
-tnoremap <Esc> <C-\><C-n>
+" This messes with fzf windows:
+" tnoremap <Esc> <C-\><C-n>
 
 " disable accidentally pressing C-z to suspend
 nnoremap <C-z> <Nop>
+
+" Recommended for coc
+set hidden
+set nobackup
+set nowritebackup
+set updatetime=300
+set cmdheight=2
+set shortmess+=c
+" TODO: might want set signcolumn-[number|yes]
 
 " nnoremap <space> <nop>
 " Leader key should be set before plugins in case they use leader key mappings
@@ -85,6 +95,19 @@ call plug#end()
 let g:airline_theme = 'angr'
 let g:airline_powerline_fonts = 1
 
+" fzf shortcut(s)
+" TODO: How to quit the window?
+" General find file
+nnoremap <leader>ff :Files<cr>
+" Files in project
+nnoremap <leader>fp :GFiles<cr>
+" Search directory (?)
+nnoremap <leader>sd :Rg<cr>
+" switch buffers
+nnoremap <leader>bb :Buffers<cr>
+" TODO: tags :Tags, :BTags. Probably needs ctags.
+" TODO: see more in fzf
+
 " NERDCommenter config
 let g:NERDSpaceDelims = 1
 
@@ -94,3 +117,17 @@ nnoremap <leader>tt :NERDTreeToggleVCS<cr>
 " Use nerd font icons for nerdtree-git
 " This doesn't seem to work
 " let g:NERDTreeGitStatusUseNerdFonts = 1
+
+" CoC configuration (consider separate file)
+" use <C-[jk]> instead of <C-[np]> to navigate completion window
+inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
+" Use `[e` and `]e` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [e <Plug>(coc-diagnostic-prev)
+nmap <silent> ]e <Plug>(coc-diagnostic-next)
+" GoTo code navigation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
