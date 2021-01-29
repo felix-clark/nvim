@@ -111,8 +111,11 @@ nnoremap <leader>bb :Buffers<cr>
 " NERDCommenter config
 let g:NERDSpaceDelims = 1
 
-" NERDTree keybinds
+" NERDTree config and keybinds
+let NERDTreeIgnore = ['^__pycache__$', 'egg-info$']
 nnoremap <leader>tt :NERDTreeToggleVCS<cr>
+
+" TODO: use gitgutter to stage hunks
 
 " Use nerd font icons for nerdtree-git
 " This doesn't seem to work
