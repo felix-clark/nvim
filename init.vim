@@ -187,7 +187,7 @@ let g:which_key_map.t = {
 nnoremap <leader>gc :Git commit<cr>
 nnoremap <leader>gl :Git log<cr>
 nnoremap <leader>g<S-s> :Gwrite<cr>
-" consider <leader>g<S-p> :Git push<cr>
+" nnoremap <leader>g<S-p> :Git push<cr>
 let g:which_key_map.g = {
   \ 'name' : '+git',
   \ '[' : ['GitGutterPrevHunk', 'goto-previous-hunk'],
