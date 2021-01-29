@@ -34,6 +34,7 @@ set showmatch
 inoremap jk <Esc>
 " something similar for terminal (?)
 " tnoremap jk <C-\><C-n>
+tnoremap <Esc> <C-\><C-n>
 
 " disable accidentally pressing C-z to suspend
 nnoremap <C-z> <Nop>
@@ -45,13 +46,13 @@ let mapleader=' '
 let maplocalleader=' '
 " additional keybindings go below:
 " Comfortable access to window menu
+" TODO: Consider mapping <C-j> to <C-w>j, for instance
 nnoremap <leader>w <C-w>
 " one we use vim-which-key we can define it as such:
 " There's more to do; see vim-which-key documentation for info.
 " let g:which_key_map.w = { 'name' : '+window' }
 
 """ List of plugins to consider:
-" * fzf
 " * vim-which-key
 " * deoplete for completion (requires python3 support in neovim)
 "     Should coc.vim be used instead?
@@ -60,7 +61,7 @@ nnoremap <leader>w <C-w>
 
 call plug#begin()
 
-" Fugitive takes a long time to load and is slow in general
+" Fugitive can take a long time to load and is slow in general
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
@@ -68,9 +69,11 @@ Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeToggleVCS'] }
-" This airline might be a little slow. Consider a lighter one.
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Must come after nerdtree and before devicons
 Plug 'Xuyuanp/nerdtree-git-plugin'
 " This says it must be the last one. Requires a Nerd font.
