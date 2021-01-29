@@ -61,14 +61,32 @@ nnoremap <leader>w <C-w>
 
 call plug#begin()
 
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
+Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeToggleVCS'] }
+" This airline might be a little slow. Consider a lighter one.
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" Must come after nerdtree and before devicons
+Plug 'Xuyuanp/nerdtree-git-plugin'
+" This says it must be the last one. Requires a Nerd font.
+Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
+
+" airline style
+let g:airline_theme = 'angr'
+let g:airline_powerline_fonts = 1
 
 " NERDCommenter config
 let g:NERDSpaceDelims = 1
 
+" NERDTree keybinds
 nnoremap <leader>tt :NERDTreeToggleVCS<cr>
+
+" Use nerd font icons for nerdtree-git
+" This doesn't seem to work
+" let g:NERDTreeGitStatusUseNerdFonts = 1
