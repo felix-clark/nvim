@@ -84,4 +84,4 @@ Configuration settings are in `coc-settings.json`. It can be opened with `:CocCo
 
 Language servers must be installed with `:CocInstall`. They often have prerequisites.
 
-* python - TODO 
+* python - `:CocInstall coc-pyright`
