@@ -1,4 +1,7 @@
-Clone this repo as ```git clone git@github.com:felix-clark/nvim.git ~/.config/nvim```.
+Clone this repo as follows.
+```
+git clone git@github.com:felix-clark/nvim.git ~/.config/nvim
+```
 
 First install vim-plug as follows:
 ```
