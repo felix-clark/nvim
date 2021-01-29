@@ -53,17 +53,18 @@ nnoremap <leader>w <C-w>
 """ List of plugins to consider:
 " * fzf
 " * vim-which-key
-" * nerdtree-git-plugin
-" * airline
 " * deoplete for completion (requires python3 support in neovim)
+"     Should coc.vim be used instead?
 
 " Run :PlugInstall and :PlugUpdate to install and update plugins.
 
 call plug#begin()
 
+" Fugitive takes a long time to load and is slow in general
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
+Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeToggleVCS'] }
