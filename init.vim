@@ -194,7 +194,7 @@ let g:which_key_map.g = {
   \ ']' : ['GitGutterNextHunk', 'goto-next-hunk'],
   \ 'c' : 'commit',
   \ 'd' : ['Gdiffsplit', 'git-diff-split'],
-  \ 'g' : ['Git', 'git'],
+  \ 'g' : ['Git', 'fugitive-summary'],
   \ 'l' : 'log',
   \ 'p' : ['GitGutterPreviewHunk', 'preview-hunk'],
   \ 's' : ['GitGutterStageHunk', 'stage-hunk'],
