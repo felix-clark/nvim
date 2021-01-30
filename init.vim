@@ -93,6 +93,22 @@ call plug#end()
 let g:airline_theme = 'angr'
 let g:airline_powerline_fonts = 1
 
+" NERDCommenter config
+" Disable keybindings; the only one we really need is toggle.
+let g:NERDCreateDefaultMappings = 0
+" TODO: see NERDCommenter readme for instructions on how to comment a
+" selection.
+
+" NERDTree config and keybinds
+let NERDTreeIgnore = ['^__pycache__$', 'egg-info$']
+
+" Turn off gitgutter default mappings in leiu of our git command tree
+let g:gitgutter_map_keys = 0
+
+" Use nerd font icons for nerdtree-git
+" This doesn't seem to work
+" let g:NERDTreeGitStatusUseNerdFonts = 1
+
 " which-key config
 call which_key#register('<Space>', "g:which_key_map")
 nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<cr>
@@ -177,11 +193,35 @@ let g:which_key_map.s = {
   \ 's' : ['Snippets', 'search-snippets'],
   \ 't' : ['Tags', 'search-tags'],
   \ }
+" Toggle comment
+" TODO: Consider cleaning this mapping
+" FIXME: This isn't working.
+" nnoremap <leader>cc <Plug>NERDCommenterToggle
+" nnoremap <leader>tc <Plug>(NERDCommenterToggle)
+" Rename symbol
+nmap <leader>cr <Plug>(coc-rename)
+" Formatting selected code.
+xmap <leader>cf  <Plug>(coc-format-selected)
+nmap <leader>cf  <Plug>(coc-format-selected)
+" TODO: format entire buffer
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>ca  <Plug>(coc-codeaction-selected)
+nmap <leader>ca  <Plug>(coc-codeaction-selected)
+" coc-codeaction is applied to the whole buffer; too much?
+" Apply AutoFix to problem on the current line.
+nmap <leader>cq  <Plug>(coc-fix-current)
 let g:which_key_map.c = {
-  \ 'name' : '+comment',
+  \ 'name' : '+code',
+  \ 'a' : 'code-action',
+  \ 'c' : ['NERDCommenterToggle', 'comment-toggle'],
+  \ 'f' : 'format-selected',
+  \ 'r' : 'rename',
+  \ 'q' : 'fix-current-line',
   \ }
 let g:which_key_map.t = {
   \ 'name' : '+toggle',
+  \ 'c' : ['NERDCommenterToggle', 'comment-toggle'],
   \ 't' : ['NERDTreeToggleVCS', 'toggle-project-tree'],
   \ }
 nnoremap <leader>gc :Git commit<cr>
@@ -205,28 +245,19 @@ let g:which_key_map.g = {
 " useful for remembering.
 let g:which_key_map['<space>'] = 'easymotion'
 
-" NERDCommenter config
-let g:NERDSpaceDelims = 1
-
-" NERDTree config and keybinds
-let NERDTreeIgnore = ['^__pycache__$', 'egg-info$']
-
-" Turn off gitgutter default mappings in leiu of our git command tree
-let g:gitgutter_map_keys = 0
-
-" Use nerd font icons for nerdtree-git
-" This doesn't seem to work
-" let g:NERDTreeGitStatusUseNerdFonts = 1
-
 " CoC configuration (consider separate file)
 " use <C-[jk]> instead of <C-[np]> to navigate completion window
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
 inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 " confirm completion with return, and pick the first one if none are selected.
 " NOTE: \<C-g>u is used to break undo level.
-inoremap <expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<cr>"
+" inoremap <expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<cr>"
+" Notify that enter has been pressed as well. This may format if
+" coc.preferences.formatOnType is enabled.
+inoremap <expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<cr>\<C-r>=coc#on_enter()\<cr>"
 
-" use <tab> for trigger completion and navigate to the next complete item
+" use <tab> for trigger completion and navigate to the next complete item.
+" This depends on tab not being used by another package (check with :help imap <tab>)
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~ '\s'
@@ -235,6 +266,26 @@ inoremap <silent><expr> <Tab>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<Tab>" :
       \ coc#refresh()
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Remap <C-f> and <C-b> for scroll float/popups.
+" Question: to what extent is this covered with <C-d>/<C-u>?
+nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 
 " Use `[e` and `]e` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -245,4 +296,18 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-" TODO: More CoC configuration
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
