@@ -5,6 +5,8 @@
     ]
   },
   "rust-analyzer": {
-    "serverPath": "/home/felix/.local/bin/rust-analyzer"
+    "serverPath": "/home/felix/.local/bin/rust-analyzer",
+    "cargo.loadOutDirsFromCheck": true,
+    "procMacro.enable": true
   }
 }
