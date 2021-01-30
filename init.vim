@@ -243,6 +243,7 @@ nnoremap <silent><nowait> <leader>ld  :<C-u>CocList diagnostics<cr>
 nnoremap <silent><nowait> <leader>lo  :<C-u>CocList outline<cr>
 " Search workspace symbols.
 nnoremap <silent><nowait> <leader>ls  :<C-u>CocList -I symbols<cr>
+" TODO: shortcuts to open config file (local and global)
 let g:which_key_map.l = {
   \ 'name' : '+language',
   \ 'a' : 'code-action',

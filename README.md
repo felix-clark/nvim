@@ -7,6 +7,8 @@ Clone this repo as follows.
 git clone git@github.com:felix-clark/nvim.git ~/.config/nvim
 ```
 
+Execute `./setup.sh` to install and set up the pre-requisites. This is undertested, however, so follow directions below.
+
 First install vim-plug as follows:
 ```
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -46,28 +48,13 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 ## Keybindings
 
-The leader key is mapped to spacebar. Insert mode can be exited with `jk` in
-rapid succession.
+Insert mode can be exited with `jk` in rapid succession.
+
+The leader key is mapped to spacebar. Press it and wait half a second for a pop-up menu describing custom commands.
 
 ### Easymotion
 
 Double-tap the leader key (`<space>`) then a normal motion key like `j` or `W`.
-
-### Code commenting
-
-* `<space>cc` - comment (line or visual selection)
-* `<space>cu` - uncomment
-* `<space>c<space>` - toggle comment
-
-See NERDCommenter documentation for more.
-
-### NERDTree
-
-* `<space>tt` - toggle NERDTree view
-
-`<space>w` is an alternative to `<C-w>`.
-Window navigation is done via `<space>w[hjkl]`. A window can be closed with
-`<space>wc`.
 
 ### CoC for LSP
 
@@ -85,3 +72,4 @@ Configuration settings are in `coc-settings.json`. It can be opened with `:CocCo
 Language servers must be installed with `:CocInstall`. They often have prerequisites.
 
 * python - `:CocInstall coc-pyright`
+* rust - `:CocInstall coc-rust-analyzer`. Edit `rust-analyzer.serverPath` (or `server.path?`) in `coc-settings.json` to point to the rust-analyzer binary.
