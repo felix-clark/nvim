@@ -95,7 +95,7 @@ let g:airline_powerline_fonts = 1
 
 " NERDCommenter config
 " Disable keybindings; the only one we really need is toggle.
-let g:NERDCreateDefaultMappings = 0
+" let g:NERDCreateDefaultMappings = 0
 " TODO: see NERDCommenter readme for instructions on how to comment a
 " selection.
 
@@ -193,31 +193,8 @@ let g:which_key_map.s = {
   \ 's' : ['Snippets', 'search-snippets'],
   \ 't' : ['Tags', 'search-tags'],
   \ }
-" Toggle comment
-" TODO: Consider cleaning this mapping
-" FIXME: This isn't working.
-" nnoremap <leader>cc <Plug>NERDCommenterToggle
-" nnoremap <leader>tc <Plug>(NERDCommenterToggle)
-" Rename symbol
-nmap <leader>cr <Plug>(coc-rename)
-" Formatting selected code.
-xmap <leader>cf  <Plug>(coc-format-selected)
-nmap <leader>cf  <Plug>(coc-format-selected)
-" TODO: format entire buffer
-" Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>ca  <Plug>(coc-codeaction-selected)
-nmap <leader>ca  <Plug>(coc-codeaction-selected)
-" coc-codeaction is applied to the whole buffer; too much?
-" Apply AutoFix to problem on the current line.
-nmap <leader>cq  <Plug>(coc-fix-current)
 let g:which_key_map.c = {
-  \ 'name' : '+code',
-  \ 'a' : 'code-action',
-  \ 'c' : ['NERDCommenterToggle', 'comment-toggle'],
-  \ 'f' : 'format-selected',
-  \ 'r' : 'rename',
-  \ 'q' : 'fix-current-line',
+  \ 'name' : '+comment',
   \ }
 let g:which_key_map.t = {
   \ 'name' : '+toggle',
@@ -244,6 +221,38 @@ let g:which_key_map.g = {
 " easymotion times out before which-key triggers. But this label is
 " useful for remembering.
 let g:which_key_map['<space>'] = 'easymotion'
+" Rename symbol
+nmap <leader>lr <Plug>(coc-rename)
+" Formatting selected code.
+xmap <leader>lf  <Plug>(coc-format-selected)
+nmap <leader>lf  <Plug>(coc-format-selected)
+" TODO: format entire buffer
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>la  <Plug>(coc-codeaction-selected)
+nmap <leader>la  <Plug>(coc-codeaction-selected)
+" coc-codeaction is applied to the whole buffer; too much?
+" Apply AutoFix to problem on the current line.
+nmap <leader>lq  <Plug>(coc-fix-current)
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <leader>ld  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+" Find symbol of current document.
+nnoremap <silent><nowait> <leader>lo  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <leader>ls  :<C-u>CocList -I symbols<cr>
+let g:which_key_map.l = {
+  \ 'name' : '+language',
+  \ 'a' : 'code-action',
+  \ 'b' : ['Format', 'format-buffer'],
+  \ 'd' : 'diagnostics',
+  \ 'f' : 'format-selected',
+  \ 'o' : 'outline',
+  \ 'r' : 'rename',
+  \ 's' : 'symbols',
+  \ 'q' : 'fix-current-line',
+  \ }
 
 " CoC configuration (consider separate file)
 " use <C-[jk]> instead of <C-[np]> to navigate completion window
@@ -311,3 +320,19 @@ endfunction
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+nmap <silent> <C-S-s> <Plug>(coc-range-select-backward)
+xmap <silent> <C-S-s> <Plug>(coc-range-select-backward)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
