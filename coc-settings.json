@@ -1,4 +1,9 @@
 {
+  "coc.preferences": {
+    "formatOnSaveFiletypes": [
+      "rust"
+    ]
+  },
   "rust-analyzer": {
     "serverPath": "/home/felix/.local/bin/rust-analyzer"
   }

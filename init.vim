@@ -198,7 +198,6 @@ let g:which_key_map.c = {
   \ }
 let g:which_key_map.t = {
   \ 'name' : '+toggle',
-  \ 'c' : ['NERDCommenterToggle', 'comment-toggle'],
   \ 't' : ['NERDTreeToggleVCS', 'toggle-project-tree'],
   \ }
 nnoremap <leader>gc :Git commit<cr>
@@ -225,9 +224,9 @@ let g:which_key_map['<space>'] = 'easymotion'
 nmap <leader>lr <Plug>(coc-rename)
 " Formatting selected code.
 " If a range is not selected, this command can be followed by a text object.
+" This seems similar to `=`.
 xmap <leader>lf <Plug>(coc-format-selected)
 nmap <leader>lf <Plug>(coc-format-selected)
-" TODO: format entire buffer
 " Applying codeAction to the selected region.
 " Example: `<leader>laap` for current paragraph
 xmap <leader>la <Plug>(coc-codeaction-selected)
@@ -253,6 +252,7 @@ let g:which_key_map.l = {
   \ 'r' : 'rename',
   \ 's' : 'symbols',
   \ 'q' : 'fix-current-line',
+  \ 'v' : { 'name': '+server', },
   \ '=' : ['Format', 'format-buffer'],
   \ }
 
@@ -338,3 +338,11 @@ command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
+
+""" Language-specific configuration
+
+" Filetype plugins are defined in (:echo $VIMRUNTIME) (e.g.
+" /usr/share/nvim/runtime/ftplugin).
+" To load additional configuration for a filetype, add {ft}.vim to
+" ./after/ftplugin/{ft}.vim where {ft} is a filetype.
+
