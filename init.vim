@@ -224,13 +224,14 @@ let g:which_key_map['<space>'] = 'easymotion'
 " Rename symbol
 nmap <leader>lr <Plug>(coc-rename)
 " Formatting selected code.
-xmap <leader>lf  <Plug>(coc-format-selected)
-nmap <leader>lf  <Plug>(coc-format-selected)
+" If a range is not selected, this command can be followed by a text object.
+xmap <leader>lf <Plug>(coc-format-selected)
+nmap <leader>lf <Plug>(coc-format-selected)
 " TODO: format entire buffer
 " Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>la  <Plug>(coc-codeaction-selected)
-nmap <leader>la  <Plug>(coc-codeaction-selected)
+" Example: `<leader>laap` for current paragraph
+xmap <leader>la <Plug>(coc-codeaction-selected)
+nmap <leader>la <Plug>(coc-codeaction-selected)
 " coc-codeaction is applied to the whole buffer; too much?
 " Apply AutoFix to problem on the current line.
 nmap <leader>lq  <Plug>(coc-fix-current)
@@ -245,9 +246,9 @@ nnoremap <silent><nowait> <leader>ls  :<C-u>CocList -I symbols<cr>
 let g:which_key_map.l = {
   \ 'name' : '+language',
   \ 'a' : 'code-action',
-  \ 'b' : ['Format', 'format-buffer'],
   \ 'd' : 'diagnostics',
-  \ 'f' : 'format-selected',
+  \ 'f' : 'format',
+  \ 'g' : ['Format', 'format-buffer'],
   \ 'o' : 'outline',
   \ 'r' : 'rename',
   \ 's' : 'symbols',
