@@ -248,11 +248,11 @@ let g:which_key_map.l = {
   \ 'a' : 'code-action',
   \ 'd' : 'diagnostics',
   \ 'f' : 'format',
-  \ 'g' : ['Format', 'format-buffer'],
   \ 'o' : 'outline',
   \ 'r' : 'rename',
   \ 's' : 'symbols',
   \ 'q' : 'fix-current-line',
+  \ '=' : ['Format', 'format-buffer'],
   \ }
 
 " CoC configuration (consider separate file)
