@@ -7,7 +7,7 @@ Clone this repo as follows.
 git clone git@github.com:felix-clark/nvim.git ~/.config/nvim
 ```
 
-Execute `./setup.sh` to install and set up the pre-requisites. This is undertested, however, so follow directions below.
+Execute `sudo ./setup.sh` to install and set up the pre-requisites. This is undertested, however, so follow directions below.
 
 First install vim-plug as follows:
 ```
