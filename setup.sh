@@ -3,7 +3,7 @@
 echo "This script is untested"
 
 # install vim-plug
-PLUG_VIM="~/.local/share/nvim/site/autoload/plug.vim"
+PLUG_VIM="$HOME/.local/share/nvim/site/autoload/plug.vim"
 if [ ! -f $PLUG_VIM ]
 then
     curl -fLo $PLUG_VIM --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -18,7 +18,7 @@ then
         echo "Calling default `nvm use`."
         nvm use
     else
-        curl -sL install-node.now.sh/lts | bash
+        curl -sL install-node.now.sh/lts | sudo bash
     fi
 fi
 
@@ -26,11 +26,12 @@ fi
 nvim -c 'PlugInstall' -c '<\CR>' -c 'qa'
 
 # Install fuzzy finder
-if ! command -v fzf &> /dev/null
-then
-    sudo apt-get update
-    sudo apt-get install -y fzf
-fi
+# NOTE: The plugin should install it if needed
+#if ! command -v fzf &> /dev/null
+#then
+    #sudo apt-get update
+    #sudo apt-get install -y fzf
+#fi
 # Install rust utilities (requires responding to prompt)
 if ! command -v cargo &> /dev/null
 then
