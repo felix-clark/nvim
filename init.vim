@@ -82,6 +82,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'cespare/vim-toml'
 " Must come after nerdtree and before devicons
 Plug 'Xuyuanp/nerdtree-git-plugin'
 " This says it must be the last one. Requires a Nerd font.
