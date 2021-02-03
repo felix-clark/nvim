@@ -78,6 +78,7 @@ Plug 'tpope/vim-commentary'
 Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
+Plug 'luochen1990/rainbow'
 Plug 'liuchengxu/vim-which-key'
 Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeToggleVCS'] }
 Plug 'vim-airline/vim-airline'
@@ -99,6 +100,15 @@ call plug#end()
 " airline style
 let g:airline_theme = 'angr'
 let g:airline_powerline_fonts = 1
+
+" Use fly mode for autopairs to close all open delims when the last one is
+" typed
+let g:AutoPairsFlyMode = 1
+" Don't use the built-in; define our own keybinding for toggle
+let g:AutoPairsShortcutToggle = '<leader>tp'
+
+" turn on rainbow parentheses by default
+let g:rainbow_active = 1
 
 " NERDTree config and keybinds
 let NERDTreeIgnore = ['^__pycache__$', 'egg-info$']
@@ -197,6 +207,7 @@ let g:which_key_map.s = {
 let g:which_key_map.t = {
   \ 'name' : '+toggle',
   \ 't' : ['NERDTreeToggleVCS', 'toggle-project-tree'],
+  \ 'p' : 'autopair',
   \ }
 nnoremap <leader>gc :Git commit<cr>
 nnoremap <leader>gl :Git log<cr>
@@ -226,9 +237,9 @@ nmap <leader>lr <Plug>(coc-rename)
 xmap <leader>lf <Plug>(coc-format-selected)
 nmap <leader>lf <Plug>(coc-format-selected)
 " Applying codeAction to the selected region.
-" Example: `<leader>laap` for current paragraph
-xmap <leader>la <Plug>(coc-codeaction-selected)
-nmap <leader>la <Plug>(coc-codeaction-selected)
+" Example: `<leader>caap` for current paragraph
+xmap <leader>ca <Plug>(coc-codeaction-selected)
+nmap <leader>ca <Plug>(coc-codeaction-selected)
 " coc-codeaction is applied to the whole buffer; too much?
 " Apply AutoFix to problem on the current line.
 nmap <leader>lq  <Plug>(coc-fix-current)
@@ -243,10 +254,10 @@ nnoremap <silent><nowait> <leader>ls  :<C-u>CocList -I symbols<cr>
 " TODO: shortcuts to open config file (local and global)
 let g:which_key_map.c = {
   \ 'name' : '+code ("TODO")',
+  \ 'a' : 'code-action',
   \ }
 let g:which_key_map.l = {
   \ 'name' : '+language',
-  \ 'a' : 'code-action',
   \ 'd' : 'diagnostics',
   \ 'f' : 'format',
   \ 'o' : 'outline',
