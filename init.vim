@@ -71,17 +71,23 @@ call plug#begin()
 " Fugitive can take a long time to load and is slow in general
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+" Repeat plugin commands
+Plug 'tpope/vim-repeat'
+" Could consider tcomment as an alternative
+Plug 'tpope/vim-commentary'
 Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
 Plug 'liuchengxu/vim-which-key'
-Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeToggleVCS'] }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+if has("python3")
+  Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+endif
 Plug 'cespare/vim-toml'
 " Must come after nerdtree and before devicons
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -93,12 +99,6 @@ call plug#end()
 " airline style
 let g:airline_theme = 'angr'
 let g:airline_powerline_fonts = 1
-
-" NERDCommenter config
-" Disable keybindings; the only one we really need is toggle.
-" let g:NERDCreateDefaultMappings = 0
-" TODO: see NERDCommenter readme for instructions on how to comment a
-" selection.
 
 " NERDTree config and keybinds
 let NERDTreeIgnore = ['^__pycache__$', 'egg-info$']
@@ -194,9 +194,6 @@ let g:which_key_map.s = {
   \ 's' : ['Snippets', 'search-snippets'],
   \ 't' : ['Tags', 'search-tags'],
   \ }
-let g:which_key_map.c = {
-  \ 'name' : '+comment',
-  \ }
 let g:which_key_map.t = {
   \ 'name' : '+toggle',
   \ 't' : ['NERDTreeToggleVCS', 'toggle-project-tree'],
@@ -244,6 +241,9 @@ nnoremap <silent><nowait> <leader>lo  :<C-u>CocList outline<cr>
 " Search workspace symbols.
 nnoremap <silent><nowait> <leader>ls  :<C-u>CocList -I symbols<cr>
 " TODO: shortcuts to open config file (local and global)
+let g:which_key_map.c = {
+  \ 'name' : '+code ("TODO")',
+  \ }
 let g:which_key_map.l = {
   \ 'name' : '+language',
   \ 'a' : 'code-action',
