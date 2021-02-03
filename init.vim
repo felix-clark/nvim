@@ -107,6 +107,9 @@ let g:AutoPairsFlyMode = 1
 " Don't use the built-in; define our own keybinding for toggle
 let g:AutoPairsShortcutToggle = '<leader>tp'
 
+" Try to make semshi a bit less garish
+let g:semshi#simplify_markup = 'v:false'
+
 " turn on rainbow parentheses by default
 let g:rainbow_active = 1
 
