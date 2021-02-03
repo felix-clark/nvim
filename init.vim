@@ -103,7 +103,7 @@ let g:airline_powerline_fonts = 1
 
 " Use fly mode for autopairs to close all open delims when the last one is
 " typed
-let g:AutoPairsFlyMode = 1
+" let g:AutoPairsFlyMode = 1
 " Don't use the built-in; define our own keybinding for toggle
 let g:AutoPairsShortcutToggle = '<leader>tp'
 
