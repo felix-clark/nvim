@@ -87,6 +87,10 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 if has("python3")
+  " Debugging with vimspector. Requires python for neovim.
+  " NOTE: consider nvim-dap for neovim 0.5
+  Plug 'puremourning/vimspector'
+  " Better python syntax highlighting
   Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 endif
 Plug 'cespare/vim-toml'
@@ -270,6 +274,34 @@ let g:which_key_map.l = {
   \ 'v' : { 'name': '+server', },
   \ '=' : ['Format', 'format-buffer'],
   \ }
+
+" TODO: Should limit these to only when debugger active?
+" NOTE: run-to-cursor creates a breakpoint at a line and runs until it's
+" reached. This may be the most common use case.
+nnoremap <S-k> :call vimspector#StepOut()
+nnoremap <S-l> :call vimspector#StepInto()
+nnoremap <S-j> :call vimspector#StepOver()
+let g:which_key_map.d = {
+  \ 'name': '+debug',
+  \ 'a': ['vimspector#Launch()', 'launch-debugger'],
+  \ 'r': ['vimspector#Reset()', 'reset'],
+  \ 'R': ['vimspector#Restart()', 'restart'],
+  \ 'c': ['vimspector#Continue()', 'continue'],
+  \ 'd': ['vimspector#RunToCursor()', 'run-to-cursor'],
+  \ 'b': {
+  \   'name': '+breakpoint',
+  \   'b': ['vimspector#ToggleBreakpoint', 'toggle-breakpoint'],
+  \   'c': ['vimspector#ToggleConditionalBreakpoint', 'toggle-conditional-breakpoint'],
+  \   'D': ['vimspector#ClearBreakpoints', 'clear-breakpoints'],
+  \ },
+  \ }
+" Global debug configurations can be placed here. Some instances might want
+" specific ones, in which case this could be changed out of the nvim config
+" repo.
+" The configurations can go in <vimspector_base_dir>/configurations/linux/_all/vim-debug-configuration.json 
+" (although the JSON filename does not matter)
+let g:vimspector_base_dir = expand('$HOME/.config/nvim/vimspector')
+let g:vimspector_install_gadgets = ['debugpy', 'CodeLLDB']
 
 " CoC configuration (consider separate file)
 " use <C-[jk]> instead of <C-[np]> to navigate completion window

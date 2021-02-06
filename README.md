@@ -76,4 +76,8 @@ Language servers must be installed with `:CocInstall`. They often have prerequis
 
 ### Vimspector for debugging
 
-Run `:VimspectorInstall <lang>` where `<lang>` is a language of choice (e.g. `python`). Update with `:VimspectorUpdate`.
+Run `:VimspectorInstall <lang>` where `<lang>` is a language of choice (e.g. `debugpy`). Update with `:VimspectorUpdate`.
+
+A `.vimspector.json` file must be present in the project root to define
+adaptors, or in `vimspector/configurations/linux/_all/<name>.json` within this
+repo.
