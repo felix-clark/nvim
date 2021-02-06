@@ -73,3 +73,7 @@ Language servers must be installed with `:CocInstall`. They often have prerequis
 
 * python - `:CocInstall coc-pyright`
 * rust - `:CocInstall coc-rust-analyzer`. Edit `rust-analyzer.serverPath` (or `server.path?`) in `coc-settings.json` to point to the rust-analyzer binary.
+
+### Vimspector for debugging
+
+Run `:VimspectorInstall <lang>` where `<lang>` is a language of choice (e.g. `python`). Update with `:VimspectorUpdate`.
