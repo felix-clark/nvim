@@ -278,9 +278,10 @@ let g:which_key_map.l = {
 " TODO: Should limit these to only when debugger active?
 " NOTE: run-to-cursor creates a breakpoint at a line and runs until it's
 " reached. This may be the most common use case.
-nnoremap <S-k> :call vimspector#StepOut()
-nnoremap <S-l> :call vimspector#StepInto()
-nnoremap <S-j> :call vimspector#StepOver()
+" S-j at least is commonly used to join line
+" nnoremap <S-k> :call vimspector#StepOut()
+" nnoremap <S-l> :call vimspector#StepInto()
+" nnoremap <S-j> :call vimspector#StepOver()
 let g:which_key_map.d = {
   \ 'name': '+debug',
   \ 'a': ['vimspector#Launch()', 'launch-debugger'],
