@@ -73,6 +73,7 @@ Language servers must be installed with `:CocInstall`. They often have prerequis
 
 * python - `:CocInstall coc-pyright`
 * rust - `:CocInstall coc-rust-analyzer`. Edit `rust-analyzer.serverPath` (or `server.path?`) in `coc-settings.json` to point to the rust-analyzer binary.
+* java = `:CocInstall coc-java`. A JDK and, crucially, source must be installed (i.e. `openjdk-11-source`). `$JAVA_HOME` may need to be set as well.
 
 ### Vimspector for debugging
 
