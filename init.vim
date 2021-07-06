@@ -1,6 +1,7 @@
 " See https://github.com/Optixal/neovim-init.vim for more ideas
 
 " This seems to give a nicer palette; requires ISO-8613-3 terminal.
+" Some plugins, like nvim-tree, require it.
 set termguicolors
 
 " give the terminal window an appropriate title with the name of the open file
@@ -71,9 +72,10 @@ Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
 Plug 'luochen1990/rainbow'
 Plug 'liuchengxu/vim-which-key'
-Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeToggleVCS'] }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -86,10 +88,6 @@ if has("python3")
   Plug 'puremourning/vimspector'
 endif
 Plug 'cespare/vim-toml'
-" Must come after nerdtree and before devicons
-Plug 'Xuyuanp/nerdtree-git-plugin'
-" This says it must be the last one. Requires a Nerd font.
-Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
@@ -109,15 +107,8 @@ let g:AutoPairsShortcutToggle = '<leader>tp'
 " turn on rainbow parentheses by default
 let g:rainbow_active = 1
 
-" NERDTree config and keybinds
-let NERDTreeIgnore = ['^__pycache__$', 'egg-info$']
-
-" Turn off gitgutter default mappings in leiu of our git command tree
+" Turn off gitgutter default mappings in lieu of our git command tree
 let g:gitgutter_map_keys = 0
-
-" Use nerd font icons for nerdtree-git
-" This doesn't seem to work
-" let g:NERDTreeGitStatusUseNerdFonts = 1
 
 " which-key config
 call which_key#register('<Space>', "g:which_key_map")
@@ -218,7 +209,7 @@ let g:which_key_map.s = {
   \ }
 let g:which_key_map.t = {
   \ 'name' : '+toggle',
-  \ 't' : ['NERDTreeToggleVCS', 'toggle-project-tree'],
+  \ 't' : ['NvimTreeToggle', 'toggle-project-tree'],
   \ 'p' : 'autopair',
   \ }
 nnoremap <leader>gc :Git commit<cr>
@@ -241,8 +232,9 @@ let g:which_key_map.g = {
 " easymotion times out before which-key triggers. But this label is
 " useful for remembering.
 let g:which_key_map['<space>'] = 'easymotion'
+" TODO: fill this out and/or refactor with <leader>l
 let g:which_key_map.c = {
-  \ 'name' : '+code ("TODO")',
+  \ 'name' : '+code',
   \ 'a' : 'code-action',
   \ 's' : 'toggle-style',
   \ }
@@ -283,13 +275,105 @@ let g:which_key_map.d = {
 let g:vimspector_base_dir = expand('$HOME/.config/nvim/vimspector')
 let g:vimspector_install_gadgets = ['debugpy', 'CodeLLDB']
 
-" Compe configuration
+""" nvim-tree configuration
+" let g:nvim_tree_side = 'right' "left by default
+" let g:nvim_tree_width = 40 "30 by default, can be width_in_columns or 'width_in_percent%'
+let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
+let g:nvim_tree_gitignore = 1 "0 by default
+let g:nvim_tree_auto_open = 1 "0 by default, opens the tree when typing `vim $DIR` or `vim`
+let g:nvim_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
+let g:nvim_tree_auto_ignore_ft = [ 'startify', 'dashboard' ] "empty by default, don't auto open tree on specific filetypes.
+" let g:nvim_tree_quit_on_open = 1 "0 by default, closes the tree when you open a file
+let g:nvim_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
+let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
+let g:nvim_tree_hide_dotfiles = 1 "0 by default, this option hides files and folders starting with a dot `.`
+let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
+let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and file icon highlight for opened files/directories.
+let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
+let g:nvim_tree_tab_open = 1 "0 by default, will open the tree when entering a new tab and the tree was previously open
+let g:nvim_tree_auto_resize = 0 "1 by default, will resize the tree to its saved width when opening a file
+let g:nvim_tree_disable_netrw = 0 "1 by default, disables netrw
+let g:nvim_tree_hijack_netrw = 0 "1 by default, prevents netrw from automatically opening when opening directories (but lets you keep its other utilities)
+let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
+let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
+let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
+let g:nvim_tree_disable_window_picker = 1 "0 by default, will disable the window picker.
+let g:nvim_tree_hijack_cursor = 0 "1 by default, when moving cursor in the tree, will position the cursor at the start of the file on the current line
+let g:nvim_tree_icon_padding = ' ' "one space by default, used for rendering the space between the icon and the filename. Use with caution, it could break rendering if you set an empty string depending on your font.
+let g:nvim_tree_update_cwd = 1 "0 by default, will update the tree cwd when changing nvim's directory (DirChanged event). Behaves strangely with autochdir set.
+let g:nvim_tree_window_picker_exclude = {
+    \   'filetype': [
+    \     'packer',
+    \     'qf'
+    \   ],
+    \   'buftype': [
+    \     'terminal'
+    \   ]
+    \ }
+" Dictionary of buffer option names mapped to a list of option values that
+" indicates to the window picker that the buffer's window should not be
+" selectable.
+let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } " List of filenames that gets highlighted with NvimTreeSpecialFile
+let g:nvim_tree_show_icons = {
+    \ 'git': 1,
+    \ 'folders': 1,
+    \ 'files': 1,
+    \ 'folder_arrows': 1,
+    \ }
+"If 0, do not show the icons for one of 'git' 'folder' and 'files'
+"1 by default, notice that if 'files' is 1, it will only display
+"if nvim-web-devicons is installed and on your runtimepath.
+"if folder is 1, you can also tell folder_arrows 1 to show small arrows next to the folder icons.
+"but this will not work when you set indent_markers (because of UI conflict)
+
+" default will show icon by default if no icon is provided
+" default shows no icon by default
+let g:nvim_tree_icons = {
+    \ 'default': '',
+    \ 'symlink': '',
+    \ 'git': {
+    \   'unstaged': "✗",
+    \   'staged': "✓",
+    \   'unmerged': "",
+    \   'renamed': "➜",
+    \   'untracked': "★",
+    \   'deleted': "",
+    \   'ignored': "◌"
+    \   },
+    \ 'folder': {
+    \   'arrow_open': "",
+    \   'arrow_closed': "",
+    \   'default': "",
+    \   'open': "",
+    \   'empty': "",
+    \   'empty_open': "",
+    \   'symlink': "",
+    \   'symlink_open': "",
+    \   },
+    \   'lsp': {
+    \     'hint': "",
+    \     'info': "",
+    \     'warning': "",
+    \     'error': "",
+    \   }
+    \ }
+
+" Use <leader>tt to toggle the tree instead
+" nnoremap <C-n> :NvimTreeToggle<CR>
+" nnoremap <leader>r :NvimTreeRefresh<CR>
+" nnoremap <leader>n :NvimTreeFindFile<CR>
+" NvimTreeOpen and NvimTreeClose are also available if you need them
+
+" a list of groups can be found at `:help nvim_tree_highlight`
+highlight NvimTreeFolderIcon guibg=blue
+""" End nvim-tree configuration
+
+""" Compe configuration
 let g:compe = {}
 let g:compe.enabled = v:true
 let g:compe.autocomplete = v:true
 let g:compe.debug = v:false
-" let g:compe.min_length = 1
-let g:compe.min_length = 2
+let g:compe.min_length = 1
 let g:compe.preselect = 'enable'
 let g:compe.throttle_time = 80
 let g:compe.source_timeout = 200
@@ -321,9 +405,9 @@ inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 highlight link CompeDocumentation NormalFloat
 " TODO: Snippet support ? (see compe readme)
-" End compe configuration
+""" End compe configuration
 
-" Treesitter configuration
+""" Treesitter configuration
 " NOTE: the "ensure_installed" line could be removed in lieu of manual installations.
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
@@ -339,9 +423,9 @@ EOF
 " Define folds based on treesitter objects
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
-" End treesitter configuration
+""" End treesitter configuration
 
-" nvim-lspconfig configuration
+""" nvim-lspconfig configuration
 lua << EOF
 local nvim_lsp = require('lspconfig')
 
@@ -390,6 +474,7 @@ for _, lsp in ipairs(servers) do
   }
 end
 EOF
+""" End nvim-lspconfig configuration
 
 
 " use <C-[jk]> instead of <C-[np]> to navigate completion window
