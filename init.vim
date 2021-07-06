@@ -82,6 +82,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
+Plug 'mfussenegger/nvim-dap'
 if has("python3")
   " Debugging with vimspector. Requires python for neovim.
   " NOTE: consider nvim-dap for neovim 0.5
