@@ -38,14 +38,6 @@ Install utilities through cargo.
 cargo install ripgrep fd-find bat git-delta
 ```
 
-### Configuring fzf
-
-Set the following environment variables in your shell's init. e.g. bash:
-```
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-```
-
 ## Keybindings
 
 Insert mode can be exited with `jk` in rapid succession.

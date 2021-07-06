@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# Supposedly coc-rust-analyzer can download it's own version of rust-analyzer. This might be prefered so that it can always find it.
 if ! command -v rust-analyzer &> /dev/null
 then
     echo "WARNING: Install rust-analyzer."
@@ -10,5 +9,5 @@ fi
 
 rustup component add rust-src rustfmt clippy
 
-nvim -c 'CocInstall coc-rust-analyzer' -c '<\CR>' -c 'qa'
+nvim -c 'TSInstall rust' -c '<\CR>' -c 'qa'
 
