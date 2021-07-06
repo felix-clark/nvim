@@ -48,26 +48,9 @@ The leader key is mapped to spacebar. Press it and wait half a second for a pop-
 
 Double-tap the leader key (`<space>`) then a normal motion key like `j` or `W`.
 
-### CoC for LSP
-
-NOTE: For neovim 0.5, might prefer native LSP support.
-
-Install node if not already present.
-```
-curl -sL install-node.now.sh/lts | bash
-```
-
-Configuration settings are in `coc-settings.json`. It can be opened with `:CocConfig`.
-
-#### Language-specific
-
-Language servers must be installed with `:CocInstall`. They often have prerequisites.
-
-* python - `:CocInstall coc-pyright`
-* rust - `:CocInstall coc-rust-analyzer`. Edit `rust-analyzer.serverPath` (or `server.path?`) in `coc-settings.json` to point to the rust-analyzer binary.
-* java = `:CocInstall coc-java`. A JDK and, crucially, source must be installed (i.e. `openjdk-11-source`). `$JAVA_HOME` may need to be set as well.
-
 ### Vimspector for debugging
+ 
+NOTE: Consider nvim-dap now that 0.5 is being used
 
 Run `:VimspectorInstall <lang>` where `<lang>` is a language of choice (e.g. `debugpy`). Update with `:VimspectorUpdate`.
 

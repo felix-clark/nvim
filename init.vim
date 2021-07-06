@@ -1,8 +1,5 @@
 " See https://github.com/Optixal/neovim-init.vim for more ideas
 
-" from https://raw.githubusercontent.com/tomasiser/vim-code-dark/master/colors/codedark.vim
-colorscheme codedark
-
 " This seems to give a nicer palette; requires ISO-8613-3 terminal.
 set termguicolors
 
@@ -70,6 +67,7 @@ let maplocalleader=' '
 
 call plug#begin()
 
+Plug 'navarasu/onedark.nvim'
 " Fugitive can take a long time to load and is slow in general
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
@@ -89,7 +87,6 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
 if has("python3")
@@ -104,6 +101,9 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
+
+" let g:onedark_style = 'darker'
+colorscheme onedark
 
 " airline style
 let g:airline_theme = 'angr'
@@ -250,44 +250,18 @@ let g:which_key_map.g = {
 " easymotion times out before which-key triggers. But this label is
 " useful for remembering.
 let g:which_key_map['<space>'] = 'easymotion'
-" Rename symbol
-" nmap <leader>lr <Plug>(coc-rename)
-" Formatting selected code.
-" If a range is not selected, this command can be followed by a text object.
-" This seems similar to `=`.
-" xmap <leader>lf <Plug>(coc-format-selected)
-" nmap <leader>lf <Plug>(coc-format-selected)
-" Applying codeAction to the selected region.
-" Example: `<leader>caap` for current paragraph
-" xmap <leader>ca <Plug>(coc-codeaction-selected)
-" nmap <leader>ca <Plug>(coc-codeaction-selected)
-" coc-codeaction is applied to the whole buffer; too much?
-" Apply AutoFix to problem on the current line.
-" nmap <leader>lq  <Plug>(coc-fix-current)
-" Mappings for CoCList
-" Show all diagnostics.
-" nnoremap <silent><nowait> <leader>ld  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
-" Find symbol of current document.
-" nnoremap <silent><nowait> <leader>lo  :<C-u>CocList outline<cr>
-" Search workspace symbols.
-" nnoremap <silent><nowait> <leader>ls  :<C-u>CocList -I symbols<cr>
-" TODO: shortcuts to open config file (local and global)
 let g:which_key_map.c = {
   \ 'name' : '+code ("TODO")',
   \ 'a' : 'code-action',
+  \ 's' : 'toggle-style',
   \ }
 let g:which_key_map.l = {
   \ 'name' : '+language',
-  \ 'd' : 'diagnostics',
-  \ 'f' : 'format',
-  \ 'o' : 'outline',
   \ 'r' : 'rename',
-  \ 's' : 'symbols',
-  \ 'q' : 'fix-current-line',
-  \ 'v' : { 'name': '+server', },
-  \ '=' : ['Format', 'format-buffer'],
+  \ 'q' : 'set-loclist',
+  \ '=' : 'format-buffer',
   \ }
+" TODO: shortcuts to open config file (local and global)
 
 " TODO: Should limit these to only when debugger active?
 " NOTE: run-to-cursor creates a breakpoint at a line and runs until it's
@@ -359,7 +333,7 @@ highlight link CompeDocumentation NormalFloat
 " End compe configuration
 
 " Treesitter configuration
-" NOTE: the "ensure_installed" line could be removed in leiu of manual installations.
+" NOTE: the "ensure_installed" line could be removed in lieu of manual installations.
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = 'maintained',
@@ -371,92 +345,66 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 EOF
+" Define folds based on treesitter objects
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 " End treesitter configuration
 
-" CoC configuration (consider separate file)
+" nvim-lspconfig configuration
+lua << EOF
+local nvim_lsp = require('lspconfig')
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  --Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<leader>lq', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap("n", "<leader>l=", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+
+end
+
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = { "vimls", "pylsp", "rust_analyzer" }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup {
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150,
+    }
+  }
+end
+EOF
+
+
 " use <C-[jk]> instead of <C-[np]> to navigate completion window
+" This was used for CoC but perhaps it would still be useful?
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
 inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
-" confirm completion with return, and pick the first one if none are selected.
-" NOTE: \<C-g>u is used to break undo level.
-" inoremap <expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<cr>"
-" Notify that enter has been pressed as well. This may format if
-" coc.preferences.formatOnType is enabled.
-" inoremap <expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<cr>\<C-r>=coc#on_enter()\<cr>"
-
-" " use <tab> for trigger completion and navigate to the next complete item.
-" " This depends on tab not being used by another package (check with :help imap <tab>)
-" function! s:check_back_space() abort
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~ '\s'
-" endfunction
-" inoremap <silent><expr> <Tab>
-"       \ pumvisible() ? "\<C-n>" :
-"       \ <SID>check_back_space() ? "\<Tab>" :
-"       \ coc#refresh()
-
-" " Map function and class text objects
-" " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-" xmap if <Plug>(coc-funcobj-i)
-" omap if <Plug>(coc-funcobj-i)
-" xmap af <Plug>(coc-funcobj-a)
-" omap af <Plug>(coc-funcobj-a)
-" xmap ic <Plug>(coc-classobj-i)
-" omap ic <Plug>(coc-classobj-i)
-" xmap ac <Plug>(coc-classobj-a)
-" omap ac <Plug>(coc-classobj-a)
-
-" " Remap <C-f> and <C-b> for scroll float/popups.
-" " Question: to what extent is this covered with <C-d>/<C-u>?
-" nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-" nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-" inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-" inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-" vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-" vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-
-" " Use `[e` and `]e` to navigate diagnostics
-" " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-" nmap <silent> [e <Plug>(coc-diagnostic-prev)
-" nmap <silent> ]e <Plug>(coc-diagnostic-next)
-" " GoTo code navigation
-" nmap <silent> gd <Plug>(coc-definition)
-" nmap <silent> gy <Plug>(coc-type-definition)
-" nmap <silent> gi <Plug>(coc-implementation)
-" nmap <silent> gr <Plug>(coc-references)
-
-" " Use K to show documentation in preview window.
-" " nnoremap <silent> K :call <SID>show_documentation()<CR>
-" function! s:show_documentation()
-"   if (index(['vim','help'], &filetype) >= 0)
-"     execute 'h '.expand('<cword>')
-"   elseif (coc#rpc#ready())
-"     call CocActionAsync('doHover')
-"   else
-"     execute '!' . &keywordprg . " " . expand('<cword>')
-"   endif
-" endfunction
-
-" " Highlight the symbol and its references when holding the cursor.
-" autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" " Use CTRL-S for selections ranges.
-" " Requires 'textDocument/selectionRange' support of language server.
-" nmap <silent> <C-s> <Plug>(coc-range-select)
-" xmap <silent> <C-s> <Plug>(coc-range-select)
-" nmap <silent> <C-S-s> <Plug>(coc-range-select-backward)
-" xmap <silent> <C-S-s> <Plug>(coc-range-select-backward)
-
-" " Add `:Format` command to format current buffer.
-" command! -nargs=0 Format :call CocAction('format')
-
-" " Add `:Fold` command to fold current buffer.
-" command! -nargs=? Fold :call CocAction('fold', <f-args>)
-
-" " Add `:OR` command for organize imports of the current buffer.
-" command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 
 """ Language-specific configuration
 
