@@ -83,11 +83,6 @@ Plug 'hrsh7th/nvim-compe'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'mfussenegger/nvim-dap'
-if has("python3")
-  " Debugging with vimspector. Requires python for neovim.
-  " NOTE: consider nvim-dap for neovim 0.5
-  Plug 'puremourning/vimspector'
-endif
 Plug 'cespare/vim-toml'
 
 call plug#end()
@@ -249,34 +244,30 @@ let g:which_key_map.l = {
   \ }
 " TODO: shortcuts to open config file (local and global)
 
-" TODO: Should limit these to only when debugger active?
-" NOTE: run-to-cursor creates a breakpoint at a line and runs until it's
-" reached. This may be the most common use case.
-" S-j at least is commonly used to join line
-" nnoremap <S-k> :call vimspector#StepOut()
-" nnoremap <S-l> :call vimspector#StepInto()
-" nnoremap <S-j> :call vimspector#StepOver()
+" TODO: Check :help dap.* for more options
+nnoremap <silent> <leader>dc :lua require'dap'.continue()<CR>
+nnoremap <silent> <leader>dv :lua require'dap'.step_over()<CR>
+nnoremap <silent> <leader>di :lua require'dap'.step_into()<CR>
+nnoremap <silent> <leader>do :lua require'dap'.step_out()<CR>
+nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <silent> <leader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+nnoremap <silent> <leader>dg :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+nnoremap <silent> <leader>dd :lua require'dap'.repl.open()<CR>
+nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
+nnoremap <silent> <leader>dr :lua require'dap'.run_to_cursor()<CR>
 let g:which_key_map.d = {
   \ 'name': '+debug',
-  \ 'a': ['vimspector#Launch()', 'launch-debugger'],
-  \ 'r': ['vimspector#Reset()', 'reset'],
-  \ 'R': ['vimspector#Restart()', 'restart'],
-  \ 'c': ['vimspector#Continue()', 'continue'],
-  \ 'd': ['vimspector#RunToCursor()', 'run-to-cursor'],
-  \ 'b': {
-  \   'name': '+breakpoint',
-  \   'b': ['vimspector#ToggleBreakpoint', 'toggle-breakpoint'],
-  \   'c': ['vimspector#ToggleConditionalBreakpoint', 'toggle-conditional-breakpoint'],
-  \   'D': ['vimspector#ClearBreakpoints', 'clear-breakpoints'],
-  \ },
+  \ 'd': 'open-repl',
+  \ 'c': 'continue',
+  \ 'i': 'step-into',
+  \ 'o': 'step-out',
+  \ 'v': 'step-over',
+  \ 'r': 'run-to-cursor',
+  \ 'l': 'run-last',
+  \ 'b': 'toggle-breakpoint',
+  \ 'B': 'conditional-breakpoint',
+  \ 'g': 'log-point',
   \ }
-" Global debug configurations can be placed here. Some instances might want
-" specific ones, in which case this could be changed out of the nvim config
-" repo.
-" The configurations can go in <vimspector_base_dir>/configurations/linux/_all/vim-debug-configuration.json 
-" (although the JSON filename does not matter)
-let g:vimspector_base_dir = expand('$HOME/.config/nvim/vimspector')
-let g:vimspector_install_gadgets = ['debugpy', 'CodeLLDB']
 
 """ nvim-tree configuration
 " let g:nvim_tree_side = 'right' "left by default

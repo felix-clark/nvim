@@ -48,12 +48,7 @@ The leader key is mapped to spacebar. Press it and wait half a second for a pop-
 
 Double-tap the leader key (`<space>`) then a normal motion key like `j` or `W`.
 
-### Vimspector for debugging
- 
-NOTE: Consider nvim-dap now that 0.5 is being used
+### Debugging
 
-Run `:VimspectorInstall <lang>` where `<lang>` is a language of choice (e.g. `debugpy`). Update with `:VimspectorUpdate`.
-
-A `.vimspector.json` file must be present in the project root to define
-adaptors, or in `vimspector/configurations/linux/_all/<name>.json` within this
-repo.
+Consult the documentation for nvim-dap to see how to install and configure
+debuggers. Some keybindings are defined but no debuggers are currently set up.
