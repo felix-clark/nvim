@@ -212,6 +212,8 @@ let g:which_key_map.t = {
   \ 't' : ['NvimTreeToggle', 'toggle-project-tree'],
   \ 'p' : 'autopair',
   \ }
+nnoremap ]g <cmd>GitGutterNextHunk<cr>
+nnoremap [g <cmd>GitGutterPrevHunk<cr>
 nnoremap <leader>gc :Git commit<cr>
 nnoremap <leader>gl :Git log<cr>
 nnoremap <leader>g<S-s> :Gwrite<cr>
