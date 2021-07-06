@@ -41,15 +41,6 @@ nnoremap <C-z> <Nop>
 " Make sure to not set notimeout
 set timeoutlen=500
 
-" " Recommended for coc
-" set hidden
-" set nobackup
-" set nowritebackup
-" set updatetime=300
-" set cmdheight=2
-" set shortmess+=c
-" " TODO: might want set signcolumn-[number|yes]
-
 " Enable compe
 set completeopt=menuone,noselect
 
