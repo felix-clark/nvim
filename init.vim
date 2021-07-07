@@ -75,8 +75,11 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'nvim-treesitter/nvim-treesitter-refactor'
 Plug 'neovim/nvim-lspconfig'
 Plug 'kabouzeid/nvim-lspinstall'
+Plug 'folke/trouble.nvim'
 Plug 'hrsh7th/nvim-compe'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
@@ -373,18 +376,7 @@ source $HOME/.config/nvim/compe.lua
 """ End compe configuration
 
 """ Treesitter configuration
-" NOTE: the "ensure_installed" line could be removed in lieu of manual installations.
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = 'maintained',
-  highlight = {
-    enable = true
-  },
-  indent = {
-    enable = true
-  }
-}
-EOF
+source $HOME/.config/nvim/treesitter.lua
 " Define folds based on treesitter objects
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
@@ -394,6 +386,17 @@ set foldexpr=nvim_treesitter#foldexpr()
 """ (and possibly nvim-lspinstall in the future)
 source $HOME/.config/nvim/lspconfig.lua
 """ End nvim-lspconfig configuration
+
+""" trouble configuration for listing errors
+" TODO: Consider changing these default bindings (e.g. <leader>cx to toggle
+" window)
+nnoremap <leader>xx <cmd>TroubleToggle<cr>
+nnoremap <leader>xw <cmd>TroubleToggle lsp_workspace_diagnostics<cr>
+nnoremap <leader>xd <cmd>TroubleToggle lsp_document_diagnostics<cr>
+nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
+nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
+nnoremap gR <cmd>TroubleToggle lsp_references<cr>
+""" end trouble configuration
 
 
 " use <C-[jk]> instead of <C-[np]> to navigate completion window
