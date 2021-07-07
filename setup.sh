@@ -16,7 +16,6 @@ then
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     source $HOME/.cargo/env
 fi
-# NOTE: bat is probably unneccessary now that we've moved from fzf to telescope
 cargo install ripgrep fd-find bat git-delta
 
 nvim -c 'TSInstall bash' -c '<\CR>' -c 'qa'
