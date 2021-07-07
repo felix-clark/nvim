@@ -22,8 +22,8 @@ Try running on the command line with `nvim -c 'PlugInstall' -c '<\CR>' -c 'qa'`.
 
 ### Install fonts
 
-Install a nerd font by copying into `~/.fonts` or `~/.local/share/fonts`, then
-run `fc-cache -fv` to rebuild the cache. (This may not be working.)
+Install a nerd font by copying into `~/.local/share/fonts`, then run `fc-cache
+-fv` to rebuild the cache. (This may not be working completely.)
 
 ### Supporting utilities
 
@@ -52,3 +52,5 @@ Double-tap the leader key (`<space>`) then a normal motion key like `j` or `W`.
 
 Consult the documentation for nvim-dap to see how to install and configure
 debuggers. Some keybindings are defined but no debuggers are currently set up.
+
+NOTE: Consider [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)
