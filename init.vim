@@ -213,6 +213,10 @@ nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 """ end trouble configuration
 
+""" Configure nvim-lightbulb
+" Update the lightbulbs when there is a pause
+autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
+""" end nvim-lightbulb configuration
 
 " use <C-[jk]> instead of <C-[np]> to navigate completion window
 " This was used for CoC but perhaps it would still be useful?
