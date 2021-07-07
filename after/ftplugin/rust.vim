@@ -1,5 +1,11 @@
 " Rust language configuration
 
+" rust-tools does some configuration for the rust_analyzer LSP.
+lua <<EOF
+-- Try with default opts
+require('rust-tools').setup()
+EOF
+
 " nnoremap <buffer> <localleader>th :<C-u>CocCommand rust-analyzer.toggleInlayHints<cr>
 " nnoremap <buffer> <localleader>le :<C-u>CocCommand rust-analyzer.explainError<cr>
 " nnoremap <buffer> <localleader>lw :<C-u>CocCommand rust-analyzer.ssr<cr>

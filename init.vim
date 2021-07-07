@@ -19,6 +19,9 @@ set linebreak
 set number
 set relativenumber
 
+" Keep at least some folds open to start
+set foldlevelstart=2
+
 " Complete the longest common string and show the list of potential matches
 " when using <TAB>
 set wildmode=longest,list
@@ -55,8 +58,9 @@ let maplocalleader=' '
 call plug#begin()
 
 Plug 'navarasu/onedark.nvim'
-" Fugitive can take a long time to load and is slow in general
+" Git client. Fugitive can take a long time to load and is slow in general
 Plug 'tpope/vim-fugitive'
+" Surround actions/objects
 Plug 'tpope/vim-surround'
 " Repeat plugin commands
 Plug 'tpope/vim-repeat'
@@ -66,7 +70,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
 Plug 'luochen1990/rainbow'
-Plug 'liuchengxu/vim-which-key'
+Plug 'folke/which-key.nvim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
@@ -80,10 +84,12 @@ Plug 'nvim-treesitter/nvim-treesitter-refactor'
 Plug 'neovim/nvim-lspconfig'
 Plug 'kabouzeid/nvim-lspinstall'
 Plug 'folke/trouble.nvim'
+Plug 'kosayoda/nvim-lightbulb'
 Plug 'hrsh7th/nvim-compe'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'mfussenegger/nvim-dap'
+Plug 'simrat39/rust-tools.nvim'
 Plug 'cespare/vim-toml'
 
 call plug#end()
@@ -107,33 +113,9 @@ let g:rainbow_active = 1
 " Turn off gitgutter default mappings in lieu of our git command tree
 let g:gitgutter_map_keys = 0
 
-" which-key config
-call which_key#register('<Space>', "g:which_key_map")
-nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<cr>
-" If localleader is comma, then:
-" nnoremap <silent> <localleader> :<c-u>WhichKey ','<cr>
-vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<cr>
-" We can use which-key on g-commands too. Presumably another dictionary can be
-" registered as above if we want to edit and document these commands.
-nnoremap <silent> g :<c-u>WhichKey 'g'<cr>
-vnoremap <silent> g :<c-u>WhichKeyVisual 'g'<cr>
-" We don't have anything bound to the 'z' prefix right now.
-" nnoremap <silent> z :<c-u>WhichKey 'z'<cr>
-" vnoremap <silent> z :<c-u>WhichKeyVisual 'z'<cr>
-nnoremap <silent> ] :<c-u>WhichKey ']'<cr>
-nnoremap <silent> [ :<c-u>WhichKey '['<cr>
-vnoremap <silent> ] :<c-u>WhichKeyVisual ']'<cr>
-vnoremap <silent> [ :<c-u>WhichKeyVisual '['<cr>
-" This lets us not mask built-in combos like gj, although they will not be
-" listed in the which-key menu (try :help g)
-let g:which_key_fallback_to_native_key = 1
+source $HOME/.config/nvim/which-key.lua
+
 let g:which_key_map = {}
-" This procedure defines keybindings as well as the which-key info.
-" Complicated commands will need to be defined separately as usual, then the
-" value in which_key_map set to a string.
-" The format is recursive, so additional layers in the command tree can be
-" added in the obvious way.
-" Modified keys (e.g. <C-h>) don't seem to work naively in the command tree.
 let g:which_key_map.w = {
   \ 'name'  : '+window',
   \ 'w'     : ['<C-w>w'    , 'other-window'],
@@ -152,7 +134,7 @@ let g:which_key_map.w = {
   \ 'L'     : ['<C-w>L'    , 'move-window-right'],
   \ '='     : ['<C-w>='    , 'balance-window'],
   \ 's'     : ['<C-w>s'    , 'split-window-below'],
-  \ 'v'     : ['<C-w>v'    , 'split-window-below'],
+  \ 'v'     : ['<C-w>v'    , 'split-window-right'],
   \ 'e'     : {
   \   'name' : '+expand',
   \   'h' : ['<C-w>5<'   , 'expand-window-left'],
@@ -161,73 +143,8 @@ let g:which_key_map.w = {
   \   'k' : [':resize -5', 'expand-window-up'],
   \   },
   \ }
-nnoremap <leader>bb <cmd>Telescope buffers<cr>
-let g:which_key_map.b = {
-  \ 'name' : '+buffer',
-  \ 'b' : 'switch-buffer',
-  \ 'd' : ['bd'       , 'delete-buffer'],
-  \ 'h' : ['bfirst'   , 'first-buffer'],
-  \ 'j' : ['bnext'    , 'next-buffer'],
-  \ 'k' : ['bprevious', 'previous-buffer'],
-  \ 'l' : ['blast'    , 'last-buffer'],
-  \ }
-nnoremap <leader>fb <cmd>Telescope file_browser<cr>
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fp <cmd>Telescope git_files<cr>
-let g:which_key_map.f = {
-  \ 'name' : '+file',
-  \ 'b' : 'browser',
-  \ 'f' : 'find',
-  \ 'p' : 'project',
-  \ 's' : ['update', 'save'],
-  \ }
-" See telescope's documentation for other pickers
-nnoremap <leader>s: <cmd>Telescope commands<cr>
-nnoremap <leader>sb <cmd>Telescope current_buffer_fuzzy_find<cr>
-nnoremap <leader>sc <cmd>Telescope git_commits<cr>
-nnoremap <leader>sh <cmd>Telescope help_tags<cr>
-nnoremap <leader>sk <cmd>Telescope marks<cr>
-nnoremap <leader>sm <cmd>Telescope keymaps<cr>
-nnoremap <leader>sp <cmd>Telescope live_grep<cr>
-nnoremap <leader>ss <cmd>Telescope treesitter<cr>
-nnoremap <leader>st <cmd>Telescope tags<cr>
-" nnoremap <leader>st <cmd>Telescope current_buffer_tags<cr>
-let g:which_key_map.s = {
-  \ 'name' : '+search',
-  \ ':' : 'commands',
-  \ 'b' : 'buffer',
-  \ 'c' : 'commits',
-  \ 'h' : 'help-tags',
-  \ 'k' : 'marks',
-  \ 'm' : 'keymaps',
-  \ 'p' : 'project',
-  \ 's' : 'treesitter',
-  \ 't' : 'tags',
-  \ }
-let g:which_key_map.t = {
-  \ 'name' : '+toggle',
-  \ 't' : ['NvimTreeToggle', 'toggle-project-tree'],
-  \ 'p' : 'autopair',
-  \ }
-nnoremap ]g <cmd>GitGutterNextHunk<cr>
-nnoremap [g <cmd>GitGutterPrevHunk<cr>
-nnoremap <leader>gc :Git commit<cr>
-nnoremap <leader>gl :Git log<cr>
-nnoremap <leader>g<S-s> :Gwrite<cr>
-" nnoremap <leader>g<S-p> :Git push<cr>
-let g:which_key_map.g = {
-  \ 'name' : '+git',
-  \ '[' : ['GitGutterPrevHunk', 'goto-previous-hunk'],
-  \ ']' : ['GitGutterNextHunk', 'goto-next-hunk'],
-  \ 'c' : 'commit',
-  \ 'd' : ['Gdiffsplit', 'git-diff-split'],
-  \ 'g' : ['Git', 'fugitive-summary'],
-  \ 'l' : 'log',
-  \ 'p' : ['GitGutterPreviewHunk', 'preview-hunk'],
-  \ 's' : ['GitGutterStageHunk', 'stage-hunk'],
-  \ 'S' : 'stage-file',
-  \ 'u' : ['GitGutterUndoHunk', 'undo-hunk'],
-  \ }
+nnoremap ]h <cmd>GitGutterNextHunk<cr>
+nnoremap [h <cmd>GitGutterPrevHunk<cr>
 " easymotion times out before which-key triggers. But this label is
 " useful for remembering.
 let g:which_key_map['<space>'] = 'easymotion'
@@ -246,6 +163,7 @@ let g:which_key_map.l = {
 " TODO: shortcuts to open config file (local and global)
 
 " TODO: Check :help dap.* for more options
+nnoremap <silent> <leader>dd :lua require'dap'.repl.open()<CR>
 nnoremap <silent> <leader>dc :lua require'dap'.continue()<CR>
 nnoremap <silent> <leader>dv :lua require'dap'.step_over()<CR>
 nnoremap <silent> <leader>di :lua require'dap'.step_into()<CR>
@@ -253,114 +171,11 @@ nnoremap <silent> <leader>do :lua require'dap'.step_out()<CR>
 nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>
 nnoremap <silent> <leader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
 nnoremap <silent> <leader>dg :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
-nnoremap <silent> <leader>dd :lua require'dap'.repl.open()<CR>
 nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
 nnoremap <silent> <leader>dr :lua require'dap'.run_to_cursor()<CR>
-let g:which_key_map.d = {
-  \ 'name': '+debug',
-  \ 'd': 'open-repl',
-  \ 'c': 'continue',
-  \ 'i': 'step-into',
-  \ 'o': 'step-out',
-  \ 'v': 'step-over',
-  \ 'r': 'run-to-cursor',
-  \ 'l': 'run-last',
-  \ 'b': 'toggle-breakpoint',
-  \ 'B': 'conditional-breakpoint',
-  \ 'g': 'log-point',
-  \ }
 
 """ nvim-tree configuration
-" let g:nvim_tree_side = 'right' "left by default
-" let g:nvim_tree_width = 40 "30 by default, can be width_in_columns or 'width_in_percent%'
-let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
-let g:nvim_tree_gitignore = 1 "0 by default
-let g:nvim_tree_auto_open = 1 "0 by default, opens the tree when typing `vim $DIR` or `vim`
-let g:nvim_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
-let g:nvim_tree_auto_ignore_ft = [ 'startify', 'dashboard' ] "empty by default, don't auto open tree on specific filetypes.
-" let g:nvim_tree_quit_on_open = 1 "0 by default, closes the tree when you open a file
-let g:nvim_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
-let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
-let g:nvim_tree_hide_dotfiles = 1 "0 by default, this option hides files and folders starting with a dot `.`
-let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
-let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and file icon highlight for opened files/directories.
-let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
-let g:nvim_tree_tab_open = 1 "0 by default, will open the tree when entering a new tab and the tree was previously open
-let g:nvim_tree_auto_resize = 0 "1 by default, will resize the tree to its saved width when opening a file
-let g:nvim_tree_disable_netrw = 0 "1 by default, disables netrw
-let g:nvim_tree_hijack_netrw = 0 "1 by default, prevents netrw from automatically opening when opening directories (but lets you keep its other utilities)
-let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
-let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
-let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
-let g:nvim_tree_disable_window_picker = 1 "0 by default, will disable the window picker.
-let g:nvim_tree_hijack_cursor = 0 "1 by default, when moving cursor in the tree, will position the cursor at the start of the file on the current line
-let g:nvim_tree_icon_padding = ' ' "one space by default, used for rendering the space between the icon and the filename. Use with caution, it could break rendering if you set an empty string depending on your font.
-let g:nvim_tree_update_cwd = 1 "0 by default, will update the tree cwd when changing nvim's directory (DirChanged event). Behaves strangely with autochdir set.
-let g:nvim_tree_window_picker_exclude = {
-    \   'filetype': [
-    \     'packer',
-    \     'qf'
-    \   ],
-    \   'buftype': [
-    \     'terminal'
-    \   ]
-    \ }
-" Dictionary of buffer option names mapped to a list of option values that
-" indicates to the window picker that the buffer's window should not be
-" selectable.
-let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } " List of filenames that gets highlighted with NvimTreeSpecialFile
-let g:nvim_tree_show_icons = {
-    \ 'git': 1,
-    \ 'folders': 1,
-    \ 'files': 1,
-    \ 'folder_arrows': 1,
-    \ }
-"If 0, do not show the icons for one of 'git' 'folder' and 'files'
-"1 by default, notice that if 'files' is 1, it will only display
-"if nvim-web-devicons is installed and on your runtimepath.
-"if folder is 1, you can also tell folder_arrows 1 to show small arrows next to the folder icons.
-"but this will not work when you set indent_markers (because of UI conflict)
-
-" default will show icon by default if no icon is provided
-" default shows no icon by default
-let g:nvim_tree_icons = {
-    \ 'default': '',
-    \ 'symlink': '',
-    \ 'git': {
-    \   'unstaged': "✗",
-    \   'staged': "✓",
-    \   'unmerged': "",
-    \   'renamed': "➜",
-    \   'untracked': "★",
-    \   'deleted': "",
-    \   'ignored': "◌"
-    \   },
-    \ 'folder': {
-    \   'arrow_open': "",
-    \   'arrow_closed': "",
-    \   'default': "",
-    \   'open': "",
-    \   'empty': "",
-    \   'empty_open': "",
-    \   'symlink': "",
-    \   'symlink_open': "",
-    \   },
-    \   'lsp': {
-    \     'hint': "",
-    \     'info': "",
-    \     'warning': "",
-    \     'error': "",
-    \   }
-    \ }
-
-" Use <leader>tt to toggle the tree instead
-" nnoremap <C-n> :NvimTreeToggle<CR>
-" nnoremap <leader>r :NvimTreeRefresh<CR>
-" nnoremap <leader>n :NvimTreeFindFile<CR>
-" NvimTreeOpen and NvimTreeClose are also available if you need them
-
-" a list of groups can be found at `:help nvim_tree_highlight`
-highlight NvimTreeFolderIcon guibg=blue
+source $HOME/.config/nvim/nvim-tree.vim
 """ End nvim-tree configuration
 
 """ Compe configuration
