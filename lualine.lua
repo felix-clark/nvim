@@ -15,5 +15,5 @@ require'lualine'.setup{
     lualine_y = {'encoding', 'fileformat', 'filetype'},
     lualine_z = {'progress', 'location'},
   },
-  extensions = { 'fugitive' },
+  extensions = { 'fugitive', 'nvim-tree' },
 }
