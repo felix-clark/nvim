@@ -7,6 +7,8 @@ require'lualine'.setup{
         'diagnostics',
         sources = {'nvim_lsp'},
         sections = {'error', 'warn', 'info', 'hint'},
+        -- TODO: Figure out why some icons are not correctly displayed in
+        -- nerdfont and replace these with appropriate icons
         symbols = {error='E', warn='W', info='I', hint='H'},
       } 
     },
