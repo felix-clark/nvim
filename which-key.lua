@@ -13,6 +13,12 @@ wk.register({
   c = {
     name = "+code",
     a = "Code action",
+    d = {"<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document diagnostics"},
+    l = {"<cmd>TroubleToggle loclist<cr>", "Location list"},
+    q = {"<cmd>TroubleToggle quickfix<cr>", "Quickfix list"},
+    r = "Rename (treesitter-refactor)",
+    w = {"<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace diagnostics"},
+    x = {"<cmd>TroubleToggle<cr>", "Show error list"},
   },
   d = {
     name = "+debug",
@@ -21,6 +27,7 @@ wk.register({
     name = "+file",
     b = {"<cmd>Telescope file_browser<cr>", "File browser"},
     f = {"<cmd>Telescope find_files<cr>", "Find file"},
+    g = {"<cmd>find $HOME/.config/nvim/init.vim<cr>", "Open neovim config"},
     n = {"<cmd>enew<cr>", "New file"},
     p = {"<cmd>Telescope git_files<cr>", "Open file in project"},
     r = {"<cmd>Telescope oldfiles<cr>", "Open recent file"},
@@ -35,6 +42,7 @@ wk.register({
     g = {"<cmd>Git<cr>", "Git launcher"},
     l = {"<cmd>Git log<cr>", "Git log"},
     p = {"<cmd>GitGutterPreviewHunk<cr>", "Preview hunk"},
+    -- This one might be a little dangerous
     -- P = {"<cmd>Git push<cr>", "Push"},
     s = {"<cmd>GitGutterStageHunk<cr>", "Stage hunk"},
     S = {"<cmd>Gwrite<cr>", "Stage file"},
@@ -42,7 +50,7 @@ wk.register({
   },
   l = {
     name = "+lsp",
-    r = "rename",
+    r = "Rename (LSP)",
     w = "+workspace",
     ["="] = "Format",
   },
@@ -61,10 +69,10 @@ wk.register({
   },
   t = {
     name = "+toggle",
+    l = {"<cmd>set relativenumber!<cr>", "Switch line number style"},
     t = {"<cmd>NvimTreeToggle<cr>", "Project tree"},
     p = "Toggle AutoPairs",
     s = {"<cmd>lua require('onedark').toggle()<cr>", "Toggle color scheme"}
-    -- TODO: line numbering
     -- TODO: Consider toggle for git-gitter, although there isn't harm in
     -- keeping it on
   },
@@ -98,5 +106,13 @@ wk.register({
     x     = {"<C-w>x"    , "Swap window with next"},
     r     = {"<C-w>r"    , "Rotate windows down/right"},
     R     = {"<C-w>r"    , "Rotate windows up/left"},
+    T     = {"<C-w>T"    , "Break out into new tab"},
   },
 }, { prefix = "<leader>" })
+wk.register({
+  -- from treesitter-refactor: goto definition w/ lsp fallback
+  d = "Go to definition",
+  -- overwrites "Goto global declaration"
+  D = {"<cmd>TroubleToggle lsp_definitions<cr>", "List definitions"},
+  R = {"<cmd>TroubleToggle lsp_references<cr>", "List references"},
+}, { prefix = "g" })

@@ -20,7 +20,7 @@ set number
 set relativenumber
 
 " Keep all folds open to start
-set foldlevelstart=99
+" set foldlevelstart=99
 
 " Complete the longest common string and show the list of potential matches
 " when using <TAB>
@@ -109,12 +109,11 @@ let g:rainbow_active = 1
 
 " Turn off gitgutter default mappings in lieu of our git command tree
 let g:gitgutter_map_keys = 0
-
-source $HOME/.config/nvim/which-key.lua
-
 nnoremap ]h <cmd>GitGutterNextHunk<cr>
 nnoremap [h <cmd>GitGutterPrevHunk<cr>
-" TODO: shortcuts to open config file (local and global)
+
+" Most keymappings are defined here
+source $HOME/.config/nvim/which-key.lua
 
 " TODO: Check :help dap.* for more options
 nnoremap <silent> <leader>dd :lua require'dap'.repl.open()<CR>
@@ -151,17 +150,6 @@ set foldexpr=nvim_treesitter#foldexpr()
 """ (and possibly nvim-lspinstall in the future)
 source $HOME/.config/nvim/lspconfig.lua
 """ End nvim-lspconfig configuration
-
-""" trouble configuration for listing errors
-" TODO: Consider changing these default bindings (e.g. <leader>cx to toggle
-" window)
-nnoremap <leader>xx <cmd>TroubleToggle<cr>
-nnoremap <leader>xw <cmd>TroubleToggle lsp_workspace_diagnostics<cr>
-nnoremap <leader>xd <cmd>TroubleToggle lsp_document_diagnostics<cr>
-nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
-nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
-nnoremap gR <cmd>TroubleToggle lsp_references<cr>
-""" end trouble configuration
 
 """ Configure nvim-lightbulb
 " Update the lightbulbs when there is a pause
