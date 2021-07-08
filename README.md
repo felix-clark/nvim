@@ -22,8 +22,10 @@ Try running on the command line with `nvim -c 'PlugInstall' -c '<\CR>' -c 'qa'`.
 
 ### Install fonts
 
-Install a nerd font by copying into `~/.local/share/fonts`, then run `fc-cache
--fv` to rebuild the cache. (This may not be working completely.)
+* Download a [nerd font](https://www.nerdfonts.com/) such as Fira Code.
+* Unpack into `~/.local/share/fonts`.
+* Run `fc-cache -fv` to rebuild the font cache.
+* Adjust your terminal's preferences to use the nerd font.
 
 ### Supporting utilities
 
@@ -46,7 +48,7 @@ The leader key is mapped to spacebar. Press it and wait half a second for a pop-
 
 ### Easymotion
 
-Double-tap the leader key (`<space>`) then a normal motion key like `j` or `W`.
+Double-tap the leader key (`<space>`) then quickly press a normal motion key like `j` or `W`.
 
 ### Debugging
 

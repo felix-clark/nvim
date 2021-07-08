@@ -63,6 +63,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
 Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
+" TODO: Investigate replacing with windwp/nvim-autopairs
 Plug 'jiangmiao/auto-pairs'
 Plug 'luochen1990/rainbow'
 Plug 'hoob3rt/lualine.nvim'
