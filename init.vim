@@ -19,8 +19,8 @@ set linebreak
 set number
 set relativenumber
 
-" Keep at least some folds open to start
-set foldlevelstart=2
+" Keep all folds open to start
+set foldlevelstart=99
 
 " Complete the longest common string and show the list of potential matches
 " when using <TAB>
@@ -41,17 +41,12 @@ nnoremap <C-z> <Nop>
 
 " snappier response time (default 1000ms)
 " Make sure to not set notimeout
-set timeoutlen=500
+set timeoutlen=400
 
 " Leader key should be set before plugins in case they use leader key mappings
 " map the leader and localleader to space (default is '\')
 let mapleader=' '
-" TODO: Should localleader be ','? If this is changed we must edit the
-" which-key config as well.
 let maplocalleader=' '
-" additional keybindings go below:
-" Comfortable access to window menu
-" TODO: Consider mapping <C-j> to <C-w>j, for instance
 
 " Run :PlugInstall and :PlugUpdate to install and update plugins.
 
@@ -70,9 +65,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
 Plug 'luochen1990/rainbow'
-Plug 'folke/which-key.nvim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'hoob3rt/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nvim-lua/popup.nvim'
@@ -82,8 +75,10 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
 Plug 'neovim/nvim-lspconfig'
+" nvim-lspinstall allows use of :LspInstall; not really used right now
 Plug 'kabouzeid/nvim-lspinstall'
 Plug 'folke/trouble.nvim'
+Plug 'folke/which-key.nvim'
 Plug 'kosayoda/nvim-lightbulb'
 Plug 'hrsh7th/nvim-compe'
 Plug 'hrsh7th/vim-vsnip'
@@ -97,13 +92,15 @@ call plug#end()
 " let g:onedark_style = 'darker'
 colorscheme onedark
 
-" airline style
-let g:airline_theme = 'angr'
-let g:airline_powerline_fonts = 1
+" lualine configuration
+lua <<EOF
+require'lualine'.setup{
+  options = { theme = 'onedark' },
+}
+EOF
 
-" Use fly mode for autopairs to close all open delims when the last one is
-" typed
-" let g:AutoPairsFlyMode = 1
+" fly mode for autopairs closes all open delims when the last one is typed
+let g:AutoPairsFlyMode = 1
 " Don't use the built-in; define our own keybinding for toggle
 let g:AutoPairsShortcutToggle = '<leader>tp'
 
@@ -115,51 +112,8 @@ let g:gitgutter_map_keys = 0
 
 source $HOME/.config/nvim/which-key.lua
 
-let g:which_key_map = {}
-let g:which_key_map.w = {
-  \ 'name'  : '+window',
-  \ 'w'     : ['<C-w>w'    , 'other-window'],
-  \ 'd'     : ['<C-w>c'    , 'delete-window'],
-  \ 'o'     : ['<C-w>o'    , 'focus-window'],
-  \ '-'     : ['<C-w>s'    , 'split-window-below'],
-  \ '|'     : ['<C-w>v'    , 'split-window-right'],
-  \ '2'     : ['<C-w>v'    , 'layout-double-columns'],
-  \ 'h'     : ['<C-w>h'    , 'window-left'],
-  \ 'j'     : ['<C-w>j'    , 'window-below'],
-  \ 'l'     : ['<C-w>l'    , 'window-right'],
-  \ 'k'     : ['<C-w>k'    , 'window-up'],
-  \ 'H'     : ['<C-w>H'    , 'move-window-left'],
-  \ 'J'     : ['<C-w>J'    , 'move-window-down'],
-  \ 'K'     : ['<C-w>K'    , 'move-window-up'],
-  \ 'L'     : ['<C-w>L'    , 'move-window-right'],
-  \ '='     : ['<C-w>='    , 'balance-window'],
-  \ 's'     : ['<C-w>s'    , 'split-window-below'],
-  \ 'v'     : ['<C-w>v'    , 'split-window-right'],
-  \ 'e'     : {
-  \   'name' : '+expand',
-  \   'h' : ['<C-w>5<'   , 'expand-window-left'],
-  \   'j' : [':resize +5', 'expand-window-below'],
-  \   'l' : ['<C-w>5>'   , 'expand-window-right'],
-  \   'k' : [':resize -5', 'expand-window-up'],
-  \   },
-  \ }
 nnoremap ]h <cmd>GitGutterNextHunk<cr>
 nnoremap [h <cmd>GitGutterPrevHunk<cr>
-" easymotion times out before which-key triggers. But this label is
-" useful for remembering.
-let g:which_key_map['<space>'] = 'easymotion'
-" TODO: fill this out and/or refactor with <leader>l
-let g:which_key_map.c = {
-  \ 'name' : '+code',
-  \ 'a' : 'code-action',
-  \ 's' : 'toggle-style',
-  \ }
-let g:which_key_map.l = {
-  \ 'name' : '+language',
-  \ 'r' : 'rename',
-  \ 'q' : 'set-loclist',
-  \ '=' : 'format-buffer',
-  \ }
 " TODO: shortcuts to open config file (local and global)
 
 " TODO: Check :help dap.* for more options
@@ -173,10 +127,6 @@ nnoremap <silent> <leader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Brea
 nnoremap <silent> <leader>dg :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
 nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
 nnoremap <silent> <leader>dr :lua require'dap'.run_to_cursor()<CR>
-
-""" nvim-tree configuration
-source $HOME/.config/nvim/nvim-tree.vim
-""" End nvim-tree configuration
 
 """ Compe configuration
 inoremap <silent><expr> <C-Space> compe#complete()
@@ -217,6 +167,10 @@ nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 " Update the lightbulbs when there is a pause
 autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
 """ end nvim-lightbulb configuration
+
+""" nvim-tree configuration
+source $HOME/.config/nvim/nvim-tree.vim
+""" End nvim-tree configuration
 
 " use <C-[jk]> instead of <C-[np]> to navigate completion window
 " This was used for CoC but perhaps it would still be useful?

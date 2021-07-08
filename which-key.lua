@@ -12,6 +12,7 @@ wk.register({
   },
   c = {
     name = "+code",
+    a = "Code action",
   },
   d = {
     name = "+debug",
@@ -41,6 +42,9 @@ wk.register({
   },
   l = {
     name = "+lsp",
+    r = "rename",
+    w = "+workspace",
+    ["="] = "Format",
   },
   -- See telescope's documentation for other pickers
   s = {
@@ -59,13 +63,40 @@ wk.register({
     name = "+toggle",
     t = {"<cmd>NvimTreeToggle<cr>", "Project tree"},
     p = "Toggle AutoPairs",
-    -- TODO: Code style (from onedark) -- currently bound to <leader>cs
+    s = {"<cmd>lua require('onedark').toggle()<cr>", "Toggle color scheme"}
     -- TODO: line numbering
     -- TODO: Consider toggle for git-gitter, although there isn't harm in
     -- keeping it on
   },
-  -- w = {
-  --   name = "+window",
-  --   -- "<C-w>", "+window"
-  -- },
+  w = {
+    name = "+window",
+    w     = {"<C-w>w"    , "Switch to next window"},
+    W     = {"<C-w>W"    , "Switch to previous window"},
+    c     = {"<C-w>c"    , "Close window"},
+    q     = {"<C-w>q"    , "Quit window"},
+    o     = {"<C-w>o"    , "Focus current window"},
+    ["-"] = {"<C-w>-"    , "Decrease height"},
+    ["+"] = {"<C-w>+"    , "Increase height"},
+    ["|"] = {"<C-w>|"    , "Max out the width"},
+    ["<"] = {"<C-w><lt>" , "Decrease width"},
+    [">"] = {"<C-w><gt>" , "Increase width"},
+    h     = {"<C-w>h"    , "Go to left window"},
+    j     = {"<C-w>j"    , "Go to down window"},
+    l     = {"<C-w>l"    , "Go to right window"},
+    k     = {"<C-w>k"    , "Go to up window"},
+    t     = {"<C-w>t"    , "Go to top-left window"},
+    b     = {"<C-w>b"    , "Go to bottom-right window"},
+    p     = {"<C-w>p"    , "Go to previous window"},
+    P     = {"<C-w>P"    , "Go to preview window"},
+    H     = {"<C-w>H"    , "Move window left"},
+    J     = {"<C-w>J"    , "Move window down"},
+    K     = {"<C-w>K"    , "Move window up"},
+    L     = {"<C-w>L"    , "Move window right"},
+    ["="] = {"<C-w>="    , "Equally high and wide"},
+    s     = {"<C-w>s"    , "Split window horizontally"},
+    v     = {"<C-w>v"    , "Split window vertically"},
+    x     = {"<C-w>x"    , "Swap window with next"},
+    r     = {"<C-w>r"    , "Rotate windows down/right"},
+    R     = {"<C-w>r"    , "Rotate windows up/left"},
+  },
 }, { prefix = "<leader>" })
