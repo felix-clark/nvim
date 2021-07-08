@@ -93,11 +93,7 @@ call plug#end()
 colorscheme onedark
 
 " lualine configuration
-lua <<EOF
-require'lualine'.setup{
-  options = { theme = 'onedark' },
-}
-EOF
+source $HOME/.config/nvim/lualine.lua
 
 " fly mode for autopairs closes all open delims when the last one is typed
 let g:AutoPairsFlyMode = 1
