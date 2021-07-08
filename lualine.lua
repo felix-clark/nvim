@@ -3,13 +3,13 @@ require'lualine'.setup{
   sections = {
     lualine_b = {'branch', 'diff'},
     lualine_c = {
-      'filename',
       {
         'diagnostics',
         sources = {'nvim_lsp'},
         sections = {'error', 'warn', 'info', 'hint'},
         symbols = {error='', warn='', info='', hint=''},
       },
+      'filename',
     },
     lualine_x = {},
     lualine_y = {'encoding', 'fileformat', 'filetype'},
