@@ -22,6 +22,18 @@ wk.register({
   },
   d = {
     name = "+debug",
+    -- TODO: Check :help dap.* for more options. These descriptions could be
+    -- improved with experience using them.
+    d = {"<cmd>lua require'dap'.repl.open()<CR>", "Open debug terminal"},
+    c = {"<cmd>lua require'dap'.continue()<CR>", "Continue"},
+    v = {"<cmd>lua require'dap'.step_over()<CR>", "Step over"},
+    i = {"<cmd>lua require'dap'.step_into()<CR>", "Step into"},
+    o = {"<cmd>lua require'dap'.step_out()<CR>", "Step out"},
+    b = {"<cmd>lua require'dap'.toggle_breakpoint()<CR>", "Toggle breakpoint"},
+    B = {"<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", "Conditional breakpoint"},
+    g = {"<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>", "Log point"},
+    l = {"<cmd>lua require'dap'.run_last()<CR>", "Run last"},
+    r = {"<cmd>lua require'dap'.run_to_cursor()<CR>", "Run to cursor"},
   },
   f = {
     name = "+file",
@@ -54,6 +66,11 @@ wk.register({
     w = "+workspace",
     ["="] = "Format",
   },
+  p = {
+    name = "+project",
+    f = {"<cmd>Telescope git_files<cr>", "Open file in project"},
+    p = {"<cmd>lua require'telescope'.extensions.project.project{}<cr>", "Pick project"},
+  },
   -- See telescope's documentation for other pickers
   s = {
     name = "+search",
@@ -71,7 +88,6 @@ wk.register({
     name = "+toggle",
     l = {"<cmd>set relativenumber!<cr>", "Switch line number style"},
     t = {"<cmd>NvimTreeToggle<cr>", "Project tree"},
-    p = "Toggle AutoPairs",
     s = {"<cmd>lua require('onedark').toggle()<cr>", "Toggle color scheme"}
     -- TODO: Consider toggle for git-gitter, although there isn't harm in
     -- keeping it on

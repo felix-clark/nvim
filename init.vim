@@ -63,8 +63,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
 Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
-" TODO: Investigate replacing with windwp/nvim-autopairs
-Plug 'jiangmiao/auto-pairs'
+Plug 'windwp/nvim-autopairs'
 Plug 'luochen1990/rainbow'
 Plug 'hoob3rt/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
@@ -72,6 +71,9 @@ Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-project.nvim'
+" TODO: consider other extensions from nvim-telescope, perhaps with more
+" maturity. (i.e. fzf-native, frecency)
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
@@ -96,11 +98,6 @@ colorscheme onedark
 " lualine configuration
 source $HOME/.config/nvim/lualine.lua
 
-" fly mode for autopairs closes all open delims when the last one is typed
-let g:AutoPairsFlyMode = 1
-" Don't use the built-in; define our own keybinding for toggle
-let g:AutoPairsShortcutToggle = '<leader>tp'
-
 " turn on rainbow parentheses by default
 let g:rainbow_active = 1
 
@@ -112,28 +109,23 @@ nnoremap [h <cmd>GitGutterPrevHunk<cr>
 " Most keymappings are defined here
 source $HOME/.config/nvim/which-key.lua
 
-" TODO: Check :help dap.* for more options
-nnoremap <silent> <leader>dd :lua require'dap'.repl.open()<CR>
-nnoremap <silent> <leader>dc :lua require'dap'.continue()<CR>
-nnoremap <silent> <leader>dv :lua require'dap'.step_over()<CR>
-nnoremap <silent> <leader>di :lua require'dap'.step_into()<CR>
-nnoremap <silent> <leader>do :lua require'dap'.step_out()<CR>
-nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>
-nnoremap <silent> <leader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
-nnoremap <silent> <leader>dg :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
-nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
-nnoremap <silent> <leader>dr :lua require'dap'.run_to_cursor()<CR>
+source $HOME/.config/nvim/autopairs.lua
+
+source $HOME/.config/nvim/telescope.lua
 
 """ Compe configuration
+source $HOME/.config/nvim/compe.lua
+
 inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+" inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+" Compe documentation says this is needed for nvim-autopairs, but it's not
+" clear it makes a difference given the autopairs config doing a re-mapping:
+" inoremap <silent><expr> <CR>      compe#confirm(luaeval("require 'nvim-autopairs'.autopairs_cr()"))
 inoremap <silent><expr> <C-e>     compe#close('<C-e>')
 inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 highlight link CompeDocumentation NormalFloat
-
-source $HOME/.config/nvim/compe.lua
 """ End compe configuration
 
 """ Treesitter configuration
@@ -158,9 +150,8 @@ source $HOME/.config/nvim/nvim-tree.vim
 """ End nvim-tree configuration
 
 " use <C-[jk]> instead of <C-[np]> to navigate completion window
-" This was used for CoC but perhaps it would still be useful?
-" inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
-" inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
+inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
 """ Language-specific configuration
 

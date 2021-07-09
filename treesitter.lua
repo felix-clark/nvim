@@ -7,6 +7,8 @@ require'nvim-treesitter.configs'.setup {
   indent = {
     enable = true
   },
+  -- Integration with nvim-autopairs
+  autopairs = { enable = true },
   -- These are part of nvim-treesitter-textobjects
   -- TODO: There are many more text objects possible, check
   -- nvim-treesitter-textobjects documentation. The ones here are better
