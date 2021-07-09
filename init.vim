@@ -72,6 +72,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-project.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 " TODO: consider other extensions from nvim-telescope, perhaps with more
 " maturity. (i.e. fzf-native, frecency)
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
