@@ -73,13 +73,11 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-project.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-" TODO: consider other extensions from nvim-telescope, perhaps with more
-" maturity. (i.e. fzf-native, frecency)
+" TODO: consider other extension from nvim-telescope, frecency.
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
 Plug 'neovim/nvim-lspconfig'
-" nvim-lspinstall allows use of :LspInstall; not really used right now
 Plug 'kabouzeid/nvim-lspinstall'
 Plug 'folke/trouble.nvim'
 Plug 'folke/which-key.nvim'
