@@ -100,6 +100,12 @@ source $HOME/.config/nvim/lualine.lua
 " turn on rainbow parentheses by default
 let g:rainbow_active = 1
 
+" Change the diagnostic icons in the gutter
+sign define LspDiagnosticsSignError text= texthl=LspDiagnosticsSignError linehl= numhl=
+sign define LspDiagnosticsSignWarning text= texthl=LspDiagnosticsSignWarning linehl= numhl=
+sign define LspDiagnosticsSignInformation text= texthl=LspDiagnosticsSignInformation linehl= numhl=
+sign define LspDiagnosticsSignHint text= texthl=LspDiagnosticsSignHint linehl= numhl=
+
 " Turn off gitgutter default mappings in lieu of our git command tree
 let g:gitgutter_map_keys = 0
 nnoremap ]h <cmd>GitGutterNextHunk<cr>
