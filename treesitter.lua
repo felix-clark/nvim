@@ -9,6 +9,12 @@ require'nvim-treesitter.configs'.setup {
   },
   -- Integration with nvim-autopairs
   autopairs = { enable = true },
+  -- Use nvim-ts-rainbow for rainbow delimiters
+  rainbow = {
+    enable = true,
+    extended_mode = true,
+    max_file_lines = 1000,
+  },
   -- These are part of nvim-treesitter-textobjects
   -- TODO: There are many more text objects possible, check
   -- nvim-treesitter-textobjects documentation. The ones here are better

@@ -11,7 +11,7 @@ require'lualine'.setup{
       },
       'filename',
     },
-    lualine_x = {},
+    lualine_x = {require'lsp-status'.status},
     lualine_y = {'encoding', 'fileformat', 'filetype'},
     lualine_z = {'progress', 'location'},
   },

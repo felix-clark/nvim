@@ -47,18 +47,21 @@ wk.register({
   },
   g = {
     name = "+git",
-    ["["] = {"<cmd>GitGutterPrevHunk<cr>", "Go to previous hunk"},
-    ["]"] = {"<cmd>GitGutterNextHunk<cr>", "Go to next hunk"},
+    ["["] = {"<cmd>lua require'gitsigns.actions'.prev_hunk()<cr>", "Go to previous hunk"},
+    ["]"] = {"<cmd>lua require'gitsigns.actions'.next_hunk()<cr>", "Go to next hunk"},
+    b = {"<cmd>lua require'gitsigns.actions'.blame_line(true)<cr>", "Blame line"},
     c = {"<cmd>Git commit<cr>", "Commit"},
     d = {"<cmd>Gdiffsplit<cr>", "Open split diff"},
     g = {"<cmd>Git<cr>", "Git launcher"},
     l = {"<cmd>Git log<cr>", "Git log"},
-    p = {"<cmd>GitGutterPreviewHunk<cr>", "Preview hunk"},
+    p = {"<cmd>lua require'gitsigns.actions'.preview_hunk()<cr>", "Preview hunk"},
     -- This one might be a little dangerous
     -- P = {"<cmd>Git push<cr>", "Push"},
-    s = {"<cmd>GitGutterStageHunk<cr>", "Stage hunk"},
+    r = {"<cmd>lua require'gitsigns.actions'.reset_hunk()<cr>", "Revert hunk"},
+    R = {"<cmd>lua require'gitsigns.actions'.reset_buffer()<cr>", "Revert buffer"},
+    s = {"<cmd>lua require'gitsigns.actions'.stage_hunk()<cr>", "Stage hunk"},
     S = {"<cmd>Gwrite<cr>", "Stage file"},
-    u = {"<cmd>GitGutterUndoHunk<cr>", "Undo hunk"},
+    u = {"<cmd>lua require'gitsigns.actions'.undo_stage_hunk()<cr>", "Undo stage hunk"},
   },
   l = {
     name = "+lsp",
@@ -132,3 +135,4 @@ wk.register({
   D = {"<cmd>TroubleToggle lsp_definitions<cr>", "List definitions"},
   R = {"<cmd>TroubleToggle lsp_references<cr>", "List references"},
 }, { prefix = "g" })
+-- TODO: visual mode bindings for gitsigns

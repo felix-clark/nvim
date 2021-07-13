@@ -62,14 +62,14 @@ Plug 'tpope/vim-repeat'
 " Could consider tcomment as an alternative
 Plug 'tpope/vim-commentary'
 Plug 'easymotion/vim-easymotion'
-Plug 'airblade/vim-gitgutter'
 Plug 'windwp/nvim-autopairs'
-Plug 'luochen1990/rainbow'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'hoob3rt/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
+Plug 'nvim-lua/lsp-status.nvim'
 Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-lua/plenary.nvim' " required for other plugins
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-project.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
@@ -77,6 +77,7 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
+Plug 'p00f/nvim-ts-rainbow'
 Plug 'neovim/nvim-lspconfig'
 Plug 'kabouzeid/nvim-lspinstall'
 Plug 'folke/trouble.nvim'
@@ -97,13 +98,12 @@ colorscheme onedark
 " lualine configuration
 source $HOME/.config/nvim/lualine.lua
 
-" turn on rainbow parentheses by default
-let g:rainbow_active = 1
-
-" Turn off gitgutter default mappings in lieu of our git command tree
-let g:gitgutter_map_keys = 0
-nnoremap ]h <cmd>GitGutterNextHunk<cr>
-nnoremap [h <cmd>GitGutterPrevHunk<cr>
+" gitsigns configuration
+" TODO: Disable default keybindings, replacing text objects and visual-mode
+" shortcuts.
+lua <<EOF
+require('gitsigns').setup()
+EOF
 
 " Most keymappings are defined here
 source $HOME/.config/nvim/which-key.lua
