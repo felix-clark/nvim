@@ -1,5 +1,12 @@
 -- Most of this config is taken from wiki for nvim-lspinstall.
+-- Some additions from the lsp-status documentation.
 local nvim_lsp = require('lspconfig')
+local lsp_status = require('lsp-status')
+
+-- We're getting diagnostics from nvim_lsp
+lsp_status.config({ diagnostics = false })
+-- register lsp-status progress handler
+lsp_status.register_progress()
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -47,6 +54,11 @@ local on_attach = function(client, bufnr)
     augroup END
     ]], false)
   end
+
+  -- Register client for messages and set up buffer autocommands to update the
+  -- statusline and the current function.
+  lsp_status.on_attach(client)
+
 end
 
 -- Set the gutter diagnostics to use icons
@@ -83,6 +95,8 @@ local lua_settings = {
 local function make_config()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
+  -- Add window/workDoneProgress capabilities from lsp-status
+  capabilities = vim.tbl_extend('keep', capabilities, lsp_status.capabilities)
   return {
     -- enable snippet support
     capabilities = capabilities,
@@ -93,6 +107,7 @@ local function make_config()
       debounce_text_changes = 150,
     },
   }
+
 end
 
 -- lsp-install
@@ -102,8 +117,8 @@ local function setup_servers()
   -- get all installed servers
   local servers = require'lspinstall'.installed_servers()
   -- ... and add manually installed servers
-  table.insert(servers, "clangd")
-  table.insert(servers, "sourcekit")
+  -- table.insert(servers, "clangd")
+  -- table.insert(servers, "sourcekit")
 
   for _, server in pairs(servers) do
     local config = make_config()
@@ -111,6 +126,10 @@ local function setup_servers()
     -- language specific config
     if server == "lua" then
       config.settings = lua_settings
+    end
+    if server == "pyright" then
+      config.handlers = lsp_status.extensions.pyright.setup()
+      config.settings = { python = { workspaceSymbols = {enabled = true} } }
     end
     if server == "sourcekit" then
       config.filetypes = {"swift", "objective-c", "objective-cpp"}; -- we don't want c and cpp!
