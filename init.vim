@@ -53,8 +53,6 @@ let maplocalleader=' '
 call plug#begin()
 
 Plug 'navarasu/onedark.nvim'
-" Git client. Fugitive can take a long time to load and is slow in general
-Plug 'tpope/vim-fugitive'
 " Surround actions/objects
 Plug 'tpope/vim-surround'
 " Repeat plugin commands
@@ -64,6 +62,9 @@ Plug 'tpope/vim-commentary'
 " Easymotion reimplementation
 Plug 'phaazon/hop.nvim'
 Plug 'windwp/nvim-autopairs'
+" Magit clone
+Plug 'TimUntersberger/neogit'
+" Git gutter
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'hoob3rt/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
@@ -104,10 +105,13 @@ require('hop').setup()
 EOF
 
 " gitsigns configuration
-" TODO: Disable default keybindings, replacing text objects and visual-mode
-" shortcuts.
+" TODO: Disable default keybindings, replacing text objects
 lua <<EOF
 require('gitsigns').setup()
+EOF
+
+lua <<EOF
+require('neogit').setup()
 EOF
 
 " Most keymappings are defined here
@@ -163,4 +167,3 @@ inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 " /usr/share/nvim/runtime/ftplugin).
 " To load additional configuration for a filetype, add {ft}.vim to
 " ./after/ftplugin/{ft}.vim where {ft} is a filetype.
-
