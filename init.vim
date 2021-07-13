@@ -61,7 +61,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 " Could consider tcomment as an alternative
 Plug 'tpope/vim-commentary'
-Plug 'easymotion/vim-easymotion'
+" Easymotion reimplementation
+Plug 'phaazon/hop.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'hoob3rt/lualine.nvim'
@@ -97,6 +98,10 @@ colorscheme onedark
 
 " lualine configuration
 source $HOME/.config/nvim/lualine.lua
+
+lua <<EOF
+require('hop').setup()
+EOF
 
 " gitsigns configuration
 " TODO: Disable default keybindings, replacing text objects and visual-mode

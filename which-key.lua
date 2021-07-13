@@ -1,6 +1,21 @@
 local wk = require("which-key")
+
+-- These are common to both normal and visual mode
+local hop = {
+    name = "+hop",
+    ["/"] = {"<cmd>lua require'hop'.hint_patterns()<cr>", "Patterns"},
+    c = {"<cmd>lua require'hop'.hint_char1()<cr>", "Characters"},
+    j = {"<cmd>HopLineStartAC<cr>", "Lines down"},
+    k = {"<cmd>HopLineStartBC<cr>", "Lines up"},
+    s = {"<cmd>lua require'hop'.hint_char2()<cr>", "Bigrams"},
+    -- This will search all words; could split between forward and backwards
+    -- with HopWord[AC|BC]
+    w = {"<cmd>lua require'hop'.hint_words()<cr>", "Words"},
+  }
+
 -- Mappings starting with leader key
 wk.register({
+  ["<space>"] = hop,
   b = {
     name = "+buffer",
     b = {"<cmd>Telescope buffers<cr>", "Switch buffer"},
@@ -135,4 +150,13 @@ wk.register({
   D = {"<cmd>TroubleToggle lsp_definitions<cr>", "List definitions"},
   R = {"<cmd>TroubleToggle lsp_references<cr>", "List references"},
 }, { prefix = "g" })
--- TODO: visual mode bindings for gitsigns
+
+-- visual mode bindings
+wk.register({
+  ["<space>"] = hop,
+  g = {
+    name = "+git",
+    r = {"<cmd>lua require'gitsigns'.reset_hunk({vim.fn.line('.'), vim.fn.line('v')})<cr>", "Revert selection"},
+    s = {"<cmd>lua require'gitsigns'.stage_hunk({vim.fn.line('.'), vim.fn.line('v')})<cr>", "Stage selection"},
+  },
+}, { mode = 'v', prefix = "<leader>" })
