@@ -62,6 +62,7 @@ Plug 'tpope/vim-commentary'
 " Easymotion reimplementation
 Plug 'phaazon/hop.nvim'
 Plug 'windwp/nvim-autopairs'
+Plug 'mhartington/formatter.nvim'
 " Magit clone
 Plug 'TimUntersberger/neogit'
 " Git gutter
@@ -116,6 +117,8 @@ EOF
 
 " Most keymappings are defined here
 source $HOME/.config/nvim/which-key.lua
+
+source $HOME/.config/nvim/formatter.lua
 
 source $HOME/.config/nvim/autopairs.lua
 

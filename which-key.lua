@@ -2,8 +2,8 @@ local wk = require("which-key")
 
 -- These are common to both normal and visual mode
 local hop = {
-    name = "+hop",
-    ["/"] = {"<cmd>lua require'hop'.hint_patterns()<cr>", "Patterns"},
+  name = "+hop",
+  ["/"] = {"<cmd>lua require'hop'.hint_patterns()<cr>", "Patterns"},
     c = {"<cmd>lua require'hop'.hint_char1()<cr>", "Characters"},
     j = {"<cmd>HopLineStartAC<cr>", "Lines down"},
     k = {"<cmd>HopLineStartBC<cr>", "Lines up"},
@@ -117,8 +117,8 @@ wk.register({
     ["-"] = {"<C-w>-"    , "Decrease height"},
     ["+"] = {"<C-w>+"    , "Increase height"},
     ["|"] = {"<C-w>|"    , "Max out the width"},
-    ["<"] = {"<C-w><lt>" , "Decrease width"},
-    [">"] = {"<C-w><gt>" , "Increase width"},
+    ["<lt>"] = {"<C-w><lt>" , "Decrease width"},
+    [">"] = {"<C-w>>" , "Increase width"},
     h     = {"<C-w>h"    , "Go to left window"},
     j     = {"<C-w>j"    , "Go to down window"},
     l     = {"<C-w>l"    , "Go to right window"},
@@ -147,6 +147,10 @@ wk.register({
   D = {"<cmd>TroubleToggle lsp_definitions<cr>", "List definitions"},
   R = {"<cmd>TroubleToggle lsp_references<cr>", "List references"},
 }, { prefix = "g" })
+wk.register({
+  name = "+format",
+  ["="] = {"<cmd>Format<cr>", "Format buffer"},
+}, { prefix = "=" })
 
 -- visual mode bindings
 wk.register({
