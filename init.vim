@@ -98,9 +98,6 @@ call plug#end()
 " let g:onedark_style = 'darker'
 colorscheme onedark
 
-" lualine configuration
-source $HOME/.config/nvim/lualine.lua
-
 lua <<EOF
 require('hop').setup()
 EOF
@@ -115,17 +112,19 @@ lua <<EOF
 require('neogit').setup()
 EOF
 
-" Most keymappings are defined here
-source $HOME/.config/nvim/which-key.lua
+" Load custom modules
+lua <<EOF
+require("cfg.lualine")
+require("cfg.which-key")
+require("cfg.formatter")
+require("cfg.autopairs")
+require("cfg.telescope")
+require("cfg.compe")
+require("cfg.treesitter")
+require("cfg.lsp")
+EOF
 
-source $HOME/.config/nvim/formatter.lua
-
-source $HOME/.config/nvim/autopairs.lua
-
-source $HOME/.config/nvim/telescope.lua
-
-""" Compe configuration
-source $HOME/.config/nvim/compe.lua
+""" Additional vimscript compe configuration (TODO: move to lua)
 
 inoremap <silent><expr> <C-Space> compe#complete()
 " inoremap <silent><expr> <CR>      compe#confirm('<CR>')
@@ -139,17 +138,11 @@ inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 highlight link CompeDocumentation NormalFloat
 """ End compe configuration
 
-""" Treesitter configuration
-source $HOME/.config/nvim/treesitter.lua
+""" Additional treesitter configuration (TODO: move to lua)
 " Define folds based on treesitter objects
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 """ End treesitter configuration
-
-""" nvim-lspconfig configuration
-""" (and possibly nvim-lspinstall in the future)
-source $HOME/.config/nvim/lspconfig.lua
-""" End nvim-lspconfig configuration
 
 """ Configure nvim-lightbulb
 " Update the lightbulbs when there is a pause
