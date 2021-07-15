@@ -105,13 +105,10 @@ lua <<EOF
 require('hop').setup()
 EOF
 
-" gitsigns configuration
-" TODO: Disable default keybindings, replacing text objects
+" git configuration
 lua <<EOF
+-- TODO: Disable default keybindings, replacing text objects
 require('gitsigns').setup()
-EOF
-
-lua <<EOF
 require('neogit').setup()
 EOF
 
@@ -131,9 +128,9 @@ EOF
 
 inoremap <silent><expr> <C-Space> compe#complete()
 " inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-" Compe documentation says this is needed for nvim-autopairs, but it's not
-" clear it makes a difference given the autopairs config doing a re-mapping:
-" inoremap <silent><expr> <CR>      compe#confirm(luaeval("require 'nvim-autopairs'.autopairs_cr()"))
+" Compe documentation says this is needed for nvim-autopairs; it inserts
+" parentheses. Autopairs documentation doesn't mention this.:
+inoremap <silent><expr> <CR>      compe#confirm(luaeval("require 'nvim-autopairs'.autopairs_cr()"))
 inoremap <silent><expr> <C-e>     compe#close('<C-e>')
 inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
