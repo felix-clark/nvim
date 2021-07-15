@@ -46,6 +46,7 @@ set timeoutlen=400
 " Leader key should be set before plugins in case they use leader key mappings
 " map the leader and localleader to space (default is '\')
 let mapleader=' '
+" TODO: Consider <SPC>m for local leader, if used for anything
 let maplocalleader=' '
 
 " Run :PlugInstall and :PlugUpdate to install and update plugins.
@@ -59,6 +60,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 " Could consider tcomment as an alternative
 Plug 'tpope/vim-commentary'
+" Expanded text objects
+Plug 'wellle/targets.vim'
 " Easymotion reimplementation
 Plug 'phaazon/hop.nvim'
 Plug 'windwp/nvim-autopairs'
