@@ -9,16 +9,9 @@ git clone git@github.com:felix-clark/nvim.git ~/.config/nvim
 
 Execute `./setup.sh` to install and set up the pre-requisites. This is undertested, however, so follow directions below.
 
-First install vim-plug as follows:
-```
-curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-```
+Run `:PackerSync` from within neovim to download plugins.
 
-Then run `:PlugInstall` from within neovim to download plugins.
-
-Update plugins with `:PlugUpdate`.
-
-Try running on the command line with `nvim -c 'PlugInstall' -c '<\CR>' -c 'qa'`.
+Try running on the command line with `nvim -c 'PackerSync' -c '<\CR>' -c 'qa'`.
 
 ### Install fonts
 
@@ -46,7 +39,7 @@ Insert mode can be exited with `jk` in rapid succession.
 
 The leader key is mapped to spacebar. Press it and wait half a second for a pop-up menu describing custom commands.
 
-### Easymotion
+### Easymotion (hop)
 
 Double-tap the leader key (`<space>`) then quickly press a normal motion key like `j` or `W`.
 
