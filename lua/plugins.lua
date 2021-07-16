@@ -21,13 +21,13 @@ return require('packer').startup(function (use)
   -- Check this out sometime (e.g. build commands)
   -- use {'tpope/vim-dispatch', opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}}
 
-  --" Surround actions/objects
+  -- Surround actions/objects
   use 'tpope/vim-surround'
-  --" Repeat plugin commands
+  -- Repeat plugin commands
   use 'tpope/vim-repeat'
-  --" Could consider tcomment as an alternative
+  -- Could consider tcomment as an alternative
   use 'tpope/vim-commentary'
-  --" Expanded text objects
+  -- Expanded text objects
   use 'wellle/targets.vim'
 
   -- Easymotion reimplementation
@@ -56,7 +56,7 @@ return require('packer').startup(function (use)
   -- Git gutter
   use {'lewis6991/gitsigns.nvim',
     requires = 'nvim-lua/plenary.nvim',
-    event = "BufRead",
+    event = 'BufRead',
     config = function () require('gitsigns').setup() end,
   }
 
@@ -111,13 +111,13 @@ return require('packer').startup(function (use)
   }
 
   use {'folke/trouble.nvim',
-    requires = "kyazdani42/nvim-web-devicons",
+    requires = 'kyazdani42/nvim-web-devicons',
     config = function () require('trouble').setup() end,
   }
 
   -- Keybindings and help
   use {'folke/which-key.nvim',
-    event = "BufWinEnter",
+    event = 'BufWinEnter',
     config = function () require('cfg.which-key') end,
   }
 
@@ -133,6 +133,7 @@ return require('packer').startup(function (use)
       'hrsh7th/vim-vsnip',
       'hrsh7th/vim-vsnip-integ',
     },
+    event = 'InsertEnter *',
     config = function () require('cfg.compe') end,
   }
 
@@ -140,8 +141,8 @@ return require('packer').startup(function (use)
   use 'mfussenegger/nvim-dap'
 
   -- Language-specific
-  use 'simrat39/rust-tools.nvim'
-  use 'cespare/vim-toml'
+  use {'simrat39/rust-tools.nvim', ft='rust'}
+  use {'cespare/vim-toml', ft='toml'}
 
   -- theme
   use 'navarasu/onedark.nvim'
