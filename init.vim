@@ -1,3 +1,8 @@
+" fish shell seems to slow things down
+set shell=bash
+" in lua this would be:
+" vim.opt.shell = "bash"
+
 " This seems to give a nicer palette; requires ISO-8613-3 terminal.
 " Some plugins, like nvim-tree, require it.
 set termguicolors
