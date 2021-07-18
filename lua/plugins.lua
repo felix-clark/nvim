@@ -141,7 +141,17 @@ return require('packer').startup(function (use)
   use 'mfussenegger/nvim-dap'
 
   -- Language-specific
-  use {'simrat39/rust-tools.nvim', ft='rust'}
+  use {
+    'simrat39/rust-tools.nvim',
+    ft='rust',
+    config = function () require('rust-tools').setup() end,
+    requires = {
+      'nvim-lspconfig',
+      {'popup.nvim', opt = true},
+      {'plenary.nvim', opt = true},
+      {'telescope.nvim', opt = true},
+    },
+  }
   use {'cespare/vim-toml', ft='toml'}
 
   -- theme
