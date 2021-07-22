@@ -63,6 +63,7 @@ return require('packer').startup(function (use)
   -- Status line
   use {'hoob3rt/lualine.nvim',
     requires = {'kyazdani42/nvim-web-devicons', opt = true},
+    after = 'onedark.nvim',
     config = function () require('cfg.lualine') end,
   }
 
@@ -161,6 +162,6 @@ return require('packer').startup(function (use)
       -- Change the default style before calling setup(), e.g.:
       -- vim.g.onedark_style = 'darker'
       require('onedark').setup()
-    end
+    end,
   }
 end)
