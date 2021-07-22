@@ -60,9 +60,6 @@ lua <<EOF
 require('plugins')
 EOF
 
-" let g:onedark_style = 'darker'
-colorscheme onedark
-
 """ Additional vimscript compe configuration (TODO: move to lua)
 
 inoremap <silent><expr> <C-Space> compe#complete()

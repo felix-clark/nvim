@@ -155,5 +155,12 @@ return require('packer').startup(function (use)
   use {'cespare/vim-toml', ft='toml'}
 
   -- theme
-  use 'navarasu/onedark.nvim'
+  use {
+    'navarasu/onedark.nvim',
+    config = function ()
+      -- Change the default style before calling setup(), e.g.:
+      -- vim.g.onedark_style = 'darker'
+      require('onedark').setup()
+    end
+  }
 end)
