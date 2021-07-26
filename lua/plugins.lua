@@ -89,10 +89,12 @@ return require('packer').startup(function (use)
   -- TODO: consider other extension from nvim-telescope, frecency.
 
   use {'nvim-treesitter/nvim-treesitter',
+    branch = '0.5-compat',
     run = ':TSUpdate',
     config = function () require('cfg.treesitter') end,
   }
   use {'nvim-treesitter/nvim-treesitter-textobjects',
+    branch = '0.5-compat',
     requires = 'nvim-treesitter',
   }
   use {'nvim-treesitter/nvim-treesitter-refactor',
