@@ -145,8 +145,13 @@ return require('packer').startup(function (use)
 
   -- Language-specific
   use {
+    'stsewd/isort.nvim',
+    ft = 'python',
+    run = ':UpdateRemotePlugins',
+  }
+  use {
     'simrat39/rust-tools.nvim',
-    ft='rust',
+    ft = 'rust',
     config = function () require('rust-tools').setup() end,
     requires = {
       'nvim-lspconfig',
