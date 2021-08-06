@@ -16,4 +16,5 @@ npairs.setup({
 require('nvim-autopairs.completion.compe').setup({
   map_cr = true, -- map <CR> on insert mode
   map_complete = true, -- will auto-insert '(' after select function or menu item
+  auto_select = true, -- auto-select first item
 })
