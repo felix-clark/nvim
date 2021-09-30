@@ -54,35 +54,16 @@ let mapleader=' '
 " TODO: Consider <SPC>m for local leader, if used for anything
 let maplocalleader=' '
 
+""" nvim-tree configuration is in vimscript.
+" It configures global options that should be set before calling setup().
+source $HOME/.config/nvim/nvim-tree.vim
+""" End nvim-tree configuration
+
 " Run :PackerSync to clean, install, and update plugins.
 " Run :PackerCompile following changes to plugin configuration.
 lua <<EOF
 require('plugins')
 EOF
-
-""" Additional vimscript compe configuration (TODO: move to lua)
-
-inoremap <silent><expr> <C-Space> compe#complete()
-" inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-" This appears to be unnecessary if autopairs is loaded after compe and
-" configured appropriately.
-" inoremap <silent><expr> <CR>      compe#confirm(luaeval("require 'nvim-autopairs'.autopairs_cr()"))
-inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
-
-highlight link CompeDocumentation NormalFloat
-""" End compe configuration
-
-""" Additional treesitter configuration (TODO: move to lua)
-" Define folds based on treesitter objects
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-""" End treesitter configuration
-
-""" nvim-tree configuration
-source $HOME/.config/nvim/nvim-tree.vim
-""" End nvim-tree configuration
 
 " use <C-[jk]> instead of <C-[np]> to navigate completion window
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"

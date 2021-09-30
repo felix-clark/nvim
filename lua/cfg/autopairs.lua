@@ -12,12 +12,13 @@ npairs.setup({
   -- local ts_conds = require('nvim-autopairs.ts-conds')
 })
 
--- compe integration
--- nvim-autopairs documentation says to remove compe <CR> mapping
-require('nvim-autopairs.completion.compe').setup({
+-- cmp integration
+-- nvim-autopairs documentation says to remove cmp <CR> mapping
+require('nvim-autopairs.completion.cmp').setup({
   map_cr = true, -- map <CR> on insert mode
-  map_complete = true, -- will auto-insert '(' after select function or menu item
-  auto_select = false, -- auto-select first item
+  map_complete = true, -- will auto-insert '(' ('map_char') after select function or method item
+  auto_select = true, -- automatically select the first item
+  insert = false, -- use insert confirm behavior instead of replace
   map_char = {
     all = '(',
     tex = '{',

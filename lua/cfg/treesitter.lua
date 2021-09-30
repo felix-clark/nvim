@@ -1,3 +1,6 @@
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+
 -- NOTE: the "ensure_installed" line could be removed in lieu of manual installations.
 require'nvim-treesitter.configs'.setup {
   ensure_installed = 'maintained',

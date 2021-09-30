@@ -38,8 +38,9 @@ return require('packer').startup(function (use)
 
   use {'windwp/nvim-autopairs',
     config = function () require('cfg.autopairs') end,
-    -- Load after compe to set up completion integration
-    after = 'nvim-compe',
+    -- Load after cmp to set up completion integration.
+    -- NOTE: This might no longer be necessary
+    after = 'nvim-cmp',
   }
 
   use {'mhartington/formatter.nvim',
@@ -110,6 +111,7 @@ return require('packer').startup(function (use)
   }
   use 'nvim-lua/lsp-status.nvim'
   use {'neovim/nvim-lspconfig',
+    after = 'nvim-cmp',
     config = function () require('cfg.lsp') end,
   }
 
@@ -131,13 +133,16 @@ return require('packer').startup(function (use)
   --   end
   -- }
 
-  use {'hrsh7th/nvim-compe',
+  use {'hrsh7th/nvim-cmp',
     requires = {
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-vsnip',
       'hrsh7th/vim-vsnip',
-      'hrsh7th/vim-vsnip-integ',
     },
-    event = 'InsertEnter *',
-    config = function () require('cfg.compe') end,
+    -- Don't lazy-load since we configure LSP based on completion capabilities.
+    -- event = 'InsertEnter *',
+    config = function () require('cfg.complete') end,
   }
 
   -- This isn't really configured right now
