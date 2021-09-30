@@ -1,3 +1,5 @@
+" TODO: This package's configuration is being migrated to lua
+
 " let g:nvim_tree_side = 'right' "left by default
 " let g:nvim_tree_width = 40 "30 by default, can be width_in_columns or 'width_in_percent%'
 let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
@@ -25,6 +27,7 @@ let g:nvim_tree_icon_padding = ' ' "one space by default, used for rendering the
 let g:nvim_tree_update_cwd = 1 "0 by default, will update the tree cwd when changing nvim's directory (DirChanged event). Behaves strangely with autochdir set.
 let g:nvim_tree_window_picker_exclude = {
     \   'filetype': [
+    \     'notify',
     \     'packer',
     \     'qf'
     \   ],

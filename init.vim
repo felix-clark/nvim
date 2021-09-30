@@ -63,6 +63,7 @@ source $HOME/.config/nvim/nvim-tree.vim
 " Run :PackerCompile following changes to plugin configuration.
 lua <<EOF
 require('plugins')
+require('fold')
 EOF
 
 " use <C-[jk]> instead of <C-[np]> to navigate completion window
