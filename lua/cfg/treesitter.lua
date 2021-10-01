@@ -61,8 +61,8 @@ require'nvim-treesitter.configs'.setup {
   -- These are part of nvim-treesitter-refactor
   refactor = {
     highlight_definitions = { enable = true },
-    -- This option feels heavy-handed
-    highlight_current_scope = { enable = true },
+    -- This option feels heavy-handed and makes folds less obvious
+    highlight_current_scope = { enable = false },
     smart_rename = {
       enable = true,
       keymaps = {
