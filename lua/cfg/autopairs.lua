@@ -11,6 +11,8 @@ npairs.setup({
   -- Additional treesitter configurations can be added here.
   -- local ts_conds = require('nvim-autopairs.ts-conds')
 })
+-- Don't complete single-quotes within a type argument e.g. <'a>
+npairs.get_rule("'")[2]:with_pair(ts_conds.is_not_ts_node({"type_arguments", "bounded_type"}))
 
 -- cmp integration
 -- nvim-autopairs documentation says to remove cmp <CR> mapping
