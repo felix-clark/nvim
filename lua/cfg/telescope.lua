@@ -1,4 +1,13 @@
+local actions = require('telescope.actions')
 require'telescope'.setup{
+  defaults = {
+    mappings = {
+      i = {
+        -- exit telescope with a single press of escape
+        ["<esc>"] = actions.close,
+      },
+    },
+  },
   extensions = {
     fzf = {
       fuzzy = true,
