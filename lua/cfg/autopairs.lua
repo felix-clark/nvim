@@ -7,13 +7,17 @@ local ts_conds = require('nvim-autopairs.ts-conds')
 npairs.setup({
   -- check treesitter
   check_ts = true,
-  -- ts_config = {
+  ts_config = {
     -- vim = {'string'},
     -- lua = {'string'}, -- it will not add a pair on that treesitter node
-    -- ...
-  -- },
-  -- Additional treesitter configurations can be added here.
-  -- local ts_conds = require('nvim-autopairs.ts-conds')
+    rust = {},
+  },
+})
+npairs.add_rules({
+  -- If immediately after a word character, assume it's a template expression
+  Rule("<", ">", {"c", "cpp", "rust"}):with_pair(cond.before_regex_check("%w")),
+  -- Some treesitter node might be a better specification
+  -- Rule("<", ">", "rust"):with_pair(ts_conds.is_ts_node({"type_arguments", "bounded_type"})),
 })
 -- Don't complete single-quotes within a type argument e.g. <'a>
 npairs.get_rule("'")[2]:with_pair(ts_conds.is_not_ts_node({"type_arguments", "bounded_type"}))
