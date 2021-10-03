@@ -1,4 +1,8 @@
 local npairs = require('nvim-autopairs')
+local Rule = require('nvim-autopairs.rule')
+local cond = require('nvim-autopairs.conds')
+-- Additional treesitter configurations can be added here.
+local ts_conds = require('nvim-autopairs.ts-conds')
 
 npairs.setup({
   -- check treesitter
