@@ -27,6 +27,8 @@ return require('packer').startup(function (use)
   use 'tpope/vim-repeat'
   -- Could consider tcomment as an alternative
   use 'tpope/vim-commentary'
+  -- For compiling
+  use 'tpope/vim-dispatch'
   -- Expanded text objects
   use 'wellle/targets.vim'
 

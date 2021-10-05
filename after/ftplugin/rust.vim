@@ -1,11 +1,12 @@
 " Rust language configuration
 
-" rust-tools does some configuration for the rust_analyzer LSP.
-" This should be done in packer
-lua <<EOF
--- Try with default opts
--- require('rust-tools').setup()
-EOF
+" Set the dispatch command for rust to make the debug build
+" The Dispatch command can also be used to run generic commands, like
+" `:Dispatch cargo build --release`
+autocmd FileType rust let b:dispatch = 'cargo build'
+
+" add command to run all tests
+nnoremap <buffer> <localleader>ct :Dispatch cargo test --all<cr>
 
 " nnoremap <buffer> <localleader>th :<C-u>CocCommand rust-analyzer.toggleInlayHints<cr>
 " nnoremap <buffer> <localleader>le :<C-u>CocCommand rust-analyzer.explainError<cr>

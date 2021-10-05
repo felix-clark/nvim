@@ -28,6 +28,8 @@ wk.register({
   c = {
     name = "+code",
     a = "Code action",
+    -- use vim-dispatch to spin up a build command
+    c = {"<cmd>Dispatch<cr>", "Compile"},
     d = {"<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document diagnostics"},
     l = {"<cmd>TroubleToggle loclist<cr>", "Location list"},
     q = {"<cmd>TroubleToggle quickfix<cr>", "Quickfix list"},
