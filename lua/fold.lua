@@ -15,9 +15,12 @@ function _G.my_fold_text ()
   local line_count = vim.v.foldend - vim.v.foldstart + 1
   local filler = ' ... '
   if (string.sub(vim.fn.trim(first_line), -1) == '{') then
-    local last_char = string.sub(vim.fn.trim(vim.fn.getline(vim.v.foldend)), -1)
+    local last_line = vim.fn.trim(vim.fn.getline(vim.v.foldend))
+    local last_char = string.sub(last_line, -1)
     if (last_char == '}') then
       filler = filler .. last_char .. ' '
+    elseif string.sub(last_line, -2) == '};' then
+      filler = filler .. '}; '
     end
   end
   local count_str = ' (' .. line_count .. ' lines)'
@@ -33,7 +36,7 @@ vim.o.foldtext = 'v:lua.my_fold_text()'
 vim.o.foldcolumn = 'auto:3'
 -- don't fill the fold lines with a character, use space
 vim.o.fillchars = 'fold: '
--- consider reducing to 3
-vim.o.foldnestmax = 4
+-- maximum nesting depth
+vim.o.foldnestmax = 3
 -- 1 seems to be the default anyway
 vim.o.foldminlines = 1
