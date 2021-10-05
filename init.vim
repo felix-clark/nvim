@@ -49,10 +49,10 @@ nnoremap <C-z> <Nop>
 set timeoutlen=400
 
 " Leader key should be set before plugins in case they use leader key mappings
-" map the leader and localleader to space (default is '\')
+" map the leader to space (default is '\')
 let mapleader=' '
-" TODO: Consider <SPC>m for local leader, if used for anything
-let maplocalleader=' '
+" Use <SPC>m for local leader, although this is seldom used right now.
+let maplocalleader=' m'
 
 """ nvim-tree configuration is in vimscript.
 " It configures global options that should be set before calling setup().

@@ -9,5 +9,6 @@ fi
 
 rustup component add rust-src rustfmt clippy
 
+# This should be done automatically by treesitter
 nvim -c 'TSInstall rust' -c '<\CR>' -c 'qa'
 

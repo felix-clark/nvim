@@ -158,6 +158,8 @@ local function setup_servers()
   -- ... and add manually installed servers
   -- table.insert(servers, "clangd")
   -- table.insert(servers, "sourcekit")
+  -- rust-tools calls lsp setup() for us, so we shouldn't do it.
+  -- table.insert(servers, "rust_analyzer")
 
   for _, server in pairs(servers) do
     local config = make_config()
@@ -181,10 +183,14 @@ local function setup_servers()
   end
 end
 
-setup_servers()
-
 -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
 require'lspinstall'.post_install_hook = function ()
   setup_servers() -- reload installed servers
   vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
 end
+
+local lsp = {}
+lsp.setup_servers = setup_servers
+-- export this so it can be passed to rust-tools
+lsp.on_attach = on_attach
+return lsp

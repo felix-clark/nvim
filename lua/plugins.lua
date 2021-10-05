@@ -18,17 +18,14 @@ return require('packer').startup(function (use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
-  -- Check this out sometime (e.g. build commands)
-  -- use {'tpope/vim-dispatch', opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}}
-
   -- Surround actions/objects
   use 'tpope/vim-surround'
   -- Repeat plugin commands
   use 'tpope/vim-repeat'
   -- Could consider tcomment as an alternative
   use 'tpope/vim-commentary'
-  -- For compiling
-  use 'tpope/vim-dispatch'
+  -- For compilation commands
+  use {'tpope/vim-dispatch', opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}}
   -- Expanded text objects
   use 'wellle/targets.vim'
 
@@ -115,7 +112,7 @@ return require('packer').startup(function (use)
   use 'nvim-lua/lsp-status.nvim'
   use {'neovim/nvim-lspconfig',
     after = 'nvim-cmp',
-    config = function () require('cfg.lsp') end,
+    config = function () require('cfg.lsp').setup_servers() end,
   }
 
   use {'folke/trouble.nvim',
@@ -148,7 +145,8 @@ return require('packer').startup(function (use)
     config = function () require('cfg.complete') end,
   }
 
-  -- This isn't really configured right now
+  -- This isn't really configured right now, although rust-tools may do some
+  -- setup.
   use 'mfussenegger/nvim-dap'
 
   -- Language-specific
@@ -156,22 +154,28 @@ return require('packer').startup(function (use)
     'stsewd/isort.nvim',
     ft = 'python',
     run = ':UpdateRemotePlugins',
+    -- use lowercase isort
+    config = function () vim.g.isort_command = 'isort' end,
   }
-  -- This appears to configure rust-analyzer found in $PATH. Unfortunately we
-  -- miss some of our general LSP configuration, so this isn't being used right
-  -- now. Ideally we would be able to use both sources of configuration at once.
+  -- This configures and sets up LSP using the rust-analyzer found in $PATH.
+  -- Thus, we should not call `:LspInstall rust` to configure it as part of our
+  -- LSP client setup.
   use {
     'simrat39/rust-tools.nvim',
     ft = 'rust',
-    config = function () require('rust-tools').setup() end,
+    config = function () require('rust-tools').setup({
+      server = {
+        on_attach = require('cfg.lsp').on_attach,
+      },
+    }) end,
     requires = {
       'nvim-lspconfig',
       {'popup.nvim', opt = true},
       {'plenary.nvim', opt = true},
       {'telescope.nvim', opt = true},
+      {'nvim-dap', opt = true},
     },
   }
-  use {'cespare/vim-toml', ft='toml'}
 
   -- theme
   use {

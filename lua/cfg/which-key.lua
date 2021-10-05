@@ -83,6 +83,9 @@ wk.register({
     w = "+workspace",
     ["="] = "Format",
   },
+  m = {
+    name = "+local",
+  },
   p = {
     name = "+project",
     f = {"<cmd>Telescope git_files<cr>", "Open file in project"},

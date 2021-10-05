@@ -6,7 +6,7 @@
 autocmd FileType rust let b:dispatch = 'cargo build'
 
 " add command to run all tests
-nnoremap <buffer> <localleader>ct :Dispatch cargo test --all<cr>
+nnoremap <buffer> <leader>ct :<C-u>Dispatch cargo test --all<cr>
 
 " nnoremap <buffer> <localleader>th :<C-u>CocCommand rust-analyzer.toggleInlayHints<cr>
 " nnoremap <buffer> <localleader>le :<C-u>CocCommand rust-analyzer.explainError<cr>
