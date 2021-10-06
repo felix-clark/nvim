@@ -65,14 +65,3 @@ lua <<EOF
 require('plugins')
 require('fold')
 EOF
-
-" use <C-[jk]> instead of <C-[np]> to navigate completion window
-inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
-inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
-
-""" Language-specific configuration
-
-" Filetype plugins are defined in (:echo $VIMRUNTIME) (e.g.
-" /usr/share/nvim/runtime/ftplugin).
-" To load additional configuration for a filetype, add {ft}.vim to
-" ./after/ftplugin/{ft}.vim where {ft} is a filetype.

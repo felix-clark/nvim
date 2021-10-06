@@ -145,8 +145,11 @@ return require('packer').startup(function (use)
     config = function () require('cfg.complete') end,
   }
 
-  -- This isn't really configured right now, although rust-tools may do some
-  -- setup.
+  -- Add pre-defined snippets
+  use 'rafamadriz/friendly-snippets'
+
+  -- Debugging isn't really configured right now, although rust-tools may do
+  -- some setup.
   use 'mfussenegger/nvim-dap'
 
   -- Language-specific
