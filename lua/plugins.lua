@@ -88,7 +88,7 @@ return require('packer').startup(function (use)
     config = function () require('telescope').load_extension('fzf') end,
   }
   use {'nvim-telescope/telescope-frecency.nvim',
-    requires = {'telescope.nvim', 'tami5/sqlite.lua'},
+    requires = {'telescope.nvim', 'sqlite.lua', {'nvim-web-devicons', opt = true}},
     config = function () require('telescope').load_extension('frecency') end,
   }
 
