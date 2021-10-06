@@ -87,6 +87,10 @@ wk.register({
   m = {
     name = "+local",
   },
+  o = {
+    name = "+open",
+    t = {string.format("<cmd>vsplit term://%s<cr>", vim.o.shell), "terminal"},
+  },
   p = {
     name = "+project",
     f = {"<cmd>Telescope git_files<cr>", "Open file in project"},

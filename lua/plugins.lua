@@ -156,6 +156,8 @@ return require('packer').startup(function (use)
   use 'mfussenegger/nvim-dap'
 
   -- Language-specific
+
+  -- isort for python doesn't seem to be working anymore; packer issue?
   use {
     'stsewd/isort.nvim',
     ft = 'python',

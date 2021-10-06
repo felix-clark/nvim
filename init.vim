@@ -40,8 +40,11 @@ nnoremap Y y$
 inoremap jk <Esc>
 " something similar for terminal (?)
 " tnoremap jk <C-\><C-n>
-" This messes with fzf windows:
-" tnoremap <Esc> <C-\><C-n>
+" This messes with fzf windows, although telescope seems fine so far
+tnoremap <Esc> <C-\><C-n>
+
+" start in terminal (insert-like) mode when opening a terminal window
+autocmd TermOpen * startinsert
 
 " disable accidentally pressing C-z to suspend
 nnoremap <C-z> <Nop>
