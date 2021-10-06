@@ -24,9 +24,6 @@ set linebreak
 set number
 set relativenumber
 
-" Keep all folds open to start
-" set foldlevelstart=99
-
 " Complete the longest common string and show the list of potential matches
 " when using <TAB>
 set wildmode=longest,list

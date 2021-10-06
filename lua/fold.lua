@@ -40,3 +40,6 @@ vim.o.fillchars = 'fold: '
 vim.o.foldnestmax = 3
 -- 1 seems to be the default anyway
 vim.o.foldminlines = 1
+-- Starting fold level: 0 for all folds closed, 99 for no folds closed.
+vim.o.foldlevelstart=1
+
