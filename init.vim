@@ -52,6 +52,9 @@ nnoremap <C-z> <Nop>
 " snappier response time (default 1000ms)
 " Make sure to not set notimeout
 set timeoutlen=400
+" Reduce the delay (from 4s) for the CursorHold event. Used in crash-recovery
+" as well.
+set updatetime=600
 
 " Leader key should be set before plugins in case they use leader key mappings
 " map the leader to space (default is '\')

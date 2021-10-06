@@ -5,6 +5,8 @@ require'telescope'.setup{
       i = {
         -- exit telescope with a single press of escape
         ["<esc>"] = actions.close,
+        -- use C-h for help. Default is <C-/> or ? for i or n mode.
+        ["<C-h>"] = "which_key",
       },
     },
   },

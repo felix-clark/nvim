@@ -129,12 +129,14 @@ return require('packer').startup(function (use)
     config = function () require('cfg.which-key') end,
   }
 
-  -- TODO: Try re-enabling this. It might lead to slowdown.
-  -- use {'kosayoda/nvim-lightbulb',
-  --   config = function ()
-  --     vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
-  --   end
-  -- }
+  -- This is cute butthe cursor must be at exactly the right spot.
+  -- Can take a while to trigger unless updatetime is reduced, but be warned
+  -- that this has effects on crash-recovery.
+  use {'kosayoda/nvim-lightbulb',
+    config = function ()
+      vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
+    end
+  }
 
   use {'hrsh7th/nvim-cmp',
     requires = {
