@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# telescope-frecency requires sqlite
+sudo apt-get -y install sqlite3 libsqlite3-dev
+
 # Install plugins and compile
 nvim -c 'PackerSync' -c '<\CR>' -c 'qa'
 

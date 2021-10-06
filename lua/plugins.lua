@@ -87,7 +87,10 @@ return require('packer').startup(function (use)
     requires = 'telescope.nvim',
     config = function () require('telescope').load_extension('fzf') end,
   }
-  -- TODO: consider other extension from nvim-telescope, frecency.
+  use {'nvim-telescope/telescope-frecency.nvim',
+    requires = {'telescope.nvim', 'tami5/sqlite.lua'},
+    config = function () require('telescope').load_extension('frecency') end,
+  }
 
   use {'nvim-treesitter/nvim-treesitter',
     branch = '0.5-compat',
