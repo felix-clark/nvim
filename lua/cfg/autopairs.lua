@@ -12,6 +12,12 @@ npairs.setup({
     -- lua = {'string'}, -- it will not add a pair on that treesitter node
     rust = {},
   },
+  -- After typing opening character, press the map key (<M-e> default) then a
+  -- key like $ to indicate where to place the closing character
+  fast_wrap = {
+    -- The default mapping is <M-e>
+    map = '<M-e>',
+  },
 })
 npairs.add_rules({
   -- If immediately after a word character, assume it's a template expression
