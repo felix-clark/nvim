@@ -76,6 +76,8 @@ return require('packer').startup(function (use)
   -- Telescope for quickly searching things
   use {'nvim-telescope/telescope.nvim',
     requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
+    -- load after Trouble so the keymapping to open results in trouble works
+    after = 'trouble.nvim',
     config = function () require('cfg.telescope') end,
   }
   use {'nvim-telescope/telescope-project.nvim',
