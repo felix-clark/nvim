@@ -13,5 +13,8 @@ then
     source $HOME/.cargo/env
 fi
 cargo install ripgrep fd-find bat git-delta
+# lua formatting. More recently maintained than luafmt, which is written in
+# TypeScript.
+cargo install stylua
 
 echo "Make sure to install a NERDfont and set it as your terminal's font."
