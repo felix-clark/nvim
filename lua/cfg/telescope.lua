@@ -25,6 +25,3 @@ require'telescope'.setup{
     },
   },
 }
-require'telescope'.load_extension('project')
--- This must be loaded after the telescope setup.
-require'telescope'.load_extension('fzf')

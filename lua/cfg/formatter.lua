@@ -36,7 +36,7 @@ require("formatter").setup({
 			function()
 				return {
 					exe = "stylua",
-					args = { "--indent-width", 2, "--stdin-filepath", vim.api.nvim_buf_get_name(0), "-" },
+					args = { "--stdin-filepath", vim.api.nvim_buf_get_name(0), "-" },
 					stdin = true,
 				}
 			end,
