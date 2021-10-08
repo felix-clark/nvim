@@ -200,7 +200,7 @@ return require("packer").startup(function(use)
 		end,
 	})
 
-	-- Add pre-defined snippets
+	-- Add pre-defined snippets. Should this be a nvim-cmp requirement?
 	use("rafamadriz/friendly-snippets")
 
 	-- Debugging isn't really configured right now, although rust-tools may do
