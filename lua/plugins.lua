@@ -80,11 +80,13 @@ return require("packer").startup(function(use)
 
 	-- Status line
 	use({
-		"hoob3rt/lualine.nvim",
+		-- "hoob3rt/lualine.nvim",
+    -- The original is unmaintained at the moment, use this fork for now:
+    "shadmansaleh/lualine.nvim",
 		requires = { "kyazdani42/nvim-web-devicons", opt = true },
 		after = "onedark.nvim",
 		config = function()
-			require("cfg.lualine")
+			require("cfg.statusline")
 		end,
 	})
 
