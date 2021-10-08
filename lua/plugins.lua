@@ -209,16 +209,6 @@ return require("packer").startup(function(use)
 
 	-- Language-specific
 
-	-- isort for python doesn't seem to be working anymore; packer issue?
-	use({
-		"stsewd/isort.nvim",
-		ft = "python",
-		run = ":UpdateRemotePlugins",
-		-- use lowercase isort
-		config = function()
-			vim.g.isort_command = "isort"
-		end,
-	})
 	-- This configures and sets up LSP using the rust-analyzer found in $PATH.
 	-- Thus, we should not call `:LspInstall rust` to configure it as part of our
 	-- LSP client setup.

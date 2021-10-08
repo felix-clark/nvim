@@ -2,7 +2,8 @@
 
 " Don't add <C-u> as that will remove the range, but isort should work on a
 " range.
-nnoremap <buffer> <localleader>i :isort<cr>
+" nnoremap <buffer> <localleader>i :isort<cr>
+nnoremap <buffer> <localleader>i :PyrightOrganizeImports<cr>
 
 " nnoremap <buffer> <localleader>lis :<C-u>CocCommand python.sortImports<cr>
 " nnoremap <buffer> <localleader>lio :<C-u>CocCommand pyright.organizeImports<cr>
