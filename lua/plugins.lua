@@ -48,11 +48,13 @@ return require("packer").startup(function(use)
 		after = "nvim-cmp",
 	})
 
-  -- NOTE: This may be phased out in favor of null-ls configurations
+	-- Allows command line linters and formatters to interact like LSP clients
 	use({
-		"mhartington/formatter.nvim",
+		"jose-elias-alvarez/null-ls.nvim",
+		requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    after = {'nvim-lspconfig'},
 		config = function()
-			require("cfg.formatter")
+			require("cfg.null-ls")
 		end,
 	})
 
@@ -100,7 +102,7 @@ return require("packer").startup(function(use)
 		"nvim-telescope/telescope.nvim",
 		requires = { { "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" } },
 		-- load after Trouble so the keymapping to open results in trouble works.
-    -- This leads to problems with the other telescope plugins, however.
+		-- This leads to problems with the other telescope plugins, however.
 		-- after = "trouble.nvim",
 		config = function()
 			require("cfg.telescope")

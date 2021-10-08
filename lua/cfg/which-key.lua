@@ -163,10 +163,6 @@ wk.register({
 }, {
 	prefix = "g",
 })
-wk.register({
-	name = "+format",
-	["="] = { "<cmd>Format<cr>", "Format buffer" },
-}, { prefix = "=" })
 
 -- visual mode bindings
 wk.register({

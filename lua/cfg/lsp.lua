@@ -205,6 +205,6 @@ end
 
 local lsp = {}
 lsp.setup_servers = setup_servers
--- export this so it can be passed to rust-tools
+-- export this so it can be passed to null-ls and rust-tools
 lsp.on_attach = on_attach
 return lsp
