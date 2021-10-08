@@ -172,6 +172,7 @@ local function setup_servers()
   -- ... and add manually installed servers
   -- table.insert(servers, "clangd")
   -- table.insert(servers, "sourcekit")
+  table.insert(servers, "pylsp")
   -- rust-tools calls lsp setup() for us, so we shouldn't do it.
   -- table.insert(servers, "rust_analyzer")
 
