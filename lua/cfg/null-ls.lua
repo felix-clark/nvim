@@ -16,5 +16,6 @@ null_ls.config({
 	},
 })
 require("lspconfig")["null-ls"].setup({
+  -- setup keybindings
   on_attach = require("cfg.lsp").on_attach,
 })
