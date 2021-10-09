@@ -1,12 +1,7 @@
 vim.o.completeopt = "menu,menuone,noselect"
 
-local check_back_space = function()
-    local col = vim.fn.col '.' - 1
-    return col == 0 or vim.fn.getline('.'):sub(col, col):match '%s' ~= nil
-end
-
-local cmp = require('cmp')
-cmp.setup({
+local cmp = require "cmp"
+cmp.setup {
   snippet = {
     expand = function(args)
       -- For `vsnip` user.
@@ -21,25 +16,25 @@ cmp.setup({
   },
   mapping = {
     -- add <C-j> and <C-k> to navigate menu without stretching fingers like C-n/p
-    ['<C-j>'] = cmp.mapping.select_next_item(),
-    ['<C-k>'] = cmp.mapping.select_prev_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
+    ["<C-j>"] = cmp.mapping.select_next_item(),
+    ["<C-k>"] = cmp.mapping.select_prev_item(),
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<C-e>"] = cmp.mapping.close(),
     -- nvim-autopairs documentation says to remove this
     -- ['<CR>'] = cmp.mapping.confirm({
     --   behavior = cmp.ConfirmBehavior.Replace,
     --   select = true,
     -- }),
-    ['<Tab>'] = function(fallback)
+    ["<Tab>"] = function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       else
         fallback()
       end
     end,
-    ['<S-Tab>'] = function(fallback)
+    ["<S-Tab>"] = function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       else
@@ -48,10 +43,10 @@ cmp.setup({
     end,
   },
   sources = {
-    { name = 'nvim_lsp' },
+    { name = "nvim_lsp" },
 
     -- For vsnip user.
-    { name = 'vsnip' },
+    { name = "vsnip" },
 
     -- For luasnip user.
     -- { name = 'luasnip' },
@@ -59,6 +54,12 @@ cmp.setup({
     -- For ultisnips user.
     -- { name = 'ultisnips' },
 
-    { name = 'buffer' },
-  }
-})
+    -- For neovim lua files
+    { name = "nvim_lua" },
+
+    -- Words already in buffer
+    { name = "buffer" },
+
+    { name = "path" },
+  },
+}
