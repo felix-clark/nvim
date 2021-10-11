@@ -62,12 +62,6 @@ let g:nvim_tree_icons = {
     \   'symlink': "",
     \   'symlink_open': "",
     \   },
-    \   'lsp': {
-    \     'hint': "",
-    \     'info': "",
-    \     'warning': "",
-    \     'error': "",
-    \   }
     \ }
 
 " Use <leader>tt to toggle the tree instead
