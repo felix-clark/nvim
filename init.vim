@@ -4,7 +4,7 @@ set shell=bash
 " vim.opt.shell = "bash"
 
 " This seems to give a nicer palette; requires ISO-8613-3 terminal.
-" Some plugins, like nvim-tree, require it.
+" Some plugins, like nvim-tree, require it, as does the colorscheme onedark.
 set termguicolors
 
 " give the terminal window an appropriate title with the name of the open file
