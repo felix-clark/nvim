@@ -150,15 +150,9 @@ return require("packer").startup(function(use)
   use { "p00f/nvim-ts-rainbow", requires = "nvim-treesitter" }
 
   -- LSP functionality
-  use { "kabouzeid/nvim-lspinstall", requires = "nvim-lspconfig" }
+  use { "williamboman/nvim-lsp-installer", requires = "nvim-lspconfig" }
   use "nvim-lua/lsp-status.nvim"
-  use {
-    "neovim/nvim-lspconfig",
-    after = "nvim-cmp",
-    config = function()
-      require("cfg.lsp").setup_servers()
-    end,
-  }
+  use { "neovim/nvim-lspconfig", after = "nvim-cmp" }
 
   use {
     "folke/trouble.nvim",
