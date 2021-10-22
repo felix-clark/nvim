@@ -18,8 +18,10 @@ require'nvim-treesitter.configs'.setup {
       node_decremental = "grm",
     },
   },
+  -- This is experimental and seems to do poorly at times, particularly in python.
+  -- Perhaps in the future it should be re-enabled.
   indent = {
-    enable = true
+    enable = false,
   },
   -- Integration with nvim-autopairs
   autopairs = { enable = true },
