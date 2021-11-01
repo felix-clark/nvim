@@ -50,6 +50,11 @@ require("nvim-tree").setup {
     -- the command arguments as a list
     args = {},
   },
+  -- true to enable filter, false to allow
+  filters = {
+    dotfiles = true,
+    custom = { ".git", "node_modules", ".cache" },
+  },
 
   view = {
     -- width of the window, can be either a number (columns) or a string in `%`

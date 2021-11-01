@@ -22,11 +22,11 @@ cmp.setup {
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.close(),
-    -- nvim-autopairs documentation says to remove this
-    -- ['<CR>'] = cmp.mapping.confirm({
-    --   behavior = cmp.ConfirmBehavior.Replace,
-    --   select = true,
-    -- }),
+    ['<CR>'] = cmp.mapping.confirm({
+      -- could be Insert or Replace
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    }),
     ["<Tab>"] = function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
