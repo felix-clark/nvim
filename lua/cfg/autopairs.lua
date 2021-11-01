@@ -21,7 +21,10 @@ npairs.setup({
 })
 npairs.add_rules({
   -- If immediately after a word character, assume it's a template expression
-  Rule("<", ">", {"c", "cpp", "rust"}):with_pair(cond.before_regex_check("%w")),
+  Rule("<", ">", {"c", "cpp", "rust"})
+    :with_pair(cond.before_regex_check("%w"))
+    :with_pair(cond.not_after_text_check(">"))
+  ,
   -- Some treesitter node might be a better specification
   -- Rule("<", ">", "rust"):with_pair(ts_conds.is_ts_node({"type_arguments", "bounded_type"})),
 })
