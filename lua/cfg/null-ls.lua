@@ -11,6 +11,7 @@ null_ls.config({
 		null_ls.builtins.diagnostics.flake8,
     -- pylint uses a lot of memory/CPU and is largely redundant with pylsp
 		-- null_ls.builtins.diagnostics.pylint,
+		null_ls.builtins.diagnostics.mypy,
 
 		-- web
 		null_ls.builtins.formatting.prettier,
