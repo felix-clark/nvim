@@ -45,6 +45,8 @@ tnoremap <Esc> <C-\><C-n>
 
 " start in terminal (insert-like) mode when opening a terminal window
 autocmd TermOpen * startinsert
+" disable line numbers in terminal
+autocmd TermOpen * setlocal nonumber norelativenumber
 
 " Quick window motion with Alt+<direction>
 nnoremap <M-h> <C-w>h
