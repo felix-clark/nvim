@@ -26,6 +26,7 @@ wk.register({
 		j = { "<cmd>bnext<cr>", "next-buffer" },
 		k = { "<cmd>bprevious<cr>", "previous-buffer" },
 		l = { "<cmd>blast<cr>", "last-buffer" },
+		t = { "<cmd>b term://<cr>", "terminal" },
 	},
 	c = {
 		name = "+code",

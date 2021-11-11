@@ -46,6 +46,16 @@ tnoremap <Esc> <C-\><C-n>
 " start in terminal (insert-like) mode when opening a terminal window
 autocmd TermOpen * startinsert
 
+" Quick window motion with Alt+<direction>
+nnoremap <M-h> <C-w>h
+nnoremap <M-j> <C-w>j
+nnoremap <M-k> <C-w>k
+nnoremap <M-l> <C-w>l
+tnoremap <M-h> <C-\><C-n><C-w>h
+tnoremap <M-j> <C-\><C-n><C-w>j
+tnoremap <M-k> <C-\><C-n><C-w>k
+tnoremap <M-l> <C-\><C-n><C-w>l
+
 " disable accidentally pressing C-z to suspend
 nnoremap <C-z> <Nop>
 
