@@ -93,7 +93,22 @@ wk.register({
 	},
 	o = {
 		name = "+open",
-		t = { string.format("<cmd>vsplit term://%s<cr>", vim.o.shell), "terminal" },
+    -- This variant opens the terminal based on the vim shell. Probably
+    -- redundant with +term.
+		-- t = { string.format("<cmd>vsplit term://%s<cr>", vim.o.shell), "terminal" },
+    s = {
+      name = "horizontal",
+      f = { "<cmd>split term://fish<cr>", "fish" },
+      -- TODO: Consider falling back to htop then top
+      p = { "<cmd>split term://ytop<cr>", "ytop" },
+      t = { "<cmd>split +term<cr>", "terminal" },
+    },
+    v = {
+      name = "vertical",
+      f = { "<cmd>vsplit term://fish<cr>", "fish" },
+      p = { "<cmd>vsplit term://ytop<cr>", "ytop" },
+      t = { "<cmd>vsplit +term<cr>", "terminal" },
+    },
 	},
 	p = {
 		name = "+project",
