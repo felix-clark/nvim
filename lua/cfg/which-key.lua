@@ -96,6 +96,9 @@ wk.register({
     -- This variant opens the terminal based on the vim shell. Probably
     -- redundant with +term.
 		-- t = { string.format("<cmd>vsplit term://%s<cr>", vim.o.shell), "terminal" },
+    -- TODO: Consider a variant for interactive language prompt based on
+    -- filetype, e.g. ":term python" for a python REPL. This would probably
+    -- require setting a buffer-local variable in each after/ftplugin source.
     s = {
       name = "horizontal",
       f = { "<cmd>split term://fish<cr>", "fish" },
