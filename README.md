@@ -39,9 +39,13 @@ Insert mode can be exited with `jk` in rapid succession.
 
 The leader key is mapped to spacebar. Press it and wait half a second for a pop-up menu describing custom commands.
 
-### Easymotion (hop)
+### Motion
 
-Double-tap the leader key (`<space>`) then quickly press a normal motion key like `j` or `W`.
+For easymotion-like action, double-tap the leader key (`<space>`) then quickly
+press a normal motion key like `j` or `W`.
+
+Currently, Lightspeed is being experimented with as well. Use `s/S` for
+forward/backward jumps, respectively.
 
 ### Debugging
 

@@ -38,6 +38,9 @@ return require("packer").startup(function(use)
     end,
   }
 
+  -- A more opinionated motion plugin
+  use "ggandor/lightspeed.nvim"
+
   use {
     "windwp/nvim-autopairs",
     config = function()
