@@ -103,7 +103,7 @@ wk.register({
       name = "horizontal",
       f = { "<cmd>split term://fish<cr>", "fish" },
       -- TODO: Consider falling back to htop then top
-      p = { "<cmd>split term://ytop<cr>", "ytop" },
+      p = { "<cmd>split term://ytop -m<cr>", "ytop" },
       t = { "<cmd>split +term<cr>", "terminal" },
     },
     v = {
