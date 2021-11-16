@@ -19,7 +19,7 @@ local toggle_format_on_save = function()
     vim.cmd [[
       augroup autofmt
       autocmd!
-      autocmd BufWritePre * lua vim.lsp.buf.formatting()
+      autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()
       augroup END
     ]]
     print "Enabled format on save"
