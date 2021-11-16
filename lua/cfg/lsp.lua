@@ -18,6 +18,7 @@ local toggle_format_on_save = function()
   else
     vim.cmd [[
       augroup autofmt
+      autocmd!
       autocmd BufWritePre * lua vim.lsp.buf.formatting()
       augroup END
     ]]
