@@ -8,6 +8,24 @@ lsp_status.config { diagnostics = false }
 -- register lsp-status progress handler
 lsp_status.register_progress()
 
+-- Local variable to toggle whether to autoformat on save
+local format_on_save = false
+local toggle_format_on_save = function()
+  if format_on_save then
+    vim.cmd [[ autocmd! autofmt * ]]
+    print "Disabled format on save"
+    format_on_save = false
+  else
+    vim.cmd [[
+      augroup autofmt
+      autocmd BufWritePre * lua vim.lsp.buf.formatting()
+      augroup END
+    ]]
+    print "Enabled format on save"
+    format_on_save = true
+  end
+end
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -64,20 +82,28 @@ local on_attach = function(client, bufnr)
 
   if client.resolved_capabilities.document_formatting then
     buf_set_keymap("n", "<leader>l=", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    buf_set_keymap(
+      "n",
+      "<leader>t=",
+      "<cmd>lua require('cfg.lsp').toggle_format_on_save()<CR>",
+      opts
+    )
   elseif client.resolved_capabilities.document_range_formatting then
     buf_set_keymap("n", "<leader>l=", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+    -- NOTE: In this case a similar toggle functionality could be implemented,
+    -- as toggle_format_on_save() but calling range_formatting instead
   end
 
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
     vim.api.nvim_exec(
       [[
-    augroup lsp_document_highlight
-    autocmd! * <buffer>
-    autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-    autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-    augroup END
-    ]],
+        augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+        augroup END
+      ]],
       false
     )
   end
@@ -204,4 +230,5 @@ end)
 local lsp = {}
 -- export this so it can be passed to null-ls and rust-tools
 lsp.on_attach = on_attach
+lsp.toggle_format_on_save = toggle_format_on_save
 return lsp

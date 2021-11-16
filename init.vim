@@ -43,10 +43,15 @@ inoremap jk <Esc>
 " This messes with fzf windows, although telescope seems fine so far
 tnoremap <Esc> <C-\><C-n>
 
-" start in terminal (insert-like) mode when opening a terminal window
-autocmd TermOpen * startinsert
-" disable line numbers in terminal
-autocmd TermOpen * setlocal nonumber norelativenumber
+augroup term
+  " Remove existing autocommands in this group (in case this file gets sourced
+  " twice)
+  autocmd!
+  " start in terminal (insert-like) mode when opening a terminal window
+  autocmd TermOpen * startinsert
+  " disable line numbers in terminal
+  autocmd TermOpen * setlocal nonumber norelativenumber
+augroup END
 
 " Quick window motion with Alt+<direction>
 nnoremap <M-h> <C-w>h
