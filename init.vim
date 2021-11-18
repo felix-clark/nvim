@@ -63,9 +63,6 @@ tnoremap <M-j> <C-\><C-n><C-w>j
 tnoremap <M-k> <C-\><C-n><C-w>k
 tnoremap <M-l> <C-\><C-n><C-w>l
 
-" disable accidentally pressing C-z to suspend
-nnoremap <C-z> <Nop>
-
 " snappier response time (default 1000ms)
 " Make sure to not set notimeout
 set timeoutlen=400
