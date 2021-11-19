@@ -155,6 +155,22 @@ return require("packer").startup(function(use)
   use "nvim-lua/lsp-status.nvim"
   use { "neovim/nvim-lspconfig", after = "nvim-cmp" }
 
+  -- Browse callers and callees of the current function
+  use {
+    "ldelossa/calltree.nvim",
+    config = function()
+      require("calltree").setup()
+    end,
+  }
+
+  -- Show LSP call signature in completion window
+  use {
+    "ray-x/lsp_signature.nvim",
+    config = function()
+      require("lsp_signature").setup()
+    end,
+  }
+
   use {
     "folke/trouble.nvim",
     requires = "kyazdani42/nvim-web-devicons",
