@@ -12,10 +12,10 @@ require'nvim-treesitter.configs'.setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
+      init_selection = "<cr>",
+      scope_incremental = "<cr>",
+      node_incremental = "<tab>",
+      node_decremental = "<s-tab>",
     },
   },
   -- This is experimental and seems to do poorly at times, particularly in python.
