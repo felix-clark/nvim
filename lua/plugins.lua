@@ -252,7 +252,9 @@ return require("packer").startup(function(use)
     "navarasu/onedark.nvim",
     config = function()
       -- Change the default style before calling setup(), e.g.:
-      -- vim.g.onedark_style = 'darker'
+      vim.g.onedark_style = 'darker'
+      -- This prevents the theme from setting terminal colors
+      -- vim.g.onedark_disable_terminal_colors = true
       require("onedark").setup()
     end,
   }
