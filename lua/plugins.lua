@@ -22,8 +22,6 @@ return require("packer").startup(function(use)
   use "tpope/vim-surround"
   -- Repeat plugin commands
   use "tpope/vim-repeat"
-  -- Could consider tcomment as an alternative
-  use "tpope/vim-commentary"
   -- For compilation commands
   use { "tpope/vim-dispatch", opt = true, cmd = { "Dispatch", "Make", "Focus", "Start" } }
   -- Expanded text objects
@@ -40,6 +38,13 @@ return require("packer").startup(function(use)
 
   -- A more opinionated motion plugin
   use "ggandor/lightspeed.nvim"
+
+  use {
+    "numToStr/Comment.nvim",
+    config = function()
+      require("Comment").setup()
+    end,
+  }
 
   use {
     "windwp/nvim-autopairs",
@@ -136,7 +141,6 @@ return require("packer").startup(function(use)
 
   use {
     "nvim-treesitter/nvim-treesitter",
-    branch = "0.5-compat",
     run = ":TSUpdate",
     config = function()
       require "cfg.treesitter"
@@ -144,7 +148,6 @@ return require("packer").startup(function(use)
   }
   use {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    branch = "0.5-compat",
     requires = "nvim-treesitter",
   }
   use { "nvim-treesitter/nvim-treesitter-refactor", requires = "nvim-treesitter" }
@@ -167,7 +170,9 @@ return require("packer").startup(function(use)
   use {
     "ray-x/lsp_signature.nvim",
     config = function()
-      require("lsp_signature").setup()
+      require("lsp_signature").setup({
+        hint_prefix = "",
+      })
     end,
   }
 
@@ -252,7 +257,7 @@ return require("packer").startup(function(use)
     "navarasu/onedark.nvim",
     config = function()
       -- Change the default style before calling setup(), e.g.:
-      vim.g.onedark_style = 'darker'
+      vim.g.onedark_style = "darker"
       -- This prevents the theme from setting terminal colors
       -- vim.g.onedark_disable_terminal_colors = true
       require("onedark").setup()
