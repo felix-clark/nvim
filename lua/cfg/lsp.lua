@@ -76,10 +76,10 @@ local on_attach = function(client, bufnr)
   buf_set_keymap("n", "<leader>lgS", "<cmd>Telescope lsp_workspace_symbols<CR>", opts)
   buf_set_keymap("n", "<leader>ld", "<cmd>Telescope lsp_document_diagnostics<CR>", opts)
   buf_set_keymap("n", "<leader>lD", "<cmd>Telescope lsp_workspace_diagnostics<CR>", opts)
-  buf_set_keymap("n", "<leader>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
-  buf_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
-  buf_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
-  buf_set_keymap("n", "<leader>lq", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
+  buf_set_keymap("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float(nil, {source='always'})<CR>", opts)
+  buf_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+  buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+  buf_set_keymap("n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
 
   if client.resolved_capabilities.document_formatting then
     buf_set_keymap("n", "<leader>l=", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
@@ -101,7 +101,7 @@ local on_attach = function(client, bufnr)
       [[
         augroup lsp_document_highlight
         autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorHold,CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
         autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
         augroup END
       ]],
@@ -115,10 +115,10 @@ local on_attach = function(client, bufnr)
 end
 
 -- Set the gutter diagnostics to use icons
--- local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
-local signs = { Error = "", Warning = "", Hint = "", Information = "" }
+-- local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 for type, icon in pairs(signs) do
-  local hl = "LspDiagnosticsSign" .. type
+  local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
 
@@ -152,14 +152,13 @@ for i, kind in ipairs(kinds) do
 end
 
 -- Turn off the virtual text as there are often false positives
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics,
-  {
-    virtual_text = false,
-    signs = true,
-    update_in_insert = true,
-  }
-)
+vim.diagnostic.config {
+  virtual_text = false,
+  signs = true,
+  underline = true,
+  update_in_insert = true,
+  severity_sort = true,
+}
 
 -- Configure lua language server for neovim development
 local lua_settings = {

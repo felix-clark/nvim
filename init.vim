@@ -31,11 +31,6 @@ set wildmode=longest,list
 " show matching brackets 
 set showmatch
 
-" Since we have `yy`, make Y follow C and D convention.
-" NOTE: This has been merged into neovim master so eventually this line can be
-" removed. Check with `:h Y`.
-nnoremap Y y$
-
 " use 'jk' combination to quit insert mode
 inoremap jk <Esc>
 " something similar for terminal (?)
