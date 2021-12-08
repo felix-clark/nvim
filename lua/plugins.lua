@@ -54,6 +54,7 @@ return require("packer").startup(function(use)
   -- Allows command line linters and formatters to interact like LSP clients
   use {
     "jose-elias-alvarez/null-ls.nvim",
+    branch = "0.5.1-compat",
     requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     after = { "nvim-lspconfig" },
     config = function()
