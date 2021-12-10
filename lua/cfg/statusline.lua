@@ -6,7 +6,7 @@ require("lualine").setup {
       "filename",
       {
         "diagnostics",
-        sources = { "nvim_lsp" },
+        sources = { "nvim_diagnostic" },
         sections = { "error", "warn", "info", "hint" },
         symbols = { error = "", warn = "", info = "", hint = "" },
       },
