@@ -1,5 +1,5 @@
 local null_ls = require("null-ls")
-null_ls.config({
+null_ls.setup({
 	sources = {
     -- lua
     null_ls.builtins.formatting.stylua,
@@ -16,8 +16,4 @@ null_ls.config({
 		-- web
 		null_ls.builtins.formatting.prettier,
 	},
-})
-require("lspconfig")["null-ls"].setup({
-  -- setup keybindings
-  on_attach = require("cfg.lsp").on_attach,
 })
