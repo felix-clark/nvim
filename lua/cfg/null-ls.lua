@@ -16,4 +16,5 @@ null_ls.setup({
 		-- web
 		null_ls.builtins.formatting.prettier,
 	},
+  on_attach = require("cfg.lsp").on_attach,
 })
