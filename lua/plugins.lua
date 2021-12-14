@@ -156,7 +156,13 @@ return require("packer").startup(function(use)
   -- LSP functionality
   use { "williamboman/nvim-lsp-installer", requires = "nvim-lspconfig" }
   use "nvim-lua/lsp-status.nvim"
-  use { "neovim/nvim-lspconfig", after = "nvim-cmp" }
+  use {
+    "neovim/nvim-lspconfig",
+    after = "nvim-cmp",
+    config = function()
+      require "cfg.lsp"
+    end,
+  }
 
   -- Browse callers and callees of the current function
   use {
@@ -170,9 +176,9 @@ return require("packer").startup(function(use)
   use {
     "ray-x/lsp_signature.nvim",
     config = function()
-      require("lsp_signature").setup({
+      require("lsp_signature").setup {
         hint_prefix = "",
-      })
+      }
     end,
   }
 
