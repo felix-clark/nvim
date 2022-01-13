@@ -164,11 +164,19 @@ return require("packer").startup(function(use)
     end,
   }
 
+  -- Missing IDE-like features; see litee for more detail. There's a lot more to set up here.
+  use {
+    "ldelossa/litee.nvim",
+    config = function()
+      require("litee.lib").setup()
+    end,
+  }
   -- Browse callers and callees of the current function
   use {
-    "ldelossa/calltree.nvim",
+    "ldelossa/litee-calltree.nvim",
+    requires = "litee.nvim",
     config = function()
-      require("calltree").setup()
+      require("litee.calltree").setup()
     end,
   }
 
@@ -262,11 +270,12 @@ return require("packer").startup(function(use)
   use {
     "navarasu/onedark.nvim",
     config = function()
-      -- Change the default style before calling setup(), e.g.:
-      vim.g.onedark_style = "darker"
-      -- This prevents the theme from setting terminal colors
-      -- vim.g.onedark_disable_terminal_colors = true
-      require("onedark").setup()
+      require("onedark").setup {
+        style = "darker",
+        toggle_style_key = "<leader>ts",
+        -- can use `toggle_style_list` to pick the styles that are toggled
+      }
+      require("onedark").load()
     end,
   }
 end)
