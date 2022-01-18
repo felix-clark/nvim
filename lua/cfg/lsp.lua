@@ -76,7 +76,12 @@ local on_attach = function(client, bufnr)
   buf_set_keymap("n", "<leader>lgS", "<cmd>Telescope lsp_workspace_symbols<CR>", opts)
   buf_set_keymap("n", "<leader>ld", "<cmd>Telescope lsp_document_diagnostics<CR>", opts)
   buf_set_keymap("n", "<leader>lD", "<cmd>Telescope lsp_workspace_diagnostics<CR>", opts)
-  buf_set_keymap("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float(nil, {source='always'})<CR>", opts)
+  buf_set_keymap(
+    "n",
+    "<leader>e",
+    "<cmd>lua vim.diagnostic.open_float(nil, {source='always'})<CR>",
+    opts
+  )
   buf_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
   buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
   buf_set_keymap("n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
