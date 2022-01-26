@@ -225,6 +225,8 @@ return require("packer").startup(function(use)
       "hrsh7th/cmp-vsnip",
       "hrsh7th/vim-vsnip",
       "hrsh7th/cmp-path",
+      -- Consider vim commandline completion
+      -- "hrsh7th/cmp-cmdline",
       -- For neovim lua API completion
       "hrsh7th/cmp-nvim-lua",
     },

@@ -20,13 +20,19 @@ cmp.setup {
     ["<C-k>"] = cmp.mapping.select_prev_item(),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-Space>"] = cmp.mapping.complete(),
-    ["<C-e>"] = cmp.mapping.close(),
-    ['<C-CR>'] = cmp.mapping.confirm({
+    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+    ["<C-e>"] = cmp.mapping {
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    },
+    ["<CR>"] = cmp.mapping.confirm {
       -- could be Insert or Replace
       behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
-    }),
+      -- select = true,
+      -- Only confirm explicitly selected items; it can be easy to forget to
+      -- use C-e to quit the completion window.
+      select = false,
+    },
     ["<Tab>"] = function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -42,7 +48,7 @@ cmp.setup {
       end
     end,
   },
-  sources = {
+  sources = cmp.config.sources {
     { name = "nvim_lsp" },
 
     -- For vsnip user.
