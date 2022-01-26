@@ -175,6 +175,7 @@ wk.register({
 		R = { "<C-w>r", "Rotate windows up/left" },
 		T = { "<C-w>T", "Break out into new tab" },
 	},
+  ["/"] = { ":nohlsearch<cr>", "Clear search highlight", },
 }, {
 	prefix = "<leader>",
 })
