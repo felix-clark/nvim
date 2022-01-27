@@ -82,7 +82,39 @@ return require("packer").startup(function(use)
     requires = "nvim-lua/plenary.nvim",
     event = "BufRead",
     config = function()
-      require("gitsigns").setup()
+      require("gitsigns").setup {
+        -- NOTE: this function will change in neovim 0.7
+        on_attach = function(bufnr)
+          -- local gs = package.loaded.gitsigns
+          local function map(mode, l, r, opts)
+            -- opts = opts or {}
+            -- opts.buffer = bufnr
+            -- vim.keymap.set(mode, l, r, opts)
+            opts = vim.tbl_extend("force", { noremap = true, silent = true }, opts or {})
+            vim.api.nvim_buf_set_keymap(bufnr, mode, l, r, opts)
+          end
+          -- Navigation
+          map("n", "]c", "&diff ? ']c' : '<cmd>Gitsigns next_hunk<cr>'", { expr = true })
+          map("n", "[c", "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<cr>'", { expr = true })
+
+          -- Actions
+          -- note that there is also a toggle line blame
+          map("n", "<leader>gb", '<cmd>lua require("gitsigns").blame_line{full=true}<cr>')
+          map("n", "<leader>gd", "<cmd>Gitsigns diff_this<cr>")
+          map("n", "<leader>gD", '<cmd>lua require("gitsigns").diff_this("~")<cr>')
+          map("n", "<leader>gp", "<cmd>Gitsigns preview_hunk<cr>")
+          map("n", "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>")
+          map("n", "<leader>gR", "<cmd>Gitsigns reset_buffer<cr>")
+          map("n", "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>")
+          map("n", "<leader>gu", "<cmd>Gitsigns undo_stage_hunk<cr>")
+          map("v", "<leader>gr", '<cmd>lua require("gitsigns").reset_hunk({vim.fn.line("."), vim.gn.line("v")})<cr>')
+          map("v", "<leader>gs", '<cmd>lua require("gitsigns").stage_hunk({vim.fn.line("."), vim.gn.line("v")})<cr>')
+
+          -- Text object
+          map("o", "ih", ":<C-u>Gitsigns select_hunk<cr>")
+          map("x", "ih", ":<C-u>Gitsigns select_hunk<cr>")
+        end,
+      }
     end,
   }
 
