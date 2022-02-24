@@ -95,9 +95,7 @@ wk.register({
     w = "+workspace",
     ["="] = "Format",
   },
-  m = {
-    name = "+local",
-  },
+  m = { "<localleader>", "+local" },
   o = {
     name = "+open",
     -- This variant opens the terminal based on the vim shell. Probably
