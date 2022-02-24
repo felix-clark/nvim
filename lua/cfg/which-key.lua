@@ -193,6 +193,13 @@ wk.register({
 }, {
   prefix = "g",
 })
+-- extra gotos
+wk.register({
+  c = { ":cnext<cr>", "Next quickfix" },
+}, { mode = "n", prefix = "]" })
+wk.register({
+  c = { ":cprevious<cr>", "Previous quickfix" },
+}, { mode = "n", prefix = "[" })
 
 -- visual mode bindings
 wk.register({

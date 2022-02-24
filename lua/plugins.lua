@@ -94,8 +94,8 @@ return require("packer").startup(function(use)
             vim.api.nvim_buf_set_keymap(bufnr, mode, l, r, opts)
           end
           -- Navigation
-          map("n", "]c", "&diff ? ']c' : '<cmd>Gitsigns next_hunk<cr>'", { expr = true })
-          map("n", "[c", "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<cr>'", { expr = true })
+          map("n", "]g", "&diff ? ']g' : '<cmd>Gitsigns next_hunk<cr>'", { expr = true })
+          map("n", "[g", "&diff ? '[g' : '<cmd>Gitsigns prev_hunk<cr>'", { expr = true })
 
           -- Actions
           -- note that there is also a toggle line blame
