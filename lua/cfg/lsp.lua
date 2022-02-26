@@ -114,6 +114,14 @@ local on_attach = function(client, bufnr)
     )
   end
 
+  -- Set up lsp_signature for the buffer.
+  -- This must be done in here in order to use toggle_key.
+  require("lsp_signature").on_attach({
+    bind = true,
+    hint_prefix = " ",
+    toggle_key = "<C-s>",
+  }, bufnr)
+
   -- Register client for messages and set up buffer autocommands to update the
   -- statusline and the current function.
   lsp_status.on_attach(client)

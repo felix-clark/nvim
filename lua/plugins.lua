@@ -37,7 +37,10 @@ return require("packer").startup(function(use)
   }
 
   -- A more opinionated motion plugin
-  use "ggandor/lightspeed.nvim"
+  use {
+    "ggandor/lightspeed.nvim",
+    requires = { "tpope/vim-repeat" },
+  }
 
   use {
     "numToStr/Comment.nvim",
@@ -107,8 +110,16 @@ return require("packer").startup(function(use)
           map("n", "<leader>gR", "<cmd>Gitsigns reset_buffer<cr>")
           map("n", "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>")
           map("n", "<leader>gu", "<cmd>Gitsigns undo_stage_hunk<cr>")
-          map("v", "<leader>gr", '<cmd>lua require("gitsigns").reset_hunk({vim.fn.line("."), vim.gn.line("v")})<cr>')
-          map("v", "<leader>gs", '<cmd>lua require("gitsigns").stage_hunk({vim.fn.line("."), vim.gn.line("v")})<cr>')
+          map(
+            "v",
+            "<leader>gr",
+            '<cmd>lua require("gitsigns").reset_hunk({vim.fn.line("."), vim.gn.line("v")})<cr>'
+          )
+          map(
+            "v",
+            "<leader>gs",
+            '<cmd>lua require("gitsigns").stage_hunk({vim.fn.line("."), vim.gn.line("v")})<cr>'
+          )
 
           -- Text object
           map("o", "ih", ":<C-u>Gitsigns select_hunk<cr>")
@@ -190,7 +201,8 @@ return require("packer").startup(function(use)
   use "nvim-lua/lsp-status.nvim"
   use {
     "neovim/nvim-lspconfig",
-    after = "nvim-cmp",
+    -- These packages require some configuration in cfg.lsp
+    after = { "nvim-cmp", "lsp_signature" },
     config = function()
       require "cfg.lsp"
     end,
@@ -212,14 +224,10 @@ return require("packer").startup(function(use)
     end,
   }
 
-  -- Show LSP call signature in completion window
+  -- Show LSP call signature in completion window.
+  -- Toggle with <C-s> (configured in cfg.lsp)
   use {
     "ray-x/lsp_signature.nvim",
-    config = function()
-      require("lsp_signature").setup {
-        hint_prefix = "",
-      }
-    end,
   }
 
   use {
