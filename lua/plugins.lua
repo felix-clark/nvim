@@ -202,7 +202,7 @@ return require("packer").startup(function(use)
   use {
     "neovim/nvim-lspconfig",
     -- These packages require some configuration in cfg.lsp
-    after = { "nvim-cmp", "lsp_signature" },
+    after = { "nvim-cmp", "lsp_signature.nvim" },
     config = function()
       require "cfg.lsp"
     end,
