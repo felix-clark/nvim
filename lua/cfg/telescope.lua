@@ -21,6 +21,11 @@ require("telescope").setup {
   -- "cursor": A smaller window located near the cursor
   -- "ivy": A separate frame a la the emacs package
   pickers = {
+    buffers = {
+      -- sort buffers by recency for easy switching back-and-forth
+      ignore_current_buffer = true,
+      sort_mru = true,
+    },
     lsp_code_actions = { theme = "cursor" },
     lsp_range_code_actions = { theme = "cursor" },
   },
