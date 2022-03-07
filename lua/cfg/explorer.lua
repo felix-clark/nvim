@@ -75,4 +75,27 @@ require("nvim-tree").setup {
       list = {},
     },
   },
+  actions = {
+    open_file = {
+      quit_on_open = true,
+    },
+    window_picker = {
+      enable = true,
+      exclude = {
+        filetype = {
+          "notify",
+          "packer",
+          "qf",
+          "diff",
+          "fugitive",
+          "fugitiveblame",
+        },
+        buftype = {
+          "nofile",
+          "terminal",
+          "help",
+        },
+      },
+    },
+  },
 }
