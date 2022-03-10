@@ -224,17 +224,17 @@ lsp_installer.on_server_ready(function(server)
   local config = make_config()
 
   -- language specific config
-  if server == "sumneko_lua" then
+  if server.name == "sumneko_lua" then
     config.settings = lua_settings
   end
-  if server == "pyright" then
+  if server.name == "pyright" then
     config.handlers = lsp_status.extensions.pyright.setup()
     config.settings = { python = { workspaceSymbols = { enabled = true } } }
   end
-  if server == "sourcekit" then
+  if server.name == "sourcekit" then
     config.filetypes = { "swift", "objective-c", "objective-cpp" } -- we don't want c and cpp!
   end
-  if server == "clangd" then
+  if server.name == "clangd" then
     config.filetypes = { "c", "cpp" } -- we don't want objective-c and objective-cpp!
   end
 
