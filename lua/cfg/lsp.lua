@@ -164,7 +164,8 @@ for i, kind in ipairs(kinds) do
   kinds[i] = comp_icons[kind] or kind
 end
 
--- Turn off the virtual text as there are often false positives
+-- Turn off the virtual text diagnostics as there are often false positives and
+-- it is visually noisy.
 vim.diagnostic.config {
   virtual_text = false,
   signs = true,
@@ -173,31 +174,36 @@ vim.diagnostic.config {
   severity_sort = true,
 }
 
--- Configure lua language server for neovim development
-local lua_settings = {
-  Lua = {
-    runtime = {
-      -- LuaJIT in the case of Neovim
-      version = "LuaJIT",
-      path = vim.split(package.path, ";"),
-    },
-    diagnostics = {
-      -- Get the language server to recognize the `vim` global
-      globals = { "vim" },
-    },
-    workspace = {
-      -- Make the server aware of Neovim runtime files
-      library = {
-        [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-        [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+-- Lua language server configuration for neovim development
+local function make_lua_settings()
+  local runtime_path = vim.split(package.path, ";")
+  table.insert(runtime_path, "lua/?.lua")
+  table.insert(runtime_path, "lua/?/init.lua")
+
+  local lua_settings = {
+    Lua = {
+      runtime = {
+        -- LuaJIT in the case of Neovim
+        version = "LuaJIT",
+        -- Setup your lua path
+        path = runtime_path,
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { "vim" },
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
       },
     },
-    -- Do not send telemetry data containing a randomized but unique identifier
-    telemetry = {
-      enable = false,
-    },
-  },
-}
+  }
+  return lua_settings
+end
 
 -- config that activates keymaps and enables snippet support
 local function make_config()
@@ -225,7 +231,7 @@ lsp_installer.on_server_ready(function(server)
 
   -- language specific config
   if server.name == "sumneko_lua" then
-    config.settings = lua_settings
+    config.settings = make_lua_settings()
   end
   if server.name == "pyright" then
     config.handlers = lsp_status.extensions.pyright.setup()
