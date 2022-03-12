@@ -286,6 +286,9 @@ return require("packer").startup(function(use)
 
   -- Language-specific
 
+  -- kitty terminal configuration syntax highlighting
+  use { "fladson/vim-kitty", ft = "kitty" }
+
   -- This configures and sets up LSP using the rust-analyzer found in $PATH.
   -- Thus, we should not call `:LspInstall rust` to configure it as part of our
   -- LSP client setup.
