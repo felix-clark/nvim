@@ -53,6 +53,9 @@ cmp.setup {
     -- For ultisnips user.
     -- { name = 'ultisnips' },
 
+    -- orgmode
+    { name = "orgmode" },
+
     -- For neovim lua files
     { name = "nvim_lua" },
 

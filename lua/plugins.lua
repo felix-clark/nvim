@@ -318,6 +318,20 @@ return require("packer").startup(function(use)
     },
   }
 
+  -- org-mode emulation
+  use {
+    "nvim-orgmode/orgmode",
+    -- Lazy-loading is not recommended. This package loads quickly and needs to be used before setting up treesitter.
+    -- ft = { "org" },
+    config = function()
+      require("orgmode").setup {
+        -- note: there are more
+        org_agenda_files = { "~/org/todo.org", "~/org/felix-agenda.org" },
+        org_default_notes_file = "~/org/notes.org",
+      }
+    end,
+  }
+
   -- theme
   use {
     "navarasu/onedark.nvim",
