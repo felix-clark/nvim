@@ -282,7 +282,7 @@ return require("packer").startup(function(use)
 
   -- Debugging isn't really configured right now, although rust-tools may do
   -- some setup.
-  use "mfussenegger/nvim-dap"
+  use { "mfussenegger/nvim-dap", keys = { "<leader>d" } }
 
   -- Language-specific
 

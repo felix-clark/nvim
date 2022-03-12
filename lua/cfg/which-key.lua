@@ -33,8 +33,8 @@ wk.register({
     a = "Code action",
     -- use vim-dispatch to spin up a build command
     c = { "<cmd>Dispatch<cr>", "Compile" },
-    d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document diagnostics" },
-    D = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace diagnostics" },
+    d = { "<cmd>TroubleToggle document_diagnostics<cr>", "Document diagnostics" },
+    D = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace diagnostics" },
     l = { "<cmd>TroubleToggle loclist<cr>", "Location list" },
     q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix list" },
     r = "Rename (treesitter-refactor)",
