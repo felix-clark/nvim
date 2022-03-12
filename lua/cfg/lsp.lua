@@ -85,6 +85,11 @@ local on_attach = function(client, bufnr)
   buf_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
   buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
   buf_set_keymap("n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
+  -- These require textDocument/prepareCallHierarchy.
+  -- litee-calltree provides these.
+  -- TODO: Figure out what document capabilities can be queried to only set these when available.
+  buf_set_keymap("n", "<leader>li", "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", opts)
+  buf_set_keymap("n", "<leader>lo", "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", opts)
 
   if client.resolved_capabilities.document_formatting then
     buf_set_keymap("n", "<leader>l=", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
