@@ -143,6 +143,9 @@ return require("packer").startup(function(use)
   use {
     "kyazdani42/nvim-tree.lua",
     requires = "kyazdani42/nvim-web-devicons",
+    -- NOTE: There are several more commands from this package but we really
+    -- only use Toggle.
+    cmd = { "NvimTreeToggle", "NvimTreeRefresh", "NvimTreeFindFile" },
     config = function()
       require "cfg.explorer"
     end,
@@ -209,6 +212,7 @@ return require("packer").startup(function(use)
   }
 
   -- Missing IDE-like features; see litee for more detail. There's a lot more to set up here.
+  -- TODO: Try to lazy-load, waiting for an LSP buffer to be opened
   use {
     "ldelossa/litee.nvim",
     config = function()
@@ -233,6 +237,9 @@ return require("packer").startup(function(use)
   use {
     "folke/trouble.nvim",
     requires = "kyazdani42/nvim-web-devicons",
+    -- NOTE: We can't lazy-load because the telescope configuration sets up
+    -- integration w/ Trouble
+    -- cmd = { "Trouble", "TroubleToggle", "TroubleClose", "TroubleRefresh" },
     config = function()
       require("trouble").setup()
     end,
