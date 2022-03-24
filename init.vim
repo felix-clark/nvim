@@ -24,6 +24,13 @@ set linebreak
 set number
 set relativenumber
 
+" Show up to 2 columns, one for gitsigns and one for diagnostics.
+" This could be set to a fixed width (even when empty) with "yes:2".
+" Consider using only 1 columns and simply giving gitsigns a higher priority,
+" since the diagnostics are underlined anyway.
+" In lua, vim.o.signcolumn = "auto:2".
+set signcolumn=auto:2
+
 " Complete the longest common string and show the list of potential matches
 " when using <TAB>
 set wildmode=longest,list
