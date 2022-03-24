@@ -33,7 +33,8 @@ function _G.my_fold_text ()
 end
 
 vim.o.foldtext = 'v:lua.my_fold_text()'
-vim.o.foldcolumn = 'auto:3'
+-- This option shows additional columns indicating fold levels
+-- vim.o.foldcolumn = 'auto:2'
 -- don't fill the fold lines with a character, use space
 vim.o.fillchars = 'fold: '
 -- maximum nesting depth

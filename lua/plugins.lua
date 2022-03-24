@@ -257,12 +257,13 @@ return require("packer").startup(function(use)
   -- This is cute butthe cursor must be at exactly the right spot.
   -- Can take a while to trigger unless updatetime is reduced, but be warned
   -- that this has effects on crash-recovery.
-  use {
-    "kosayoda/nvim-lightbulb",
-    config = function()
-      vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
-    end,
-  }
+  -- NOTE: With gitsigns integration, everywhere has a lightbulb. It doesn't add much.
+  -- use {
+  --   "kosayoda/nvim-lightbulb",
+  --   config = function()
+  --     vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
+  --   end,
+  -- }
 
   use {
     "hrsh7th/nvim-cmp",
