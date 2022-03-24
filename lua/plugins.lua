@@ -86,6 +86,9 @@ return require("packer").startup(function(use)
     event = "BufRead",
     config = function()
       require("gitsigns").setup {
+        -- A value of 15 or greater should prioritize gitsigns over diagnostics
+        -- (which are also underlined)
+        sign_priority = 20,
         -- NOTE: this function will change in neovim 0.7
         on_attach = function(bufnr)
           -- local gs = package.loaded.gitsigns
