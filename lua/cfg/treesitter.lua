@@ -1,17 +1,42 @@
 -- Need to set up orgmode TS parser first
-require('orgmode').setup_ts_grammar()
+require("orgmode").setup_ts_grammar()
 
 -- NOTE: the "ensure_installed" line could be removed in lieu of manual installations.
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = 'maintained',
+require("nvim-treesitter.configs").setup {
+  ensure_installed = {
+    "bash",
+    "c",
+    "cpp",
+    "css",
+    "dockerfile",
+    "fish",
+    "go",
+    "haskell",
+    "html",
+    "javascript",
+    -- NOTE: there's also json5
+    "json",
+    "latex",
+    "lua",
+    "make",
+    "org",
+    "python",
+    "r",
+    "rust",
+    "scss",
+    "toml",
+    "typescript",
+    "vim",
+    "yaml",
+  },
   highlight = {
     enable = true,
-    disable = {"org"}, -- Remove this to use TS highligher for some highlights (Experimental)
+    disable = { "org" }, -- Remove this to use TS highligher for some highlights (Experimental)
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = {"org"}, -- Required since TS highlighter doesn't support all syntax features (conceal)
+    additional_vim_regex_highlighting = { "org" }, -- Required since TS highlighter doesn't support all syntax features (conceal)
   },
   incremental_selection = {
     enable = true,
@@ -87,7 +112,7 @@ require'nvim-treesitter.configs'.setup {
       enable = true,
       keymaps = {
         smart_rename = "<leader>cr",
-      }
+      },
     },
     navigation = {
       enable = true,
