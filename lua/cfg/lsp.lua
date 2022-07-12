@@ -97,11 +97,12 @@ local on_attach = function(client, bufnr)
     "n",
     "<leader>e",
     "<cmd>lua vim.diagnostic.open_float(nil, {source='always'})<CR>",
-    "view diagnostic [LSP]"
+    "show line diagnostic [LSP]"
   )
   buf_map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", "goto previous diagnostic [LSP]")
   buf_map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", "goto next diagnostic [LSP]")
-  buf_map("n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", "set loclist [LSP]")
+  buf_map("n", "<leader>lq", "<cmd>lua vim.diagnostic.setqflist()<CR>", "send diagnostics to quickfix [LSP]")
+  buf_map("n", "<leader>lQ", "<cmd>lua vim.diagnostic.setloclist()<CR>", "send diagnostics to loclist [LSP]")
   -- These require textDocument/prepareCallHierarchy.
   -- litee-calltree provides these.
   -- TODO: Figure out what document capabilities can be queried to only set these when available.
