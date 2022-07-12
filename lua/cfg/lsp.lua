@@ -136,6 +136,12 @@ local on_attach = function(client, bufnr)
     )
   end
 
+  -- code lens
+  if client.resolved_capabilities.code_len then
+    buf_map("n", "<leader>lL", "<cmd>lua vim.lsp.codelens.run()<CR>", "code lens [LSP]")
+    vim.api.nvim_command[[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]]
+  end
+
   -- Set up lsp_signature for the buffer.
   -- This must be done in here in order to use toggle_key.
   require("lsp_signature").on_attach({
