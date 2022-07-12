@@ -30,75 +30,94 @@ end
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...)
-    vim.api.nvim_buf_set_keymap(bufnr, ...)
-  end
-  local function buf_set_option(...)
-    vim.api.nvim_buf_set_option(bufnr, ...)
+  local function buf_map(mode, lhs, rhs, desc)
+    -- opts = vim.tbl_extend("keep", opts, { silent = true, buffer = bufnr, desc = desc })
+    local opts = { buffer = bufnr, silent = true, desc = desc }
+    -- this uses `remap`, which is false by default, over `noremap`.
+    vim.keymap.set(mode, lhs, rhs, opts)
   end
 
   --Enable completion triggered by <c-x><c-o>
-  buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-
-  -- Mappings.
-  local opts = { noremap = true, silent = true }
+  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-  -- buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap("n", "gd", "<Cmd>Telescope lsp_definitions<CR>", opts)
-  buf_set_keymap("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
+  buf_map("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", "goto declaration [LSP]")
+  buf_map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', "goto definition [LSP]")
+  -- Why use telescope for this?
+  -- buf_map("n", "gd", "<Cmd>Telescope lsp_definitions<CR>", "goto definition [LSP]")
+  buf_map("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", "hover information [LSP]")
   -- gi overwrites "go to last insertion and insert", so use gI
-  -- buf_set_keymap('n', 'gI', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap("n", "gI", "<cmd>Telescope lsp_implementations<CR>", opts)
-  buf_set_keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  buf_set_keymap("n", "<leader>lwa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-  buf_set_keymap("n", "<leader>lwr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-  buf_set_keymap(
+  -- buf_set_keymap('n', 'gI', '<cmd>lua vim.lsp.buf.implementation()<CR>', {})
+  buf_map("n", "gI", "<cmd>Telescope lsp_implementations<CR>", "list implementations [LSP]")
+  buf_map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", "signature help [LSP]")
+  buf_map(
+    "n",
+    "<leader>lwa",
+    "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",
+    "add workspace folder [LSP]"
+  )
+  buf_map(
+    "n",
+    "<leader>lwr",
+    "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",
+    "remove workspace folder [LSP]"
+  )
+  buf_map(
     "n",
     "<leader>lwl",
     "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
-    opts
+    "list workspace folders [LSP]"
   )
-  -- buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap("n", "<leader>D", "<cmd>Telescope lsp_type_definitions<CR>", opts)
-  buf_set_keymap("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('v', '<leader>ca', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', opts)
-  -- buf_set_keymap('n', '<leader>lgr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap("n", "<leader>lgr", "<cmd>Telescope lsp_references<CR>", opts)
-  buf_set_keymap("n", "<leader>lgs", "<cmd>Telescope lsp_document_symbols<CR>", opts)
+  -- buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', "type definitions [LSP]")
+  -- <leader>D conflicts with treesitter "list definitions"
+  buf_map("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<CR>", "type definitions [LSP]")
+  buf_map("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", "rename [LSP]")
+  buf_map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", "code actions [LSP]")
+  buf_map("v", "<leader>ca", "<cmd>lua vim.lsp.buf.range_code_action()<CR>", "range code actions [LSP]")
+  -- buf_set_keymap('n', '<leader>lgr', '<cmd>lua vim.lsp.buf.references()<CR>', "references [LSP]")
+  buf_map("n", "<leader>lgr", "<cmd>Telescope lsp_references<CR>", "references [LSP]")
+  buf_map("n", "<leader>lgs", "<cmd>Telescope lsp_document_symbols<CR>", "document symbols [LSP]")
   -- NOTE: It's not clear what the difference is between the dynamic and
   -- vanilla versions of workspace symbols.
-  -- buf_set_keymap('n', '<leader>lgS', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', opts)
-  buf_set_keymap("n", "<leader>lgS", "<cmd>Telescope lsp_workspace_symbols<CR>", opts)
-  buf_set_keymap("n", "<leader>ld", "<cmd>Telescope lsp_document_diagnostics<CR>", opts)
-  buf_set_keymap("n", "<leader>lD", "<cmd>Telescope lsp_workspace_diagnostics<CR>", opts)
-  buf_set_keymap(
+  -- buf_set_keymap('n', '<leader>lgS', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', "workspace symbols [LSP]")
+  buf_map("n", "<leader>lgS", "<cmd>Telescope lsp_workspace_symbols<CR>", "workspace symbols [LSP]")
+  buf_map(
+    "n",
+    "<leader>ld",
+    "<cmd>Telescope lsp_document_diagnostics<CR>",
+    "document diagnostics [LSP]"
+  )
+  buf_map(
+    "n",
+    "<leader>lD",
+    "<cmd>Telescope lsp_workspace_diagnostics<CR>",
+    "workspace diagnostics [LSP]"
+  )
+  buf_map(
     "n",
     "<leader>e",
     "<cmd>lua vim.diagnostic.open_float(nil, {source='always'})<CR>",
-    opts
+    "view diagnostic [LSP]"
   )
-  buf_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-  buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-  buf_set_keymap("n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
+  buf_map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", "goto previous diagnostic [LSP]")
+  buf_map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", "goto next diagnostic [LSP]")
+  buf_map("n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", "set loclist [LSP]")
   -- These require textDocument/prepareCallHierarchy.
   -- litee-calltree provides these.
   -- TODO: Figure out what document capabilities can be queried to only set these when available.
-  buf_set_keymap("n", "<leader>li", "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", opts)
-  buf_set_keymap("n", "<leader>lo", "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", opts)
+  buf_map("n", "<leader>li", "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", "incoming calls [LSP]")
+  buf_map("n", "<leader>lo", "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls [LSP]")
 
   if client.resolved_capabilities.document_formatting then
-    buf_set_keymap("n", "<leader>l=", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-    buf_set_keymap(
+    buf_map("n", "<leader>l=", "<cmd>lua vim.lsp.buf.formatting()<CR>", "format buffer [LSP]")
+    buf_map(
       "n",
       "<leader>t=",
       "<cmd>lua require('cfg.lsp').toggle_format_on_save()<CR>",
-      opts
+      "toggle format on save [LSP]"
     )
   elseif client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap("n", "<leader>l=", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+    buf_map("n", "<leader>l=", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", "format range [LSP]")
     -- NOTE: In this case a similar toggle functionality could be implemented,
     -- as toggle_format_on_save() but calling range_formatting instead
   end

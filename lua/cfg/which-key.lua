@@ -91,9 +91,6 @@ wk.register({
   },
   l = {
     name = "+lsp",
-    r = "Rename (LSP)",
-    w = "+workspace",
-    ["="] = "Format",
   },
   -- specifying this here causes some clunky interactions
   -- m = { "<localleader>", "+local" },
