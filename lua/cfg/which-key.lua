@@ -75,19 +75,7 @@ wk.register({
   },
   g = {
     name = "+git",
-    ["["] = { "<cmd>lua require'gitsigns.actions'.prev_hunk()<cr>", "Go to previous hunk" },
-    ["]"] = { "<cmd>lua require'gitsigns.actions'.next_hunk()<cr>", "Go to next hunk" },
-    b = "Blame line",
-    c = { "<cmd>Neogit commit<cr>", "Commit" },
-    d = "Diff this",
-    -- g = {"<cmd>Neogit kind=split<cr>", "Git launcher"},
-    g = { "<cmd>Neogit<cr>", "Git launcher" },
-    l = { "<cmd>Neogit log<cr>", "Git log" },
-    p = "Preview hunk",
-    r = "Revert hunk",
-    R = "Revert buffer",
-    s = "Stage hunk",
-    u = "Undo stage hunk",
+    -- A hydra is defined for git
   },
   l = {
     name = "+lsp",
@@ -143,8 +131,8 @@ wk.register({
     p = { "<cmd>lua require('cfg.autopairs').toggle_autopairs()<cr>", "Toggle autopairs" },
     t = { "<cmd>NvimTreeToggle<cr>", "Project tree" },
     s = { "<cmd>lua require('onedark').toggle()<cr>", "Toggle color scheme" },
-    -- TODO: Consider toggle for git-gitter, although there isn't harm in
-    -- keeping it on
+    b = { "<cmd>lua require('gitsigns').toggle_current_line_blame()<cr>", "Toggle git blame" },
+    g = { "<cmd>lua require('gitsigns').toggle_signs()<cr>", "Toggle git signs" },
   },
   w = {
     name = "+window",

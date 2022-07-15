@@ -264,6 +264,15 @@ return require("packer").startup(function(use)
     end,
   }
 
+  use {
+    "anuvyklack/hydra.nvim",
+    requires = "anuvyklack/keymap-layer.nvim", -- needed only for pink hydras
+    event = "BufWinEnter",
+    config = function()
+      require "cfg.hydra"
+    end,
+  }
+
   -- This is cute butthe cursor must be at exactly the right spot.
   -- Can take a while to trigger unless updatetime is reduced, but be warned
   -- that this has effects on crash-recovery.
