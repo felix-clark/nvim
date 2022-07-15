@@ -256,6 +256,7 @@ end
 
 -- lsp-installer
 local lsp_installer = require "nvim-lsp-installer"
+-- TODO: This approach is deprecated, see nvim-lsp-installer for update
 lsp_installer.on_server_ready(function(server)
   local config = make_config()
 
