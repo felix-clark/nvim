@@ -83,7 +83,8 @@ return require("packer").startup(function(use)
   use {
     "lewis6991/gitsigns.nvim",
     requires = "nvim-lua/plenary.nvim",
-    event = "BufRead",
+    -- Lazy-loading can easily cause problems, particularly with the git hydra
+    -- event = "BufRead",
     config = function()
       require("gitsigns").setup {
         -- A value of 15 or greater should prioritize gitsigns over diagnostics
@@ -101,27 +102,17 @@ return require("packer").startup(function(use)
           map("n", "[g", "&diff ? '[g' : '<cmd>Gitsigns prev_hunk<cr>'", { expr = true })
 
           -- Actions
-          -- note that there is also a toggle line blame
-          -- These could be backup in case the hydra fails
-          -- map("n", "<leader>gb", '<cmd>lua require("gitsigns").blame_line{full=true}<cr>')
-          -- map("n", "<leader>gd", "<cmd>Gitsigns diff_this<cr>")
-          -- map("n", "<leader>gD", '<cmd>lua require("gitsigns").diff_this("~")<cr>')
-          -- map("n", "<leader>gp", "<cmd>Gitsigns preview_hunk<cr>")
-          -- map("n", "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>")
-          -- map("n", "<leader>gR", "<cmd>Gitsigns reset_buffer<cr>")
-          -- map("n", "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>")
-          -- map("n", "<leader>gu", "<cmd>Gitsigns undo_stage_hunk<cr>")
-          -- visual selections
-          map(
-            "v",
-            "<leader>gr",
-            gs.reset_hunk({vim.fn.line("."), vim.gn.line("v")})
-          )
-          map(
-            "v",
-            "<leader>gs",
-            gs.stage_hunk({vim.fn.line("."), vim.gn.line("v")})
-          )
+          -- These bindings are a backup in case the hydra fails, or in case it hasn't loaded yet
+          map({"n", "v"}, "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>")
+          map({"n", "v"}, "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>")
+          map("n", "<leader>gS", gs.stage_buffer)
+          map("n", "<leader>gu", gs.undo_stage_hunk)
+          map("n", "<leader>gR", gs.reset_buffer)
+          map("n", "<leader>gp", gs.preview_hunk)
+          map("n", "<leader>gb", function() gs.blame_line{full=true} end)
+          map("n", "<leader>gd", gs.diffthis)
+          map("n", "<leader>gD", function() gs.diffthis("~") end)
+          -- NOTE: toggle blame and deleted are defined in which-key
 
           -- Text object
           map({"o", "x"}, "ih", ":<C-u>Gitsigns select_hunk<cr>")
@@ -265,9 +256,7 @@ return require("packer").startup(function(use)
   use {
     "anuvyklack/hydra.nvim",
     requires = "anuvyklack/keymap-layer.nvim", -- needed only for pink hydras
-    -- event = "BufWinEnter",
-    -- The event must be the same as gitsigns' or it can crash (e.g. with --startuptime)
-    event = "BufRead",
+    event = "BufWinEnter",
     after = "gitsigns.nvim",
     config = function()
       require "cfg.hydra"
