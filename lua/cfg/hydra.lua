@@ -61,5 +61,6 @@ hydra {
     { "l", "<cmd>Neogit log<cr>", { exit = true } },
     { "/", gitsigns.show, { exit = true } },
     { "q", nil, { exit = true, nowait = true } },
+    -- TODO: silent exits when other keys are pressed?
   },
 }
