@@ -182,9 +182,29 @@ wk.register({
 -- extra gotos
 wk.register({
   c = { ":cnext<cr>", "Next quickfix" },
+  f = "Next function start [TS]",
+  F = "Next function end [TS]",
+  ["]"] = "Next class start [TS]",
+  ["["] = "Next class end [TS]",
+  a = "Next parameter start [TS]",
+  A = "Next parameter end [TS]",
+  o = "Next comment start [TS]",
+  O = "Next comment end [TS]",
+  b = "Next block start [TS]",
+  B = "Next block end [TS]",
 }, { mode = "n", prefix = "]" })
 wk.register({
   c = { ":cprevious<cr>", "Previous quickfix" },
+  f = "Previous function start [TS]",
+  F = "Previous function end [TS]",
+  ["["] = "Previous class start [TS]",
+  ["]"] = "Previous class end [TS]",
+  a = "Previous parameter start [TS]",
+  A = "Previous parameter end [TS]",
+  o = "Previous comment start [TS]",
+  O = "Previous comment end [TS]",
+  b = "Previous block start [TS]",
+  B = "Previous block end [TS]",
 }, { mode = "n", prefix = "[" })
 
 -- visual mode bindings

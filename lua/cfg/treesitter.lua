@@ -60,10 +60,9 @@ require("nvim-treesitter.configs").setup {
     extended_mode = true,
     max_file_lines = 1000,
   },
-  -- These are part of nvim-treesitter-textobjects
-  -- TODO: There are many more text objects possible, check
-  -- nvim-treesitter-textobjects documentation. The ones here are better
-  -- versions of neovim's defaults.
+  -- This configuration if for the extension plugin nvim-treesitter-textobjects.
+  -- There are many more text objects possible, check
+  -- nvim-treesitter-textobjects documentation.
   textobjects = {
     select = {
       enable = true,
@@ -78,21 +77,48 @@ require("nvim-treesitter.configs").setup {
     move = {
       enable = true,
       set_jumps = true,
+      -- NOTE: on "inner" vs. "outer": typically one of these is supported by
+      -- more parsers, and that's the one chosen for movement. See
+      -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects#built-in-textobjects
+      -- for full list.
       goto_next_start = {
-        ["]m"] = "@function.outer",
+        -- ]m overrides vim's defaults but ]f feels a little more ergonomic and
+        -- in vim-unimpaired (from where these bindings derive inspiration)
+        -- it's used to go to the next file, which is redundant.
+        -- ["]m"] = "@function.outer",
+        ["]f"] = "@function.outer",
+        -- ]c is used by default for git naviation; we have it set to quickfix navigation.
+        -- So ]] is used for class naviation.
         ["]]"] = "@class.outer",
+        ["]a"] = "@parameter.inner",
+        ["]o"] = "@comment.outer",
+        ["]b"] = "@block.outer",
+        -- No "paragraph" text object; "block" is different.
+        -- ["]p"] = "@block.outer",
       },
       goto_next_end = {
-        ["]M"] = "@function.outer",
+        -- ["]M"] = "@function.outer",
+        ["]F"] = "@function.outer",
         ["]["] = "@class.outer",
+        ["]A"] = "@parameter.inner",
+        ["]O"] = "@comment.outer",
+        ["]B"] = "@block.outer",
       },
       goto_previous_start = {
-        ["[m"] = "@function.outer",
+        -- ["[m"] = "@function.outer",
+        ["[f"] = "@function.outer",
         ["[["] = "@class.outer",
+        ["[a"] = "@parameter.inner",
+        ["[o"] = "@comment.outer",
+        ["[b"] = "@block.outer",
       },
       goto_previous_end = {
-        ["[M"] = "@function.outer",
+        -- ["[M"] = "@function.outer",
+        ["[F"] = "@function.outer",
         ["[]"] = "@class.outer",
+        ["[A"] = "@parameter.inner",
+        ["[O"] = "@comment.outer",
+        ["[B"] = "@block.outer",
       },
     },
     lsp_interop = {
