@@ -320,6 +320,14 @@ return require("packer").startup(function(use)
       require("rust-tools").setup {
         server = {
           on_attach = require("cfg.lsp").on_attach,
+          settings = {
+            ["rust-analyzer"] = {
+              checkOnSave = {
+                -- NOTE: This might not include all features and targets.
+                command = "clippy",
+              },
+            },
+          },
         },
       }
     end,
