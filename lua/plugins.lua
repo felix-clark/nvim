@@ -103,19 +103,23 @@ return require("packer").startup(function(use)
 
           -- Actions
           -- These bindings are a backup in case the hydra fails, or in case it hasn't loaded yet
-          map({"n", "v"}, "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>")
-          map({"n", "v"}, "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>")
+          map({ "n", "v" }, "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>")
+          map({ "n", "v" }, "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>")
           map("n", "<leader>gS", gs.stage_buffer)
           map("n", "<leader>gu", gs.undo_stage_hunk)
           map("n", "<leader>gR", gs.reset_buffer)
           map("n", "<leader>gp", gs.preview_hunk)
-          map("n", "<leader>gb", function() gs.blame_line{full=true} end)
+          map("n", "<leader>gb", function()
+            gs.blame_line { full = true }
+          end)
           map("n", "<leader>gd", gs.diffthis)
-          map("n", "<leader>gD", function() gs.diffthis("~") end)
+          map("n", "<leader>gD", function()
+            gs.diffthis "~"
+          end)
           -- NOTE: toggle blame and deleted are defined in which-key
 
           -- Text object
-          map({"o", "x"}, "ih", ":<C-u>Gitsigns select_hunk<cr>")
+          map({ "o", "x" }, "ih", ":<C-u>Gitsigns select_hunk<cr>")
         end,
       }
     end,
