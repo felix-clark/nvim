@@ -14,7 +14,7 @@ end
 
 check_dl_packer()
 
-return require("packer").startup(function(use)
+return require("packer").startup({function(use)
   -- Packer can manage itself
   use "wbthomason/packer.nvim"
 
@@ -366,4 +366,12 @@ return require("packer").startup(function(use)
       require("onedark").load()
     end,
   }
-end)
+end,
+config = {
+  profile = {
+    enable = true,
+    -- amount of time in ms a plugin must be over
+    threshold = 1,
+  },
+},
+})
