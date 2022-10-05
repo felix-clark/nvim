@@ -176,6 +176,8 @@ return require("packer").startup({function(use)
   use {
     "nvim-telescope/telescope-frecency.nvim",
     requires = { "telescope.nvim", "tami5/sqlite.lua", { "nvim-web-devicons", opt = true } },
+    -- lazy-load when we open the file tree. waiting until <leader>fr doesn't work properly.
+    keys = { "<leader>f" },
     config = function()
       require("telescope").load_extension "frecency"
     end,
