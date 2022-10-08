@@ -109,7 +109,7 @@ local on_attach = function(client, bufnr)
   buf_map("n", "<leader>li", "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", "incoming calls [LSP]")
   buf_map("n", "<leader>lo", "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls [LSP]")
 
-  if client.resolved_capabilities.document_formatting then
+  if client.server_capabilities.documentFormattingProvider then
     buf_map("n", "<leader>l=", "<cmd>lua vim.lsp.buf.formatting()<CR>", "format buffer [LSP]")
     buf_map(
       "n",
@@ -117,14 +117,14 @@ local on_attach = function(client, bufnr)
       "<cmd>lua require('cfg.lsp').toggle_format_on_save()<CR>",
       "toggle format on save [LSP]"
     )
-  elseif client.resolved_capabilities.document_range_formatting then
+  elseif client.server_capabilities.documentRangeFormattingProvider then
     buf_map("n", "<leader>l=", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", "format range [LSP]")
     -- NOTE: In this case a similar toggle functionality could be implemented,
     -- as toggle_format_on_save() but calling range_formatting instead
   end
 
   -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
+  if client.server_capabilities.documentHighlightProvider then
     vim.api.nvim_exec(
       [[
         augroup lsp_document_highlight
@@ -138,15 +138,19 @@ local on_attach = function(client, bufnr)
   end
 
   -- code lens
-  if client.resolved_capabilities.code_len then
-    buf_map("n", "<leader>lL", "<cmd>lua vim.lsp.codelens.run()<CR>", "code lens [LSP]")
-    vim.api.nvim_command[[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]]
-  end
+  -- NOTE: How do we check for capabilities in v0.8? Do we need to?
+  -- if client.resolved_capabilities.code_len then
+    -- buf_map("n", "<leader>lL", "<cmd>lua vim.lsp.codelens.run()<CR>", "code lens [LSP]")
+    -- vim.api.nvim_command[[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]]
+  -- end
 
   -- Set up lsp_signature for the buffer.
   -- This must be done in here in order to use toggle_key.
   require("lsp_signature").on_attach({
     bind = true,
+    -- This should be toggled by toggle_key. Default to false because it's
+    -- invasive, but allow C-s to turn it on.
+    floating_window = false,
     hint_prefix = " ",
     toggle_key = "<C-s>",
   }, bufnr)

@@ -98,8 +98,16 @@ return require("packer").startup({function(use)
             vim.keymap.set(mode, l, r, opts)
           end
           -- Navigation
-          map("n", "]g", "&diff ? ']g' : '<cmd>Gitsigns next_hunk<cr>'", { expr = true })
-          map("n", "[g", "&diff ? '[g' : '<cmd>Gitsigns prev_hunk<cr>'", { expr = true })
+          map("n", "]g", function ()
+            if vim.wo.diff then return "]g" end
+            vim.schedule(function() gs.next_hunk() end)
+            return "<Ignore>"
+          end, { expr = true })
+          map("n", "[g", function ()
+            if vim.wo.diff then return "[g" end
+            vim.schedule(function() gs.prev_hunk() end)
+            return "<Ignore>"
+          end, { expr = true })
 
           -- Actions
           -- These bindings are a backup in case the hydra fails, or in case it hasn't loaded yet
@@ -234,7 +242,7 @@ return require("packer").startup({function(use)
   }
 
   -- Show LSP call signature in completion window.
-  -- Toggle with <C-s> (configured in cfg.lsp)
+  -- Toggle with <C-s> (configured in cfg/lsp.lua)
   use {
     "ray-x/lsp_signature.nvim",
   }
