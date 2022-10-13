@@ -117,6 +117,7 @@ local on_attach = function(client, bufnr)
       "<cmd>lua require('cfg.lsp').toggle_format_on_save()<CR>",
       "toggle format on save [LSP]"
     )
+  end
 
   -- Set autocommands conditional on server_capabilities
   if client.server_capabilities.documentHighlightProvider then
