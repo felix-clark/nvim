@@ -19,7 +19,7 @@ local toggle_format_on_save = function()
     vim.cmd [[
       augroup autofmt
       autocmd!
-      autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()
+      autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
       augroup END
     ]]
     print "Enabled format on save"
@@ -110,18 +110,13 @@ local on_attach = function(client, bufnr)
   buf_map("n", "<leader>lo", "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls [LSP]")
 
   if client.server_capabilities.documentFormattingProvider then
-    buf_map("n", "<leader>l=", "<cmd>lua vim.lsp.buf.formatting()<CR>", "format buffer [LSP]")
+    buf_map("n", "<leader>l=", "<cmd>lua vim.lsp.buf.format({async=true})<CR>", "format buffer (async) [LSP]")
     buf_map(
       "n",
       "<leader>t=",
       "<cmd>lua require('cfg.lsp').toggle_format_on_save()<CR>",
       "toggle format on save [LSP]"
     )
-  elseif client.server_capabilities.documentRangeFormattingProvider then
-    buf_map("n", "<leader>l=", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", "format range [LSP]")
-    -- NOTE: In this case a similar toggle functionality could be implemented,
-    -- as toggle_format_on_save() but calling range_formatting instead
-  end
 
   -- Set autocommands conditional on server_capabilities
   if client.server_capabilities.documentHighlightProvider then
