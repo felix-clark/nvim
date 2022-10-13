@@ -269,8 +269,8 @@ local function make_config()
     on_attach = on_attach,
     -- added from nvim-lspconfig suggestions
     -- flags = {
-      -- Should be default of 150 in nvim 0.7+
-      -- debounce_text_changes = 200,
+    -- Should be default of 150 in nvim 0.7+
+    -- debounce_text_changes = 200,
     -- },
   }
 end
