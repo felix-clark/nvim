@@ -59,6 +59,10 @@ return require("packer").startup({function(use)
     after = "nvim-cmp",
   }
 
+  -- ensure devicons are installed. If this isn't made explicit some dependents
+  -- don't find it (e.g. trouble)
+  use "kyazdani42/nvim-web-devicons" 
+
   -- Allows command line linters and formatters to interact like LSP clients
   use {
     "jose-elias-alvarez/null-ls.nvim",
