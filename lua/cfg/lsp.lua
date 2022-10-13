@@ -1,6 +1,6 @@
 -- Most of this config is taken from wiki for nvim-lspinstall.
 -- Some additions from the lsp-status documentation.
--- local nvim_lsp = require "lspconfig"
+local nvim_lsp = require "lspconfig"
 local lsp_status = require "lsp-status"
 
 -- We're getting diagnostics from nvim_lsp
@@ -37,12 +37,13 @@ local on_attach = function(client, bufnr)
     vim.keymap.set(mode, lhs, rhs, opts)
   end
 
-  --Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  -- NOTE: Omnifunc should not be used concurrently with nvim-cmp.
+  -- Uncomment to enable completion triggered by <c-x><c-o>
+  -- vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_map("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", "goto declaration [LSP]")
-  buf_map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', "goto definition [LSP]")
+  buf_map("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", "goto definition [LSP]")
   -- Why use telescope for this?
   -- buf_map("n", "gd", "<Cmd>Telescope lsp_definitions<CR>", "goto definition [LSP]")
   buf_map("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", "hover information [LSP]")
@@ -73,7 +74,12 @@ local on_attach = function(client, bufnr)
   buf_map("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<CR>", "type definitions [LSP]")
   buf_map("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", "rename [LSP]")
   buf_map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", "code actions [LSP]")
-  buf_map("v", "<leader>ca", "<cmd>lua vim.lsp.buf.range_code_action()<CR>", "range code actions [LSP]")
+  buf_map(
+    "v",
+    "<leader>ca",
+    "<cmd>lua vim.lsp.buf.range_code_action()<CR>",
+    "range code actions [LSP]"
+  )
   -- buf_set_keymap('n', '<leader>lgr', '<cmd>lua vim.lsp.buf.references()<CR>', "references [LSP]")
   buf_map("n", "<leader>lgr", "<cmd>Telescope lsp_references<CR>", "references [LSP]")
   buf_map("n", "<leader>lgs", "<cmd>Telescope lsp_document_symbols<CR>", "document symbols [LSP]")
@@ -101,8 +107,18 @@ local on_attach = function(client, bufnr)
   )
   buf_map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", "goto previous diagnostic [LSP]")
   buf_map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", "goto next diagnostic [LSP]")
-  buf_map("n", "<leader>lq", "<cmd>lua vim.diagnostic.setqflist()<CR>", "send diagnostics to quickfix [LSP]")
-  buf_map("n", "<leader>lQ", "<cmd>lua vim.diagnostic.setloclist()<CR>", "send diagnostics to loclist [LSP]")
+  buf_map(
+    "n",
+    "<leader>lq",
+    "<cmd>lua vim.diagnostic.setqflist()<CR>",
+    "send diagnostics to quickfix [LSP]"
+  )
+  buf_map(
+    "n",
+    "<leader>lQ",
+    "<cmd>lua vim.diagnostic.setloclist()<CR>",
+    "send diagnostics to loclist [LSP]"
+  )
   -- These require textDocument/prepareCallHierarchy.
   -- litee-calltree provides these.
   -- TODO: Figure out what document capabilities can be queried to only set these when available.
@@ -110,7 +126,12 @@ local on_attach = function(client, bufnr)
   buf_map("n", "<leader>lo", "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls [LSP]")
 
   if client.server_capabilities.documentFormattingProvider then
-    buf_map("n", "<leader>l=", "<cmd>lua vim.lsp.buf.format({async=true})<CR>", "format buffer (async) [LSP]")
+    buf_map(
+      "n",
+      "<leader>l=",
+      "<cmd>lua vim.lsp.buf.format({async=true})<CR>",
+      "format buffer (async) [LSP]"
+    )
     buf_map(
       "n",
       "<leader>t=",
@@ -136,8 +157,8 @@ local on_attach = function(client, bufnr)
   -- code lens
   -- NOTE: How do we check for capabilities in v0.8? Do we need to?
   -- if client.resolved_capabilities.code_len then
-    -- buf_map("n", "<leader>lL", "<cmd>lua vim.lsp.codelens.run()<CR>", "code lens [LSP]")
-    -- vim.api.nvim_command[[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]]
+  -- buf_map("n", "<leader>lL", "<cmd>lua vim.lsp.codelens.run()<CR>", "code lens [LSP]")
+  -- vim.api.nvim_command[[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]]
   -- end
 
   -- Set up lsp_signature for the buffer.
@@ -247,17 +268,19 @@ local function make_config()
     -- map buffer local keybindings when the language server attaches
     on_attach = on_attach,
     -- added from nvim-lspconfig suggestions
-    flags = {
-      -- Should be default of 150 in nvim 0.7
-      debounce_text_changes = 200,
-    },
+    -- flags = {
+      -- Should be default of 150 in nvim 0.7+
+      -- debounce_text_changes = 200,
+    -- },
   }
 end
 
 -- lsp-installer
 local lsp_installer = require "nvim-lsp-installer"
--- TODO: This approach is deprecated, see nvim-lsp-installer for update
-lsp_installer.on_server_ready(function(server)
+lsp_installer.setup {}
+
+-- NOTE: rust-tools sets up rust-analyzer, so don't install it through LspInstall
+for _, server in ipairs(lsp_installer.get_installed_servers()) do
   local config = make_config()
 
   -- language specific config
@@ -275,11 +298,8 @@ lsp_installer.on_server_ready(function(server)
     config.filetypes = { "c", "cpp" } -- we don't want objective-c and objective-cpp!
   end
 
-  -- server:setup should be the same as this:
-  -- nvim_lsp[server].setup(config)
-  server:setup(config)
-  vim.cmd [[do User LspAttachBuffers]]
-end)
+  nvim_lsp[server.name].setup(config)
+end
 
 local lsp = {}
 -- export this so it can be passed to null-ls and rust-tools
