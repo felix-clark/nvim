@@ -61,7 +61,7 @@ return require("packer").startup({function(use)
 
   -- ensure devicons are installed. If this isn't made explicit some dependents
   -- don't find it (e.g. trouble)
-  use "kyazdani42/nvim-web-devicons" 
+  use "kyazdani42/nvim-web-devicons"
 
   -- Allows command line linters and formatters to interact like LSP clients
   use {
@@ -217,12 +217,29 @@ return require("packer").startup({function(use)
   use { "p00f/nvim-ts-rainbow", requires = "nvim-treesitter" }
 
   -- LSP functionality
-  use { "williamboman/nvim-lsp-installer", requires = "nvim-lspconfig" }
+  use { "williamboman/mason.nvim",
+      config = function()
+        require("mason").setup()
+      end
+    }
+  use {
+    "williamboman/mason-lspconfig.nvim",
+    requires = {"mason.nvim", "nvim-lspconfig"},
+    after = { "mason.nvim" },
+    config = function()
+      require("mason-lspconfig").setup({
+        ensure_installed = { "sumneko_lua" },
+        -- If enabled, this will install servers configured in lspconfig. Can
+        -- also be set to exclude specific servers (e.g. "rust-analyzer").
+        automatic_installation = false,
+      })
+    end,
+  }
   use "nvim-lua/lsp-status.nvim"
   use {
     "neovim/nvim-lspconfig",
     -- These packages require some configuration in cfg.lsp
-    after = { "nvim-cmp", "lsp_signature.nvim" },
+    after = { "nvim-cmp", "lsp_signature.nvim", "mason-lspconfig.nvim" },
     config = function()
       require "cfg.lsp"
     end,
@@ -242,6 +259,15 @@ return require("packer").startup({function(use)
     requires = "litee.nvim",
     config = function()
       require("litee.calltree").setup()
+    end,
+  }
+  -- litee-symboltree for tree-based symbol navigation
+  use {
+    "ldelossa/litee-symboltree.nvim",
+    requires = "litee.nvim",
+    after = "litee.nvim",
+    config = function()
+      require("litee.symboltree").setup()
     end,
   }
 

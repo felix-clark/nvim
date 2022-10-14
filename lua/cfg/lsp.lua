@@ -124,6 +124,8 @@ local on_attach = function(client, bufnr)
   -- TODO: Figure out what document capabilities can be queried to only set these when available.
   buf_map("n", "<leader>li", "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", "incoming calls [LSP]")
   buf_map("n", "<leader>lo", "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls [LSP]")
+  -- litee-symboltree adjusts this behavior
+  buf_map("n", "<leader>ls", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", "open symbol tree [LSP]")
 
   if client.server_capabilities.documentFormattingProvider then
     buf_map(
@@ -275,31 +277,28 @@ local function make_config()
   }
 end
 
--- lsp-installer
-local lsp_installer = require "nvim-lsp-installer"
-lsp_installer.setup {}
-
--- NOTE: rust-tools sets up rust-analyzer, so don't install it through LspInstall
-for _, server in ipairs(lsp_installer.get_installed_servers()) do
-  local config = make_config()
-
-  -- language specific config
-  if server.name == "sumneko_lua" then
+-- This setup_handlers API is used in place of looping through
+-- mason-lspconfig.get_installed_servers().
+require ("mason-lspconfig").setup_handlers({
+  -- The first entry (without a key) will be the default handler and will be
+  -- called for each installed server that doesn't have a dedicated handler.
+  function (server_name)
+    local config = make_config()
+    nvim_lsp[server_name].setup(config)
+  end,
+  -- Targetted overrides are provided with keys for specific servers.
+  ["sumneko_lua"] = function ()
+    local config = make_config()
     config.settings = make_lua_settings()
-  end
-  if server.name == "pyright" then
+    nvim_lsp.sumneko_lua.setup(config)
+  end,
+  ["pyright"] = function ()
+    local config = make_config()
     config.handlers = lsp_status.extensions.pyright.setup()
     config.settings = { python = { workspaceSymbols = { enabled = true } } }
+    nvim_lsp.pyright.setup(config)
   end
-  if server.name == "sourcekit" then
-    config.filetypes = { "swift", "objective-c", "objective-cpp" } -- we don't want c and cpp!
-  end
-  if server.name == "clangd" then
-    config.filetypes = { "c", "cpp" } -- we don't want objective-c and objective-cpp!
-  end
-
-  nvim_lsp[server.name].setup(config)
-end
+})
 
 local lsp = {}
 -- export this so it can be passed to null-ls and rust-tools
