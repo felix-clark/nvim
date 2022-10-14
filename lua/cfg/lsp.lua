@@ -277,28 +277,37 @@ local function make_config()
   }
 end
 
+local mason_lsp = require "mason-lspconfig"
+mason_lsp.setup {
+  -- bash requires npm/node which may not always be available.
+  -- ensure_installed = { "sumneko_lua", "bashls" },
+  ensure_installed = { "sumneko_lua" },
+  -- If enabled, this will install servers configured in lspconfig. Can
+  -- also be set to exclude specific servers (e.g. "rust-analyzer").
+  automatic_installation = false,
+}
 -- This setup_handlers API is used in place of looping through
 -- mason-lspconfig.get_installed_servers().
-require ("mason-lspconfig").setup_handlers({
+mason_lsp.setup_handlers {
   -- The first entry (without a key) will be the default handler and will be
   -- called for each installed server that doesn't have a dedicated handler.
-  function (server_name)
+  function(server_name)
     local config = make_config()
     nvim_lsp[server_name].setup(config)
   end,
   -- Targetted overrides are provided with keys for specific servers.
-  ["sumneko_lua"] = function ()
+  ["sumneko_lua"] = function()
     local config = make_config()
     config.settings = make_lua_settings()
     nvim_lsp.sumneko_lua.setup(config)
   end,
-  ["pyright"] = function ()
+  ["pyright"] = function()
     local config = make_config()
     config.handlers = lsp_status.extensions.pyright.setup()
     config.settings = { python = { workspaceSymbols = { enabled = true } } }
     nvim_lsp.pyright.setup(config)
-  end
-})
+  end,
+}
 
 local lsp = {}
 -- export this so it can be passed to null-ls and rust-tools

@@ -14,7 +14,7 @@ end
 
 check_dl_packer()
 
-return require("packer").startup({function(use)
+return require("packer").startup({ function(use)
   -- Packer can manage itself
   use "wbthomason/packer.nvim"
 
@@ -101,13 +101,14 @@ return require("packer").startup({function(use)
             opts.buffer = bufnr
             vim.keymap.set(mode, l, r, opts)
           end
+
           -- Navigation
-          map("n", "]g", function ()
+          map("n", "]g", function()
             if vim.wo.diff then return "]g" end
             vim.schedule(function() gs.next_hunk() end)
             return "<Ignore>"
           end, { expr = true })
-          map("n", "[g", function ()
+          map("n", "[g", function()
             if vim.wo.diff then return "[g" end
             vim.schedule(function() gs.prev_hunk() end)
             return "<Ignore>"
@@ -218,22 +219,14 @@ return require("packer").startup({function(use)
 
   -- LSP functionality
   use { "williamboman/mason.nvim",
-      config = function()
-        require("mason").setup()
-      end
-    }
+    config = function()
+      require("mason").setup()
+    end
+  }
   use {
     "williamboman/mason-lspconfig.nvim",
-    requires = {"mason.nvim", "nvim-lspconfig"},
+    requires = { "mason.nvim", "nvim-lspconfig" },
     after = { "mason.nvim" },
-    config = function()
-      require("mason-lspconfig").setup({
-        ensure_installed = { "sumneko_lua" },
-        -- If enabled, this will install servers configured in lspconfig. Can
-        -- also be set to exclude specific servers (e.g. "rust-analyzer").
-        automatic_installation = false,
-      })
-    end,
   }
   use "nvim-lua/lsp-status.nvim"
   use {
@@ -407,11 +400,11 @@ return require("packer").startup({function(use)
     end,
   }
 end,
-config = {
-  profile = {
-    enable = true,
-    -- amount of time in ms a plugin must be over
-    threshold = 1,
+  config = {
+    profile = {
+      enable = true,
+      -- amount of time in ms a plugin must be over
+      threshold = 1,
+    },
   },
-},
 })
