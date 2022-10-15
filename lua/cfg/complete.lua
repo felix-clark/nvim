@@ -1,6 +1,30 @@
 vim.o.completeopt = "menu,menuone,noselect"
 
 local cmp = require "cmp"
+local sources = cmp.config.sources {
+  { name = "nvim_lsp" },
+
+  -- For vsnip user.
+  { name = "vsnip" },
+
+  -- For luasnip user.
+  -- { name = 'luasnip' },
+
+  -- For ultisnips user.
+  -- { name = 'ultisnips' },
+
+  -- orgmode
+  { name = "orgmode" },
+
+  -- For neovim lua files
+  { name = "nvim_lua" },
+
+  -- Words already in buffer
+  { name = "buffer" },
+
+  { name = "path" },
+}
+
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -20,7 +44,11 @@ cmp.setup {
     ["<C-k>"] = cmp.mapping.select_prev_item(),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete({
+      config = {
+        sources = sources,
+      },
+    }), { "i", "c" }),
     ["<C-e>"] = cmp.mapping {
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
@@ -41,27 +69,5 @@ cmp.setup {
       end
     end,
   },
-  sources = cmp.config.sources {
-    { name = "nvim_lsp" },
-
-    -- For vsnip user.
-    { name = "vsnip" },
-
-    -- For luasnip user.
-    -- { name = 'luasnip' },
-
-    -- For ultisnips user.
-    -- { name = 'ultisnips' },
-
-    -- orgmode
-    { name = "orgmode" },
-
-    -- For neovim lua files
-    { name = "nvim_lua" },
-
-    -- Words already in buffer
-    { name = "buffer" },
-
-    { name = "path" },
-  },
+  sources = sources,
 }

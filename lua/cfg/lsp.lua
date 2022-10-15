@@ -259,17 +259,15 @@ end
 
 -- config that activates keymaps and enables snippet support
 local function make_config()
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
   -- advertise completion capabilities.
   -- This includes snippet support.
-  capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+  local capabilities = require("cmp_nvim_lsp").default_capabilities()
   -- Add window/workDoneProgress capabilities from lsp-status
   capabilities = vim.tbl_extend("keep", capabilities, lsp_status.capabilities)
   return {
     capabilities = capabilities,
     -- map buffer local keybindings when the language server attaches
     on_attach = on_attach,
-    -- added from nvim-lspconfig suggestions
     -- flags = {
     -- Should be default of 150 in nvim 0.7+
     -- debounce_text_changes = 200,
@@ -301,6 +299,22 @@ mason_lsp.setup_handlers {
     config.settings = make_lua_settings()
     nvim_lsp.sumneko_lua.setup(config)
   end,
+  ["rust_analyzer"] = function()
+    require("rust-tools").setup {
+      server = {
+        on_attach = on_attach,
+        settings = {
+          ["rust-analyzer"] = {
+            checkOnSave = {
+              -- NOTE: This might not include all features and targets.
+              -- May need to add `--all targets`.
+              command = "clippy",
+            },
+          },
+        },
+      },
+    }
+  end,
   ["pyright"] = function()
     local config = make_config()
     config.handlers = lsp_status.extensions.pyright.setup()
@@ -309,8 +323,8 @@ mason_lsp.setup_handlers {
   end,
 }
 
-local lsp = {}
--- export this so it can be passed to null-ls and rust-tools
-lsp.on_attach = on_attach
-lsp.toggle_format_on_save = toggle_format_on_save
-return lsp
+local M = {}
+-- export this so it can be passed to null-ls
+M.on_attach = on_attach
+M.toggle_format_on_save = toggle_format_on_save
+return M

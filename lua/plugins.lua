@@ -171,13 +171,14 @@ return require("packer").startup({ function(use)
       require "cfg.telescope"
     end,
   }
-  use {
-    "nvim-telescope/telescope-project.nvim",
-    requires = "telescope.nvim",
-    config = function()
-      require("telescope").load_extension "project"
-    end,
-  }
+  -- I don't really use project management and it has a slow-ish startup time.
+  -- use {
+  --   "nvim-telescope/telescope-project.nvim",
+  --   requires = "telescope.nvim",
+  --   config = function()
+  --     require("telescope").load_extension "project"
+  --   end,
+  -- }
   use {
     "nvim-telescope/telescope-fzf-native.nvim",
     run = "make",
@@ -344,26 +345,12 @@ return require("packer").startup({ function(use)
   use { "fladson/vim-kitty", ft = "kitty" }
 
   -- This configures and sets up LSP using the rust-analyzer found in $PATH.
-  -- Thus, we should not call `:LspInstall rust` to configure it as part of our
+  -- Thus, we may not need to `:LspInstall rust` to configure it as part of our
   -- LSP client setup.
   use {
     "simrat39/rust-tools.nvim",
-    ft = "rust",
-    config = function()
-      require("rust-tools").setup {
-        server = {
-          on_attach = require("cfg.lsp").on_attach,
-          settings = {
-            ["rust-analyzer"] = {
-              checkOnSave = {
-                -- NOTE: This might not include all features and targets.
-                command = "clippy",
-              },
-            },
-          },
-        },
-      }
-    end,
+    -- mason-lspconfig *should* handle the file type
+    -- ft = "rust",
     requires = {
       "nvim-lspconfig",
       { "popup.nvim", opt = true },
