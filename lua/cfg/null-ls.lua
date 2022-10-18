@@ -9,8 +9,8 @@ null_ls.setup {
 
     -- Python
     -- NOTE: The main ones here can all be included in the pylsp installation
-    -- with nvim-lsp-installer:
-    -- https://github.com/williamboman/nvim-lsp-installer/blob/main/lua/nvim-lsp-installer/servers/pylsp/README.md
+    -- with mason:
+    -- https://github.com/williamboman/mason-lspconfig.nvim/blob/main/lua/mason-lspconfig/server_configurations/pylsp/README.md
     -- null_ls.builtins.formatting.autopep8,
     -- null_ls.builtins.formatting.black,
     -- null_ls.builtins.formatting.isort,
