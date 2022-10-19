@@ -38,9 +38,25 @@ return require("packer").startup({ function(use)
 
   -- A more opinionated motion plugin
   use {
-    "ggandor/lightspeed.nvim",
+    "ggandor/leap.nvim",
     requires = { "tpope/vim-repeat" },
+    config = function()
+      require("leap").add_default_mappings()
+    end,
   }
+  -- improved f/F/t/T motions; however note that ';,' navigation (as in vim) is
+  -- not yet integrated; instead the f/F/t/T key is repeated.
+  use {
+    "ggandor/flit.nvim",
+    requires = { "leap.nvim" },
+    config = function()
+      require("flit").setup{
+        -- default is only in visual mode
+        labeled_modes = "nvo"
+      }
+    end
+  }
+  -- NOTE: there is a leap-ast plugin as well but it is very incomplete
 
   use {
     "numToStr/Comment.nvim",
