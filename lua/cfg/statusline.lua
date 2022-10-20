@@ -1,5 +1,8 @@
 require("lualine").setup {
-  options = { theme = "onedark" },
+  -- options = { theme = "onedark" },
+  -- options = { theme = "catppuccin" },
+  -- auto seems to work fine:
+  options = { theme = "auto" },
   sections = {
     lualine_b = { "branch", "diff" },
     lualine_c = {
