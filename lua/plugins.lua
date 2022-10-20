@@ -27,6 +27,39 @@ return require("packer").startup({ function(use)
   -- Expanded text objects
   use "wellle/targets.vim"
 
+  -- theme
+  -- use {
+  --   "navarasu/onedark.nvim",
+  --   config = function()
+  --     require("onedark").setup {
+  --       style = "darker",
+  --       toggle_style_key = "<leader>ts",
+  --       -- can use `toggle_style_list` to pick the styles that are toggled
+  --     }
+  --     require("onedark").load()
+  --   end,
+  -- }
+  use {
+    "catppuccin/nvim",
+    as = "catppuccin",
+    config = function ()
+      -- "latte", "frappe", "macchiato", "mocha"
+      vim.g.catppuccin_flavour = "macchiato"
+      require("catppuccin").setup({
+        integrations = {
+          -- dap = {
+          --   enabled = true,
+          --   enable_ui = true, -- nvim-dap-ui
+          -- },
+          native_lsp = {
+            enabled = true,
+          },
+        }
+      })
+      vim.api.nvim_command("colorscheme catppuccin")
+    end
+  }
+
   -- Easymotion reimplementation
   use {
     "phaazon/hop.nvim",
@@ -158,7 +191,7 @@ return require("packer").startup({ function(use)
   use {
     "nvim-lualine/lualine.nvim",
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
-    after = "onedark.nvim",
+    after = "catppuccin",
     config = function()
       require "cfg.statusline"
     end,
@@ -354,6 +387,7 @@ return require("packer").startup({ function(use)
   -- Debugging isn't really configured right now, although rust-tools may do
   -- some setup.
   use { "mfussenegger/nvim-dap", keys = { "<leader>d" } }
+  -- TODO: nvim-dap-ui. don't forget theme integration.
 
   -- Language-specific
 
@@ -390,18 +424,6 @@ return require("packer").startup({ function(use)
     end,
   }
 
-  -- theme
-  use {
-    "navarasu/onedark.nvim",
-    config = function()
-      require("onedark").setup {
-        style = "darker",
-        toggle_style_key = "<leader>ts",
-        -- can use `toggle_style_list` to pick the styles that are toggled
-      }
-      require("onedark").load()
-    end,
-  }
 end,
   config = {
     profile = {
