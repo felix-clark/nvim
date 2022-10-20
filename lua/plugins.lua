@@ -52,7 +52,7 @@ return require("packer").startup({ function(use)
     config = function()
       require("flit").setup{
         -- default is only in visual mode
-        labeled_modes = "nvo"
+        labeled_modes = "nv"
       }
     end
   }
