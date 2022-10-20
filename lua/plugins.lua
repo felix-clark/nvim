@@ -191,7 +191,6 @@ return require("packer").startup({ function(use)
   use {
     "nvim-lualine/lualine.nvim",
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
-    -- after = "onedark.nvim",
     after = "catppuccin",
     config = function()
       require "cfg.statusline"
