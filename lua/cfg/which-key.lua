@@ -130,7 +130,7 @@ wk.register({
     l = { "<cmd>set relativenumber!<cr>", "Switch line number style" },
     p = { "<cmd>lua require('cfg.autopairs').toggle_autopairs()<cr>", "Toggle autopairs" },
     t = { "<cmd>NvimTreeToggle<cr>", "Project tree" },
-    s = { "<cmd>lua require('onedark').toggle()<cr>", "Toggle color scheme" },
+    -- s = { "<cmd>lua require('onedark').toggle()<cr>", "Toggle color scheme" },
     b = { "<cmd>lua require('gitsigns').toggle_current_line_blame()<cr>", "Toggle git blame" },
     g = { "<cmd>lua require('gitsigns').toggle_signs()<cr>", "Toggle git signs" },
   },
