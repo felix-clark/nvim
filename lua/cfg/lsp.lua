@@ -236,10 +236,9 @@ end
 
 -- config that activates keymaps and enables snippet support
 local function make_config()
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
   -- advertise completion capabilities.
   -- This includes snippet support.
-  capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+  local capabilities = require("cmp_nvim_lsp").default_capabilities()
   -- Add window/workDoneProgress capabilities from lsp-status
   capabilities = vim.tbl_extend("keep", capabilities, lsp_status.capabilities)
   return {
