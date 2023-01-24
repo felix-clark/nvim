@@ -65,6 +65,7 @@ return require("packer").startup(function(use)
   -- Allows command line linters and formatters to interact like LSP clients
   use {
     "jose-elias-alvarez/null-ls.nvim",
+    branch = "0.7-compat",
     requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     after = { "nvim-lspconfig" },
     config = function()
@@ -193,6 +194,7 @@ return require("packer").startup(function(use)
 
   use {
     "nvim-treesitter/nvim-treesitter",
+    commit = "69388e8",
     run = ":TSUpdate",
     config = function()
       require "cfg.treesitter"
