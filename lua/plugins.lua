@@ -37,46 +37,6 @@ return require("packer").startup {
         vim.cmd "colorscheme kanagawa"
       end,
     }
-    -- use {
-    --   "navarasu/onedark.nvim",
-    --   config = function()
-    --     require("onedark").setup {
-    --       style = "darker",
-    --       toggle_style_key = "<leader>ts",
-    --       -- can use `toggle_style_list` to pick the styles that are toggled
-    --     }
-    --     require("onedark").load()
-    --   end,
-    -- }
-    -- use {
-    --   "catppuccin/nvim",
-    --   as = "catppuccin",
-    --   config = function ()
-    --     -- "latte", "frappe", "macchiato", "mocha"
-    --     vim.g.catppuccin_flavour = "macchiato"
-    --     require("catppuccin").setup({
-    --       integrations = {
-    --         -- dap = {
-    --         --   enabled = true,
-    --         --   enable_ui = true, -- nvim-dap-ui
-    --         -- },
-    --         native_lsp = {
-    --           enabled = true,
-    --         },
-    --       }
-    --     })
-    --     vim.api.nvim_command("colorscheme catppuccin")
-    --   end
-    -- }
-
-    -- Easymotion reimplementation
-    use {
-      "phaazon/hop.nvim",
-      as = "hop",
-      config = function()
-        require("hop").setup()
-      end,
-    }
 
     -- A more opinionated motion plugin
     use {
