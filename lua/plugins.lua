@@ -46,8 +46,7 @@ return require("packer").startup {
         require("leap").add_default_mappings()
       end,
     }
-    -- improved f/F/t/T motions; however note that ';,' navigation (as in vim) is
-    -- not yet integrated; instead the f/F/t/T key is repeated.
+    -- improved f/F/t/T motions that extend leap.nvim for single-character jumps
     use {
       "ggandor/flit.nvim",
       requires = { "leap.nvim" },
