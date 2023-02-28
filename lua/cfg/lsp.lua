@@ -278,8 +278,8 @@ end
 local mason_lsp = require "mason-lspconfig"
 mason_lsp.setup {
   -- bash requires npm/node which may not always be available.
-  -- ensure_installed = { "sumneko_lua", "bashls" },
-  ensure_installed = { "sumneko_lua" },
+  -- ensure_installed = { "lua_ls", "bashls" },
+  ensure_installed = { "lua_ls" },
   -- If enabled, this will install servers configured in lspconfig. Can
   -- also be set to exclude specific servers (e.g. "rust-analyzer").
   automatic_installation = false,
@@ -294,10 +294,10 @@ mason_lsp.setup_handlers {
     nvim_lsp[server_name].setup(config)
   end,
   -- Targetted overrides are provided with keys for specific servers.
-  ["sumneko_lua"] = function()
+  ["lua_ls"] = function()
     local config = make_config()
     config.settings = make_lua_settings()
-    nvim_lsp.sumneko_lua.setup(config)
+    nvim_lsp.lua_ls.setup(config)
   end,
   ["rust_analyzer"] = function()
     require("rust-tools").setup {
