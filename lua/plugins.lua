@@ -244,7 +244,7 @@ return require("packer").startup {
       requires = "nvim-treesitter",
     }
     use { "nvim-treesitter/nvim-treesitter-refactor", requires = "nvim-treesitter" }
-    use { "p00f/nvim-ts-rainbow", requires = "nvim-treesitter" }
+    use { "HiPhish/nvim-ts-rainbow2", requires = "nvim-treesitter" }
 
     -- LSP functionality
     use {
