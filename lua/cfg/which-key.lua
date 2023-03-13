@@ -1,23 +1,23 @@
 local wk = require "which-key"
 
--- These are common to both normal and visual mode
-local hop = {
-  name = "+hop",
-  ["/"] = { "<cmd>lua require'hop'.hint_patterns()<cr>", "Patterns" },
-  c = { "<cmd>lua require'hop'.hint_char1()<cr>", "Characters" },
-  f = { "<cmd>HopChar1CurrentLineAC<cr>", "Forward line character" },
-  F = { "<cmd>HopChar1CurrentLineBC<cr>", "Back line character" },
-  j = { "<cmd>HopLineStartAC<cr>", "Lines down" },
-  k = { "<cmd>HopLineStartBC<cr>", "Lines up" },
-  s = { "<cmd>lua require'hop'.hint_char2()<cr>", "Bigrams" },
-  -- This will search all words; could split between forward and backwards
-  -- with HopWord[AC|BC]
-  w = { "<cmd>lua require'hop'.hint_words()<cr>", "Words" },
-}
+-- -- These are common to both normal and visual mode
+-- local hop = {
+--   name = "+hop",
+--   ["/"] = { "<cmd>lua require'hop'.hint_patterns()<cr>", "Patterns" },
+--   c = { "<cmd>lua require'hop'.hint_char1()<cr>", "Characters" },
+--   f = { "<cmd>HopChar1CurrentLineAC<cr>", "Forward line character" },
+--   F = { "<cmd>HopChar1CurrentLineBC<cr>", "Back line character" },
+--   j = { "<cmd>HopLineStartAC<cr>", "Lines down" },
+--   k = { "<cmd>HopLineStartBC<cr>", "Lines up" },
+--   s = { "<cmd>lua require'hop'.hint_char2()<cr>", "Bigrams" },
+--   -- This will search all words; could split between forward and backwards
+--   -- with HopWord[AC|BC]
+--   w = { "<cmd>lua require'hop'.hint_words()<cr>", "Words" },
+-- }
 
 -- Mappings starting with leader key
 wk.register({
-  ["<space>"] = hop,
+  -- ["<space>"] = hop,
   b = {
     name = "+buffer",
     b = { "<cmd>Telescope buffers<cr>", "Switch buffer" },
