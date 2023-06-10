@@ -246,7 +246,7 @@ return require("packer").startup {
     use { "nvim-treesitter/nvim-treesitter-refactor", requires = "nvim-treesitter" }
     use { "HiPhish/nvim-ts-rainbow2", requires = "nvim-treesitter" }
 
-    -- LSP functionality
+    -- Mason for easy install of 3rd-party dependencies
     use {
       "williamboman/mason.nvim",
       config = function()
@@ -258,6 +258,7 @@ return require("packer").startup {
       requires = { "mason.nvim", "nvim-lspconfig" },
       after = { "mason.nvim" },
     }
+    -- LSP functionality
     use "nvim-lua/lsp-status.nvim"
     use {
       "neovim/nvim-lspconfig",
@@ -367,6 +368,16 @@ return require("packer").startup {
     -- Debugging isn't really configured right now, although rust-tools may do
     -- some setup.
     use { "mfussenegger/nvim-dap", keys = { "<leader>d" } }
+    -- integrate nvim-dap w/ mason
+    use {
+      "jay-babu/mason-nvim-dap.nvim",
+      after = "mason.nvim",
+      config = function()
+        require("mason-nvim-dap").setup {
+          ensure_installed = { "python" },
+        }
+      end,
+    }
     -- TODO: nvim-dap-ui. don't forget theme integration.
 
     -- Language-specific
