@@ -384,7 +384,7 @@ return require("packer").startup {
         "mfussenegger/nvim-dap-python",
         "nvim-telescope/telescope-dap.nvim",
       },
-      after = { "which-key" },
+      after = { "which-key.nvim" },
       config = function()
         require("cfg.dap").setup()
       end,

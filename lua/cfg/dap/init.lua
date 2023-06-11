@@ -49,7 +49,7 @@ local function configure_debuggers()
   require("cfg.dap.lua").setup()
   require("cfg.dap.python").setup()
   require("cfg.dap.rust").setup()
-  require("cfg.dap.go").setup()
+  -- require("cfg.dap.go").setup()
 end
 
 function M.setup()
@@ -59,6 +59,7 @@ function M.setup()
   require("cfg.dap.keymaps").setup() -- Keymaps
 end
 
-configure_debuggers()
+-- TODO: Shouldn't this be removed if the modele's setup() is called?
+-- configure_debuggers()
 
 return M
