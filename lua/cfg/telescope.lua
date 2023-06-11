@@ -29,12 +29,4 @@ require("telescope").setup {
     lsp_code_actions = { theme = "cursor" },
     lsp_range_code_actions = { theme = "cursor" },
   },
-  extensions = {
-    fzf = {
-      fuzzy = true,
-      override_generic_sorter = false,
-      override_file_sorter = true,
-      case_mode = "smart_case", -- or "ignore_case", "respect_case"
-    },
-  },
 }
