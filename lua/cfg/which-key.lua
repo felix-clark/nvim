@@ -188,7 +188,7 @@ wk.register({
 
 -- visual mode bindings
 wk.register({
-  ["<space>"] = hop,
+  -- ["<space>"] = hop,
   g = {
     name = "+git",
     r = "Revert selection",
