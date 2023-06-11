@@ -342,7 +342,6 @@ mason_lsp.setup_handlers {
         },
       },
       tools = {
-        -- NOTE: we don't have toggleterm installed?
         executor = require("rust-tools/executors").toggleterm,
         hover_actions = { border = "solid" },
         on_initialized = function()

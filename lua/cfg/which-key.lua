@@ -84,7 +84,7 @@ wk.register({
     },
     c = { "<cmd>:CTOpen<cr>", "call tree" },
     p = { "<cmd>split term://ytop -m<cr>", "ytop" },
-    t = { "<cmd>vsplit +term<cr>", "terminal" },
+    t = { "<cmd>ToggleTerm<cr>", "terminal" },
   },
   p = {
     name = "+project",

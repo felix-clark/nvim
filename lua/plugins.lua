@@ -246,6 +246,15 @@ return require("packer").startup {
     use { "nvim-treesitter/nvim-treesitter-refactor", requires = "nvim-treesitter" }
     use { "HiPhish/nvim-ts-rainbow2", requires = "nvim-treesitter" }
 
+    -- easy toggle terminal
+    use {
+      "akinsho/toggleterm.nvim",
+      tag = "*",
+      config = function()
+        require("toggleterm").setup()
+      end,
+    }
+
     -- better development of neovim lua configuration
     -- must be setup before lspconfig is, but after loading it.
     use {
@@ -373,21 +382,6 @@ return require("packer").startup {
     use "rafamadriz/friendly-snippets"
 
     -- Debugging with DAP
-    -- NOTE: These dependencies probably don't have to be explicit
-    use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
-    use {
-      "theHamsta/nvim-dap-virtual-text",
-      requires = { "mfussenegger/nvim-dap", "nvim-treesitter/nvim-treesitter" },
-      -- This is set up in cfg.dap
-    }
-    use {
-      "mfussenegger/nvim-dap-python",
-      requires = { "mfussenegger/nvim-dap" },
-    }
-    use {
-      "nvim-telescope/telescope-dap.nvim",
-      requires = { "mfussenegger/nvim-dap", "nvim-telescope/telescope.nvim"}
-    }
     use {
       "mfussenegger/nvim-dap",
       opt = true,
@@ -402,7 +396,13 @@ return require("packer").startup {
         "jbyuki/one-small-step-for-vimkind",
         "mfussenegger/nvim-dap-python",
       },
-      wants = { "nvim-dap-virtual-text", "nvim-dap-ui", "nvim-dap-python", "which-key.nvim", "telescope-dap.nvim" },
+      wants = {
+        "nvim-dap-virtual-text",
+        "nvim-dap-ui",
+        "nvim-dap-python",
+        "which-key.nvim",
+        "telescope-dap.nvim",
+      },
       config = function()
         require("cfg.dap").setup()
       end,
