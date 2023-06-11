@@ -246,6 +246,13 @@ return require("packer").startup {
     use { "nvim-treesitter/nvim-treesitter-refactor", requires = "nvim-treesitter" }
     use { "HiPhish/nvim-ts-rainbow2", requires = "nvim-treesitter" }
 
+    -- better development of neovim lua configuration
+    -- must be setup before lspconfig is, but after loading it.
+    use {
+      "folke/neodev.nvim",
+      before = "nvim-lspconfig",
+    }
+
     -- Mason for easy install of 3rd-party dependencies
     use {
       "williamboman/mason.nvim",
@@ -263,7 +270,7 @@ return require("packer").startup {
     use {
       "neovim/nvim-lspconfig",
       -- These packages require some configuration in cfg.lsp
-      after = { "nvim-cmp", "lsp_signature.nvim", "mason-lspconfig.nvim" },
+      after = { "nvim-cmp", "lsp_signature.nvim", "mason-lspconfig.nvim", "neodev.nvim" },
       config = function()
         require "cfg.lsp"
       end,

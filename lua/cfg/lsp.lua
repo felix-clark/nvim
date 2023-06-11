@@ -1,3 +1,6 @@
+-- neodev (for neovim lua) must be set up before LSP
+require("neodev").setup()
+
 -- Most of this config is taken from wiki for nvim-lspinstall.
 -- Some additions from the lsp-status documentation.
 local nvim_lsp = require "lspconfig"
@@ -142,18 +145,30 @@ local on_attach = function(client, bufnr)
     )
   end
 
-  -- Set autocommands conditional on server_capabilities
+  -- Highlight symbol under cursor (if capabilities exist)
   if client.server_capabilities.documentHighlightProvider then
-    vim.api.nvim_exec(
-      [[
-        augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold,CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-        augroup END
-      ]],
-      false
-    )
+    vim.cmd [[
+      hi! LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
+      hi! LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
+      hi! LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
+    ]]
+    vim.api.nvim_create_augroup('lsp_document_highlight', {
+      clear = false
+    })
+    vim.api.nvim_clear_autocmds({
+      buffer = bufnr,
+      group = 'lsp_document_highlight',
+    })
+    vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+      group = 'lsp_document_highlight',
+      buffer = bufnr,
+      callback = vim.lsp.buf.document_highlight,
+    })
+    vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+      group = 'lsp_document_highlight',
+      buffer = bufnr,
+      callback = vim.lsp.buf.clear_references,
+    })
   end
 
   -- code lens
@@ -226,36 +241,36 @@ vim.diagnostic.config {
   severity_sort = true,
 }
 
--- Lua language server configuration for neovim development
-local function make_lua_settings()
-  local runtime_path = vim.split(package.path, ";")
-  table.insert(runtime_path, "lua/?.lua")
-  table.insert(runtime_path, "lua/?/init.lua")
-
-  local lua_settings = {
-    Lua = {
-      runtime = {
-        -- LuaJIT in the case of Neovim
-        version = "LuaJIT",
-        -- Setup your lua path
-        path = runtime_path,
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = { "vim" },
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
-    },
-  }
-  return lua_settings
-end
+-- -- Lua language server configuration for neovim development
+-- local function make_lua_settings()
+--   local runtime_path = vim.split(package.path, ";")
+--   table.insert(runtime_path, "lua/?.lua")
+--   table.insert(runtime_path, "lua/?/init.lua")
+--
+--   local lua_settings = {
+--     Lua = {
+--       runtime = {
+--         -- LuaJIT in the case of Neovim
+--         version = "LuaJIT",
+--         -- Setup your lua path
+--         path = runtime_path,
+--       },
+--       diagnostics = {
+--         -- Get the language server to recognize the `vim` global
+--         globals = { "vim" },
+--       },
+--       workspace = {
+--         -- Make the server aware of Neovim runtime files
+--         library = vim.api.nvim_get_runtime_file("", true),
+--       },
+--       -- Do not send telemetry data containing a randomized but unique identifier
+--       telemetry = {
+--         enable = false,
+--       },
+--     },
+--   }
+--   return lua_settings
+-- end
 
 -- config that activates keymaps and enables snippet support
 local function make_config()
@@ -294,11 +309,11 @@ mason_lsp.setup_handlers {
     nvim_lsp[server_name].setup(config)
   end,
   -- Targetted overrides are provided with keys for specific servers.
-  ["lua_ls"] = function()
-    local config = make_config()
-    config.settings = make_lua_settings()
-    nvim_lsp.lua_ls.setup(config)
-  end,
+  -- ["lua_ls"] = function()
+  --   local config = make_config()
+  --   config.settings = make_lua_settings()
+  --   nvim_lsp.lua_ls.setup(config)
+  -- end,
   ["rust_analyzer"] = function()
     require("rust-tools").setup {
       server = {
