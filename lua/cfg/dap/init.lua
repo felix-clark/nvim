@@ -32,6 +32,8 @@ local function configure_exts()
     commented = true,
   }
 
+  require("telescope").load_extension("dap")
+
   local dap, dapui = require "dap", require "dapui"
   dapui.setup {} -- use default
   dap.listeners.after.event_initialized["dapui_config"] = function()
@@ -48,8 +50,7 @@ end
 local function configure_debuggers()
   require("cfg.dap.lua").setup()
   require("cfg.dap.python").setup()
-  require("cfg.dap.rust").setup()
-  -- require("cfg.dap.go").setup()
+  -- require("cfg.dap.rust").setup() -- the rust/rust-tools setup is done in mason's setup_handlers
 end
 
 function M.setup()
@@ -59,7 +60,7 @@ function M.setup()
   require("cfg.dap.keymaps").setup() -- Keymaps
 end
 
--- TODO: Shouldn't this be removed if the modele's setup() is called?
+-- TODO: Shouldn't this be removed if the model's setup() is called?
 -- configure_debuggers()
 
 return M

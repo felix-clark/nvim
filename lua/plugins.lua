@@ -372,19 +372,37 @@ return require("packer").startup {
     -- Add pre-defined snippets. Should this be a nvim-cmp requirement?
     use "rafamadriz/friendly-snippets"
 
-    -- Debugging isn't really configured right now, although rust-tools may do
-    -- some setup.
+    -- Debugging with DAP
+    -- NOTE: These dependencies probably don't have to be explicit
+    use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+    use {
+      "theHamsta/nvim-dap-virtual-text",
+      requires = { "mfussenegger/nvim-dap", "nvim-treesitter/nvim-treesitter" },
+      -- This is set up in cfg.dap
+    }
+    use {
+      "mfussenegger/nvim-dap-python",
+      requires = { "mfussenegger/nvim-dap" },
+    }
+    use {
+      "nvim-telescope/telescope-dap.nvim",
+      requires = { "mfussenegger/nvim-dap", "nvim-telescope/telescope.nvim"}
+    }
     use {
       "mfussenegger/nvim-dap",
-      -- keys = { "<leader>d" },
+      opt = true,
       event = "BufReadPre",
+      module = { "dap" },
       requires = {
+        -- UI dependencies
         "theHamsta/nvim-dap-virtual-text",
         "rcarriga/nvim-dap-ui",
-        "mfussenegger/nvim-dap-python",
         "nvim-telescope/telescope-dap.nvim",
+        -- language-specific dependencies
+        "jbyuki/one-small-step-for-vimkind",
+        "mfussenegger/nvim-dap-python",
       },
-      after = { "which-key.nvim" },
+      wants = { "nvim-dap-virtual-text", "nvim-dap-ui", "nvim-dap-python", "which-key.nvim", "telescope-dap.nvim" },
       config = function()
         require("cfg.dap").setup()
       end,
@@ -395,11 +413,10 @@ return require("packer").startup {
       after = "mason.nvim",
       config = function()
         require("mason-nvim-dap").setup {
-          ensure_installed = { "python" },
+          ensure_installed = { "codelldb", "python" },
         }
       end,
     }
-    -- TODO: nvim-dap-ui. don't forget theme integration.
 
     -- Language-specific
 

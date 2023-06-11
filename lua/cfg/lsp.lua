@@ -1,5 +1,7 @@
 -- neodev (for neovim lua) must be set up before LSP
-require("neodev").setup()
+require("neodev").setup {
+  library = { plugins = { "nvim-dap-ui" }, types = true },
+}
 
 -- Most of this config is taken from wiki for nvim-lspinstall.
 -- Some additions from the lsp-status documentation.
@@ -241,36 +243,36 @@ vim.diagnostic.config {
   severity_sort = true,
 }
 
--- -- Lua language server configuration for neovim development
--- local function make_lua_settings()
---   local runtime_path = vim.split(package.path, ";")
---   table.insert(runtime_path, "lua/?.lua")
---   table.insert(runtime_path, "lua/?/init.lua")
---
---   local lua_settings = {
---     Lua = {
---       runtime = {
---         -- LuaJIT in the case of Neovim
---         version = "LuaJIT",
---         -- Setup your lua path
---         path = runtime_path,
---       },
---       diagnostics = {
---         -- Get the language server to recognize the `vim` global
---         globals = { "vim" },
---       },
---       workspace = {
---         -- Make the server aware of Neovim runtime files
---         library = vim.api.nvim_get_runtime_file("", true),
---       },
---       -- Do not send telemetry data containing a randomized but unique identifier
---       telemetry = {
---         enable = false,
---       },
---     },
---   }
---   return lua_settings
--- end
+-- Lua language server configuration for neovim development
+local function make_lua_settings()
+  local runtime_path = vim.split(package.path, ";")
+  table.insert(runtime_path, "lua/?.lua")
+  table.insert(runtime_path, "lua/?/init.lua")
+
+  local lua_settings = {
+    Lua = {
+      runtime = {
+        -- LuaJIT in the case of Neovim
+        version = "LuaJIT",
+        -- Setup your lua path
+        path = runtime_path,
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { "vim" },
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+    },
+  }
+  return lua_settings
+end
 
 -- config that activates keymaps and enables snippet support
 local function make_config()
@@ -299,6 +301,10 @@ mason_lsp.setup {
   -- also be set to exclude specific servers (e.g. "rust-analyzer").
   automatic_installation = false,
 }
+
+-- Package installation folder
+local mason_install_root_dir = vim.fn.stdpath "data" .. "/mason"
+
 -- This setup_handlers API is used in place of looping through
 -- mason-lspconfig.get_installed_servers().
 mason_lsp.setup_handlers {
@@ -309,13 +315,19 @@ mason_lsp.setup_handlers {
     nvim_lsp[server_name].setup(config)
   end,
   -- Targetted overrides are provided with keys for specific servers.
-  -- Now leaning on neodev to set up lua LS
-  -- ["lua_ls"] = function()
-  --   local config = make_config()
-  --   config.settings = make_lua_settings()
-  --   nvim_lsp.lua_ls.setup(config)
-  -- end,
+  -- Now leaning on neodev to set up lua LS, but the pre-existing lua config
+  -- also prevents some prompts
+  ["lua_ls"] = function()
+    local config = make_config()
+    config.settings = make_lua_settings()
+    nvim_lsp.lua_ls.setup(config)
+  end,
   ["rust_analyzer"] = function()
+    -- https://github.com/simrat39/rust-tools.nvim/wiki/Debugging
+    -- https://alpha2phi.medium.com/neovim-for-beginners-packer-manager-plugin-e4d84d4c3451
+    local extension_path = mason_install_root_dir .. "/packages/codelldb/extension/"
+    local codelldb_path = extension_path .. "adapter/codelldb"
+    local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
     require("rust-tools").setup {
       server = {
         on_attach = on_attach,
@@ -328,6 +340,22 @@ mason_lsp.setup_handlers {
             },
           },
         },
+      },
+      tools = {
+        -- NOTE: we don't have toggleterm installed?
+        executor = require("rust-tools/executors").toggleterm,
+        hover_actions = { border = "solid" },
+        on_initialized = function()
+          vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertLeave" }, {
+            pattern = { "*.rs" },
+            callback = function()
+              vim.lsp.codelens.refresh()
+            end,
+          })
+        end,
+      },
+      dap = {
+        adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
       },
     }
   end,
