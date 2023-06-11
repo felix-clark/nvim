@@ -374,7 +374,20 @@ return require("packer").startup {
 
     -- Debugging isn't really configured right now, although rust-tools may do
     -- some setup.
-    use { "mfussenegger/nvim-dap", keys = { "<leader>d" } }
+    use {
+      "mfussenegger/nvim-dap",
+      -- keys = { "<leader>d" },
+      event = "BufReadPre",
+      requires = {
+        "theHamsta/nvim-dap-virtual-text",
+        "rcarriga/nvim-dap-ui",
+        "mfussenegger/nvim-dap-python",
+        "nvim-telescope/telescope-dap.nvim",
+      },
+      config = function()
+        require("cfg.dap").setup()
+      end,
+    }
     -- integrate nvim-dap w/ mason
     use {
       "jay-babu/mason-nvim-dap.nvim",
