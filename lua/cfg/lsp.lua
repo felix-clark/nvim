@@ -315,8 +315,8 @@ mason_lsp.setup_handlers {
     nvim_lsp[server_name].setup(config)
   end,
   -- Targetted overrides are provided with keys for specific servers.
-  -- Now leaning on neodev to set up lua LS, but the pre-existing lua config
-  -- also prevents some prompts
+  -- Now leaning on neodev to set up lua LS, but the pre-existing settings are
+  -- still useful
   ["lua_ls"] = function()
     local config = make_config()
     config.settings = make_lua_settings()
