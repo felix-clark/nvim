@@ -38,7 +38,7 @@ require("lazy").setup {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
-    config = function ()
+    config = function()
       require("nvim-surround").setup()
     end,
   },
@@ -220,8 +220,7 @@ require("lazy").setup {
   -- }
   {
     "nvim-telescope/telescope-fzf-native.nvim",
-    -- build = "make",
-    build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+    build = "make",
     dependencies = { "telescope.nvim" },
     config = function()
       require("telescope").load_extension "fzf"
