@@ -13,8 +13,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup {
 
-  -- Surround actions/objects
-  "tpope/vim-surround",
   -- Repeat plugin commands
   "tpope/vim-repeat",
   -- For compilation commands
@@ -34,6 +32,12 @@ require("lazy").setup {
       -- vim.api.nvim_set_keymap("n", "cw", "ce")
       -- vim.api.nvim_set_keymap("n", "cW", "cE")
     end,
+  },
+  -- Surround actions/objects, extension of tpope's vim-surround
+  {
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
   },
 
   -- theme
