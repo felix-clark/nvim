@@ -7,11 +7,8 @@ Clone this repo as follows.
 git clone git@github.com:felix-clark/nvim.git ~/.config/nvim
 ```
 
-Execute `./setup.sh` to install and set up the pre-requisites. This is undertested, however, so follow directions below.
-
-Run `:PackerSync` from within neovim to download plugins.
-
-Try running on the command line with `nvim -c 'PackerSync' -c '<\CR>' -c 'qa'`.
+In principle, execute `./setup.sh` to install and set up the pre-requisites.
+This is undertested, however, so follow directions below.
 
 ### Install fonts
 
@@ -41,15 +38,8 @@ The leader key is mapped to spacebar. Press it and wait half a second for a pop-
 
 ### Motion
 
-For easymotion-like action, double-tap the leader key (`<space>`) then quickly
-press a normal motion key like `j` or `W`.
+Use lightspeed's `s/S` to jump to any 2-character location on screen.
 
-Currently, Lightspeed is being experimented with as well. Use `s/S` for
-forward/backward jumps, respectively.
+## Future considerations
 
-### Debugging
-
-Consult the documentation for nvim-dap to see how to install and configure
-debuggers. Some keybindings are defined but no debuggers are currently set up.
-
-NOTE: Consider [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)
+* [magma-nvim](https://github.com/WhiteBlackGoose/magma-nvim-goose) for jupyter notebooks
