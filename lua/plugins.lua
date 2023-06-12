@@ -25,6 +25,16 @@ require("lazy").setup {
   },
   -- Expanded text objects
   "wellle/targets.vim",
+  -- More practical definition of "word"
+  {
+    "chaoren/vim-wordmotion",
+    config = function()
+      -- these are recommended to restore standard vim behavior to preserve
+      -- whitespace between words:
+      -- vim.api.nvim_set_keymap("n", "cw", "ce")
+      -- vim.api.nvim_set_keymap("n", "cW", "cE")
+    end,
+  },
 
   -- theme
   {
