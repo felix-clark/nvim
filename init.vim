@@ -47,7 +47,7 @@ augroup term
   " twice)
   autocmd!
   " start in terminal (insert-like) mode when opening a terminal window
-  autocmd TermOpen * startinsert
+  autocmd TermOpen,TermEnter term://* startinsert
   " disable line numbers in terminal
   autocmd TermOpen * setlocal nonumber norelativenumber
 augroup END
