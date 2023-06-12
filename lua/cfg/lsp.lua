@@ -288,10 +288,6 @@ local function make_config()
     capabilities = capabilities,
     -- map buffer local keybindings when the language server attaches
     on_attach = on_attach,
-    -- flags = {
-    -- Should be default of 150 in nvim 0.7+
-    -- debounce_text_changes = 200,
-    -- },
   }
 end
 
