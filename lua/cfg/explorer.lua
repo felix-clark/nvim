@@ -32,6 +32,30 @@ require("nvim-tree").setup {
       error = "",
     },
   },
+  view = {
+    -- width of the window, can be either a number (columns) or a string in `%`
+    width = 30,
+    -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
+    side = "left",
+    -- if true the tree will resize itself after opening a file
+    auto_resize = false,
+    mappings = {
+      -- custom only false will merge the list with the default mappings
+      -- if true, it will only use your list to set the mappings
+      custom_only = false,
+      -- list of mappings to set on the tree manually
+      list = {},
+    },
+  },
+  renderer = {
+    highlight_git = true,
+    group_empty = true,
+    highlight_opened_files = "all",
+    indent_markers = {
+      enable = true,
+    },
+    icons = {},
+  },
   -- update the focused file on `BufEnter`, un-collapses the folders recursively until it finds the file
   update_focused_file = {
     -- enables the feature
@@ -59,21 +83,6 @@ require("nvim-tree").setup {
     enable = true,
     ignore = true,
     timeout = 500,
-  },
-  view = {
-    -- width of the window, can be either a number (columns) or a string in `%`
-    width = 30,
-    -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
-    side = "left",
-    -- if true the tree will resize itself after opening a file
-    auto_resize = false,
-    mappings = {
-      -- custom only false will merge the list with the default mappings
-      -- if true, it will only use your list to set the mappings
-      custom_only = false,
-      -- list of mappings to set on the tree manually
-      list = {},
-    },
   },
   actions = {
     open_file = {

@@ -75,13 +75,7 @@ let mapleader=' '
 " Use <SPC>m for local leader, although this is seldom used right now.
 let maplocalleader=' m'
 
-""" nvim-tree configuration is in vimscript.
-" It configures global options that should be set before calling setup().
-source $HOME/.config/nvim/nvim-tree.vim
-""" End nvim-tree configuration
-
-" Run :PackerSync to clean, install, and update plugins.
-" Run :PackerCompile following changes to plugin configuration.
+" Run :Lazy sync to clean, install, and update plugins.
 lua <<EOF
 require('plugins')
 require('fold')
