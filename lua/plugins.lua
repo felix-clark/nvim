@@ -49,12 +49,10 @@ return {
   {
     "ggandor/flit.nvim",
     dependencies = { "leap.nvim" },
-    config = function()
-      require("flit").setup {
-        -- default is only in visual mode
-        labeled_modes = "nv",
-      }
-    end,
+    opts = {
+      -- default is only in visual mode
+      labeled_modes = "nv",
+    },
   },
   -- NOTE: there is a leap-ast plugin as well but it is very incomplete
 
@@ -102,65 +100,63 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     -- Lazy-loading can easily cause problems, particularly with the git hydra
     -- event = "BufRead",
-    config = function()
-      require("gitsigns").setup {
-        -- A value of 15 or greater should prioritize gitsigns over diagnostics
-        -- (which are also underlined)
-        sign_priority = 20,
-        on_attach = function(bufnr)
-          local gs = package.loaded.gitsigns
-          local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
+    opts = {
+      -- A value of 15 or greater should prioritize gitsigns over diagnostics
+      -- (which are also underlined)
+      sign_priority = 20,
+      on_attach = function(bufnr)
+        local gs = package.loaded.gitsigns
+        local function map(mode, l, r, opts)
+          opts = opts or {}
+          opts.buffer = bufnr
+          vim.keymap.set(mode, l, r, opts)
+        end
+
+        -- Navigation
+        map("n", "]g", function()
+          if vim.wo.diff then
+            return "]g"
           end
-
-          -- Navigation
-          map("n", "]g", function()
-            if vim.wo.diff then
-              return "]g"
-            end
-            vim.schedule(function()
-              gs.next_hunk()
-            end)
-            return "<Ignore>"
-          end, {
-            expr = true,
-          })
-          map("n", "[g", function()
-            if vim.wo.diff then
-              return "[g"
-            end
-            vim.schedule(function()
-              gs.prev_hunk()
-            end)
-            return "<Ignore>"
-          end, {
-            expr = true,
-          })
-
-          -- Actions
-          -- These bindings are a backup in case the hydra fails, or in case it hasn't loaded yet
-          map({ "n", "v" }, "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>")
-          map({ "n", "v" }, "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>")
-          map("n", "<leader>gS", gs.stage_buffer)
-          map("n", "<leader>gu", gs.undo_stage_hunk)
-          map("n", "<leader>gR", gs.reset_buffer)
-          map("n", "<leader>gp", gs.preview_hunk)
-          map("n", "<leader>gb", function()
-            gs.blame_line { full = true }
+          vim.schedule(function()
+            gs.next_hunk()
           end)
-          map("n", "<leader>gd", gs.diffthis)
-          map("n", "<leader>gD", function()
-            gs.diffthis "~"
+          return "<Ignore>"
+        end, {
+          expr = true,
+        })
+        map("n", "[g", function()
+          if vim.wo.diff then
+            return "[g"
+          end
+          vim.schedule(function()
+            gs.prev_hunk()
           end)
-          -- NOTE: toggle blame and deleted are defined in which-key
+          return "<Ignore>"
+        end, {
+          expr = true,
+        })
 
-          -- Text object
-          map({ "o", "x" }, "ih", ":<C-u>Gitsigns select_hunk<cr>")
-        end,
-      }
-    end,
+        -- Actions
+        -- These bindings are a backup in case the hydra fails, or in case it hasn't loaded yet
+        map({ "n", "v" }, "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>")
+        map({ "n", "v" }, "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>")
+        map("n", "<leader>gS", gs.stage_buffer)
+        map("n", "<leader>gu", gs.undo_stage_hunk)
+        map("n", "<leader>gR", gs.reset_buffer)
+        map("n", "<leader>gp", gs.preview_hunk)
+        map("n", "<leader>gb", function()
+          gs.blame_line { full = true }
+        end)
+        map("n", "<leader>gd", gs.diffthis)
+        map("n", "<leader>gD", function()
+          gs.diffthis "~"
+        end)
+        -- NOTE: toggle blame and deleted are defined in which-key
+
+        -- Text object
+        map({ "o", "x" }, "ih", ":<C-u>Gitsigns select_hunk<cr>")
+      end,
+    },
   },
 
   -- Status line
@@ -249,6 +245,7 @@ return {
   -- must be setup before lspconfig is, but after loading it.
   {
     "folke/neodev.nvim",
+    config = true,
   },
 
   -- Mason for easy install of 3rd-party dependencies
@@ -372,11 +369,9 @@ return {
   {
     "jay-babu/mason-nvim-dap.nvim",
     dependencies = { "mason.nvim" },
-    config = function()
-      require("mason-nvim-dap").setup {
-        ensure_installed = { "codelldb", "python" },
-      }
-    end,
+    opts = {
+      ensure_installed = { "codelldb", "python" },
+    },
   },
 
   -- Language-specific
@@ -405,12 +400,10 @@ return {
     "nvim-orgmode/orgmode",
     -- Lazy-loading is not recommended. This package loads quickly and needs to be used before setting up treesitter.
     -- ft = { "org" },
-    config = function()
-      require("orgmode").setup {
-        -- note: there are more
-        org_agenda_files = { "~/org/todo.org", "~/org/felix-agenda.org" },
-        org_default_notes_file = "~/org/notes.org",
-      }
-    end,
+    opts = {
+      -- note: there are more
+      org_agenda_files = { "~/org/todo.org", "~/org/felix-agenda.org" },
+      org_default_notes_file = "~/org/notes.org",
+    },
   },
 }
