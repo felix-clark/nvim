@@ -38,6 +38,13 @@ vim.opt.wildmode = "longest,list"
 -- show matching brackets
 vim.opt.showmatch = true
 
+-- snappier response time (default 1000ms)
+-- Make sure to not set notimeout
+vim.opt.timeoutlen = 400
+-- Reduce the delay (from 4s) for the CursorHold event. Used in crash-recovery
+-- as well.
+vim.opt.updatetime = 600
+
 -- use 'jk' combination to quit insert mode
 vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode" })
 -- something similar for terminal (?)
@@ -56,13 +63,6 @@ augroup term
   autocmd TermOpen * setlocal nonumber norelativenumber
 augroup END
 ]]
-
--- snappier response time (default 1000ms)
--- Make sure to not set notimeout
-vim.opt.timeoutlen = 400
--- Reduce the delay (from 4s) for the CursorHold event. Used in crash-recovery
--- as well.
-vim.opt.updatetime = 600
 
 -- Leader key should be set before plugins in case they use leader key mappings
 -- map the leader to space (default is '\')
