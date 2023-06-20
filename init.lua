@@ -51,6 +51,14 @@ vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode" })
 -- This messes with fzf windows, although telescope seems fine so far
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
+-- try helix-inspired bindings
+-- a more ergonomic 0
+vim.keymap.set({"n", "v", "x"}, "gh", "0", { desc = "Go to first character in line" })
+-- a more ergonomic ^
+vim.keymap.set({"n", "v", "x"}, "gs", "^", { desc = "Go to start of text in line" })
+-- a more ergonomic $
+vim.keymap.set({"n", "v", "x"}, "gl", "<End>", { desc = "Go to end of line" })
+
 vim.cmd [[
 augroup term
   " Remove existing autocommands in this group (in case this file gets sourced
