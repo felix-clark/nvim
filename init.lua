@@ -29,7 +29,7 @@ vim.opt.relativenumber = true
 
 -- Show exactly 1 column. Gitsigns will take priority over diagnostics with
 -- other settings.
-vim.o.signcolumn = "yes:1"
+vim.opt.signcolumn = "yes:1"
 
 -- Complete the longest common string and show the list of potential matches
 -- when using <TAB>
@@ -50,8 +50,7 @@ augroup term
   " twice)
   autocmd!
   " start in terminal (insert-like) mode when opening a terminal window
-  " Note that the term://* stipulation prevents insert mode in Neogit but means
-  " it doesn't work when moving back into toggleterm
+  " Note that the term://* stipulation prevents insert mode in Neogit
   autocmd TermOpen,TermEnter term://* startinsert
   " disable line numbers in terminal
   autocmd TermOpen * setlocal nonumber norelativenumber
@@ -81,5 +80,20 @@ vim.keymap.set("t", "<M-j>", "<C-\\><C-n><C-w>j")
 vim.keymap.set("t", "<M-k>", "<C-\\><C-n><C-w>k")
 vim.keymap.set("t", "<M-l>", "<C-\\><C-n><C-w>l")
 
-require "plugins"
+-- bootstrap lazy
+local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system {
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  }
+end
+vim.opt.rtp:prepend(lazypath)
+require("lazy").setup(require "plugins")
+
+-- custom folding; must be loaded after treesitter
 require "fold"

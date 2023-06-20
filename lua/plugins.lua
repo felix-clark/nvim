@@ -1,18 +1,4 @@
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system {
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  }
-end
-vim.opt.rtp:prepend(lazypath)
-
-require("lazy").setup {
-
+return {
   -- Repeat plugin commands
   "tpope/vim-repeat",
   -- For compilation commands
@@ -28,7 +14,7 @@ require("lazy").setup {
     "chaoren/vim-wordmotion",
     config = function()
       -- these are recommended to restore standard vim behavior to preserve
-      -- whitespace between words:
+      -- whitespace between words, but do I even use these?
       -- vim.api.nvim_set_keymap("n", "cw", "ce")
       -- vim.api.nvim_set_keymap("n", "cW", "cE")
     end,
@@ -38,9 +24,7 @@ require("lazy").setup {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup()
-    end,
+    config = true,
   },
 
   -- theme
@@ -109,9 +93,7 @@ require("lazy").setup {
     "TimUntersberger/neogit",
     -- lazy-load only when called
     cmd = "Neogit",
-    config = function()
-      require("neogit").setup()
-    end,
+    config = true,
   },
 
   -- Git gutter
@@ -272,9 +254,7 @@ require("lazy").setup {
   -- Mason for easy install of 3rd-party dependencies
   {
     "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup()
-    end,
+    config = true,
   },
   {
     "williamboman/mason-lspconfig.nvim",
@@ -326,9 +306,7 @@ require("lazy").setup {
     -- NOTE: We can't lazy-load because the telescope configuration sets up
     -- integration w/ Trouble
     -- cmd = { "Trouble", "TroubleToggle", "TroubleClose", "TroubleRefresh" },
-    config = function()
-      require("trouble").setup()
-    end,
+    config = true,
   },
 
   -- Keybindings and help
