@@ -43,3 +43,4 @@ Use lightspeed's `s/S` to jump to any 2-character location on screen.
 ## Future considerations
 
 * [magma-nvim](https://github.com/WhiteBlackGoose/magma-nvim-goose) for jupyter notebooks
+* [typescript-tools](https://github.com/pmizio/typescript-tools.nvim) for web dev
