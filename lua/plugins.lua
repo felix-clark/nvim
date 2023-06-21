@@ -58,9 +58,7 @@ return {
 
   {
     "numToStr/Comment.nvim",
-    config = function()
-      require("Comment").setup()
-    end,
+    config = true,
   },
 
   {
@@ -272,25 +270,22 @@ return {
   -- TODO: Try to lazy-load, waiting for an LSP buffer to be opened
   {
     "ldelossa/litee.nvim",
-    config = function()
-      require("litee.lib").setup()
-    end,
+    config = true,
+    main = "litee.lib",
   },
   -- Browse callers and callees of the current function
   {
     "ldelossa/litee-calltree.nvim",
     dependencies = { "litee.nvim" },
-    config = function()
-      require("litee.calltree").setup()
-    end,
+    config = true,
+    main = "litee.calltree",
   },
   -- litee-symboltree for tree-based symbol navigation
   {
     "ldelossa/litee-symboltree.nvim",
     dependencies = { "litee.nvim" },
-    config = function()
-      require("litee.symboltree").setup()
-    end,
+    config = true,
+    main = "litee.symboltree",
   },
 
   -- Show LSP call signature in completion window.
