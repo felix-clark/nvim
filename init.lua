@@ -53,24 +53,11 @@ vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- try helix-inspired bindings
 -- a more ergonomic 0
-vim.keymap.set({"n", "v", "x"}, "gh", "0", { desc = "Go to first character in line" })
+vim.keymap.set({ "n", "v", "x" }, "gh", "0", { desc = "Go to first character in line" })
 -- a more ergonomic ^ which overrides starting select mode
-vim.keymap.set({"n", "v", "x"}, "gs", "^", { desc = "Go to start of text in line" })
+vim.keymap.set({ "n", "v", "x" }, "gs", "^", { desc = "Go to start of text in line" })
 -- a more ergonomic $
-vim.keymap.set({"n", "v", "x"}, "gl", "<End>", { desc = "Go to end of line" })
-
-vim.cmd [[
-augroup term
-  " Remove existing autocommands in this group (in case this file gets sourced
-  " twice)
-  autocmd!
-  " start in terminal (insert-like) mode when opening a terminal window
-  " Note that the term://* stipulation prevents insert mode in Neogit
-  autocmd TermOpen,TermEnter term://* startinsert
-  " disable line numbers in terminal
-  autocmd TermOpen * setlocal nonumber norelativenumber
-augroup END
-]]
+vim.keymap.set({ "n", "v", "x" }, "gl", "<End>", { desc = "Go to end of line" })
 
 -- Leader key should be set before plugins in case they use leader key mappings
 -- map the leader to space (default is '\')
@@ -87,6 +74,20 @@ vim.keymap.set("t", "<M-h>", "<C-\\><C-n><C-w>h")
 vim.keymap.set("t", "<M-j>", "<C-\\><C-n><C-w>j")
 vim.keymap.set("t", "<M-k>", "<C-\\><C-n><C-w>k")
 vim.keymap.set("t", "<M-l>", "<C-\\><C-n><C-w>l")
+
+-- create a group for terminal usage. by default this clears autocommands in
+-- the group if the group already exists.
+vim.api.nvim_create_augroup("term", {})
+vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, {
+  group = "term",
+  pattern = "term://*",
+  command = "startinsert",
+})
+vim.api.nvim_create_autocmd("TermOpen", {
+  group = "term",
+  pattern = "*",
+  command = "setlocal nonumber norelativenumber",
+})
 
 -- bootstrap lazy
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
