@@ -17,16 +17,20 @@ lsp_status.register_progress()
 local format_on_save = false
 local toggle_format_on_save = function()
   if format_on_save then
-    vim.cmd [[ autocmd! autofmt * ]]
+    vim.api.nvim_del_augroup_by_name "autofmt"
     print "Disabled format on save"
     format_on_save = false
   else
-    vim.cmd [[
-      augroup autofmt
-      autocmd!
-      autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
-      augroup END
-    ]]
+    vim.api.nvim_create_augroup("autofmt", {})
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = "autofmt",
+      -- 0 refers to the current buffer.
+      -- vim.fn.bufnr() should also work.
+      buffer = 0,
+      callback = function()
+        vim.lsp.buf.format()
+      end,
+    })
     print "Enabled format on save"
     format_on_save = true
   end
