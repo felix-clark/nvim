@@ -152,12 +152,17 @@ local on_attach = function(client, bufnr)
   end
 
   -- Highlight symbol under cursor (if capabilities exist)
+  -- Treesitter handles the highlighting of the same symbol elsewhere.
   if client.server_capabilities.documentHighlightProvider then
-    vim.cmd [[
-      hi! LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-      hi! LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
-      hi! LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
-    ]]
+    -- The colors can be adjusted here, but LightYellow is too bright.
+    -- These groups must be defined for buf.document_highlight to work, but
+    -- they appear to be defined elsewhere because the CursorHold aucmd does
+    -- function.
+    -- vim.cmd [[
+    --   hi! LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
+    --   hi! LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
+    --   hi! LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
+    -- ]]
     vim.api.nvim_create_augroup("lsp_document_highlight", {
       clear = false,
     })
