@@ -52,12 +52,13 @@ vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode" })
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- try helix-inspired bindings
--- a more ergonomic 0
-vim.keymap.set({ "n", "v", "x" }, "gh", "0", { desc = "Go to first character in line" })
--- a more ergonomic ^ which overrides starting select mode
-vim.keymap.set({ "n", "v", "x" }, "gs", "^", { desc = "Go to start of text in line" })
+-- a more ergonomic 0 which overrides starting select mode ("get highlighted").
+vim.keymap.set({ "n", "x", "o" }, "gh", "0", { desc = "Go to first character in line" })
+-- a more ergonomic ^ which overrides "goto sleep". leap.nvim uses this to jump
+-- across windows, but shouldn't override the existing keymap.
+vim.keymap.set({ "n", "x", "o" }, "gs", "^", { desc = "Go to start of text in line" })
 -- a more ergonomic $
-vim.keymap.set({ "n", "v", "x" }, "gl", "<End>", { desc = "Go to end of line" })
+vim.keymap.set({ "n", "x", "o" }, "gl", "<End>", { desc = "Go to end of line" })
 
 -- Leader key should be set before plugins in case they use leader key mappings
 -- map the leader to space (default is '\')
