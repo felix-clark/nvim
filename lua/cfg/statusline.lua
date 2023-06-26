@@ -1,7 +1,7 @@
 require("lualine").setup {
   -- options = { theme = "onedark" },
   -- options = { theme = "catppuccin" },
-  -- auto seems to work fine:
+  -- auto seems to work fine for kanagawa:
   options = { theme = "auto" },
   sections = {
     lualine_b = { "branch", "diff" },
@@ -16,7 +16,7 @@ require("lualine").setup {
     },
     lualine_x = {
       function()
-        return require("lsp-status").status()
+        return require("lsp-progress").progress()
       end,
     },
     lualine_y = { "encoding", "fileformat", "filetype" },
@@ -24,3 +24,10 @@ require("lualine").setup {
   },
   extensions = { "nvim-tree" },
 }
+
+-- refresh lualine
+vim.api.nvim_create_augroup("lualine_augroup", {})
+vim.api.nvim_create_autocmd("User LspProgressStatusUpdated", {
+  group = "lualine_augroup",
+  callback = require("lualine").refresh,
+})

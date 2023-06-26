@@ -116,7 +116,7 @@ return {
 
   -- ensure devicons are installed. If this isn't made explicit some dependents
   -- don't find it (e.g. trouble), although lazy.nvim may help this situation
-  "kyazdani42/nvim-web-devicons",
+  { "nvim-tree/nvim-web-devicons" },
 
   -- Allows command line linters and formatters to interact like LSP clients
   {
@@ -203,7 +203,8 @@ return {
   -- Status line
   {
     "nvim-lualine/lualine.nvim",
-    dependencies = { "kyazdani42/nvim-web-devicons", lazy = true },
+    event = "VimEnter",
+    dependencies = { "nvim-tree/nvim-web-devicons", "linrongbin16/lsp-progress.nvim" },
     config = function()
       require "cfg.statusline"
     end,
@@ -212,7 +213,7 @@ return {
   -- This config is migrating from vimscript to lua
   {
     "kyazdani42/nvim-tree.lua",
-    dependencies = { "kyazdani42/nvim-web-devicons" },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     -- NOTE: There are several more commands from this package but we really
     -- only use Toggle.
     cmd = { "NvimTreeToggle", "NvimTreeRefresh", "NvimTreeFindFile" },
@@ -273,7 +274,7 @@ return {
     dependencies = { "nvim-treesitter" },
   },
   { "nvim-treesitter/nvim-treesitter-refactor", dependencies = { "nvim-treesitter" } },
-  { "HiPhish/nvim-ts-rainbow2", dependencies = { "nvim-treesitter" } },
+  { "HiPhish/nvim-ts-rainbow2",                 dependencies = { "nvim-treesitter" } },
 
   -- easy toggle terminal
   {
@@ -298,8 +299,12 @@ return {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "mason.nvim", "nvim-lspconfig" },
   },
-  -- LSP functionality
-  "nvim-lua/lsp-status.nvim",
+  {
+    "linrongbin16/lsp-progress.nvim",
+    event = "VimEnter",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = true,
+  },
   {
     "neovim/nvim-lspconfig",
     -- These packages require some configuration in cfg.lsp
@@ -337,7 +342,7 @@ return {
 
   {
     "folke/trouble.nvim",
-    dependencies = { "kyazdani42/nvim-web-devicons" },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     -- NOTE: We can't lazy-load because the telescope configuration sets up
     -- integration w/ Trouble
     -- cmd = { "Trouble", "TroubleToggle", "TroubleClose", "TroubleRefresh" },

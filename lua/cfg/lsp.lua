@@ -4,14 +4,7 @@ require("neodev").setup {
 }
 
 -- Most of this config is taken from wiki for nvim-lspinstall.
--- Some additions from the lsp-status documentation.
 local nvim_lsp = require "lspconfig"
-local lsp_status = require "lsp-status"
-
--- We're getting diagnostics from nvim_lsp
-lsp_status.config { diagnostics = false }
--- register lsp-status progress handler
-lsp_status.register_progress()
 
 -- Local variable to toggle whether to autoformat on save
 local format_on_save = false
@@ -200,9 +193,6 @@ local on_attach = function(client, bufnr)
     toggle_key = "<C-s>",
   }, bufnr)
 
-  -- Register client for messages and set up buffer autocommands to update the
-  -- statusline and the current function.
-  lsp_status.on_attach(client)
 end
 
 -- Set the gutter diagnostics to use icons
@@ -291,8 +281,6 @@ local function make_config()
   -- advertise completion capabilities.
   -- This includes snippet support.
   local capabilities = require("cmp_nvim_lsp").default_capabilities()
-  -- Add window/workDoneProgress capabilities from lsp-status
-  capabilities = vim.tbl_extend("keep", capabilities, lsp_status.capabilities)
   return {
     capabilities = capabilities,
     -- map buffer local keybindings when the language server attaches
@@ -368,7 +356,6 @@ mason_lsp.setup_handlers {
   end,
   ["pyright"] = function()
     local config = make_config()
-    config.handlers = lsp_status.extensions.pyright.setup()
     config.settings = { python = { workspaceSymbols = { enabled = true } } }
     nvim_lsp.pyright.setup(config)
   end,
