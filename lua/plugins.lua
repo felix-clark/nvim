@@ -129,7 +129,8 @@ return {
 
   -- Magit clone
   {
-    "TimUntersberger/neogit",
+    "NeogitOrg/neogit",
+    dependencies = { "nvim-lua/plenary.nvim" },
     -- lazy-load only when called
     cmd = "Neogit",
     config = true,
@@ -274,7 +275,7 @@ return {
     dependencies = { "nvim-treesitter" },
   },
   { "nvim-treesitter/nvim-treesitter-refactor", dependencies = { "nvim-treesitter" } },
-  { "HiPhish/nvim-ts-rainbow2",                 dependencies = { "nvim-treesitter" } },
+  { "HiPhish/nvim-ts-rainbow2", dependencies = { "nvim-treesitter" } },
 
   -- easy toggle terminal
   {
