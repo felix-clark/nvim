@@ -258,6 +258,7 @@ return {
   -- use telescope for `vim.ui.select`, so neovim core selections can fill telescope picker.
   {
     "nvim-telescope/telescope-ui-select.nvim",
+    dependencies = { "telescope.nvim" },
     config = function()
       require("telescope").load_extension "ui-select"
     end,
