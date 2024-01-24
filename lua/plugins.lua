@@ -419,7 +419,8 @@ return {
     },
   },
 
-  -- Language-specific
+  -- Language-specific (filetype plugins are often lazy-loaded by default, and
+  -- regardless it seems to be generally un-recommended to lazy-load these)
 
   -- kitty terminal configuration syntax highlighting
   { "fladson/vim-kitty", ft = "kitty" },
@@ -428,6 +429,7 @@ return {
   -- Thus, we may not need to `:LspInstall rust` to configure it as part of our
   -- LSP client setup.
   {
+    -- TODO: update to rustaceanvim
     "simrat39/rust-tools.nvim",
     -- mason-lspconfig *should* handle the file type
     -- ft = "rust",
@@ -438,6 +440,13 @@ return {
       "telescope.nvim",
       "nvim-dap",
     },
+  },
+
+  -- LaTeX (lazy-loaded by default)
+  {
+    "lervag/vimtex",
+    -- Some configuration is suggested but it doesn't appear very necessary.
+    -- Commands are mapped to local-leader (<space>m).
   },
 
   -- org-mode emulation
