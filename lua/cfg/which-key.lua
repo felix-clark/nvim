@@ -167,15 +167,3 @@ wk.register({
   b = "Previous block start [TS]",
   B = "Previous block end [TS]",
 }, { mode = "n", prefix = "[" })
-
--- visual mode bindings
-wk.register({
-  g = {
-    name = "+git",
-    r = "Revert selection",
-    s = "Stage selection",
-  },
-}, {
-  mode = "v",
-  prefix = "<leader>",
-})

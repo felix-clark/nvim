@@ -318,42 +318,6 @@ mason_lsp.setup_handlers {
     config.settings = make_lua_settings()
     nvim_lsp.lua_ls.setup(config)
   end,
-  ["rust_analyzer"] = function()
-    -- https://github.com/simrat39/rust-tools.nvim/wiki/Debugging
-    -- https://alpha2phi.medium.com/neovim-for-beginners-packer-manager-plugin-e4d84d4c3451
-    local extension_path = mason_install_root_dir .. "/packages/codelldb/extension/"
-    local codelldb_path = extension_path .. "adapter/codelldb"
-    local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
-    require("rust-tools").setup {
-      server = {
-        on_attach = on_attach,
-        settings = {
-          ["rust-analyzer"] = {
-            checkOnSave = {
-              -- NOTE: This might not include all features and targets.
-              -- May need to add `--all targets`.
-              command = "clippy",
-            },
-          },
-        },
-      },
-      tools = {
-        executor = require("rust-tools/executors").toggleterm,
-        hover_actions = { border = "solid" },
-        on_initialized = function()
-          vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertLeave" }, {
-            pattern = { "*.rs" },
-            callback = function()
-              vim.lsp.codelens.refresh()
-            end,
-          })
-        end,
-      },
-      dap = {
-        adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
-      },
-    }
-  end,
   ["pyright"] = function()
     local config = make_config()
     config.settings = { python = { workspaceSymbols = { enabled = true } } }

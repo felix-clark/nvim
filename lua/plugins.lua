@@ -148,9 +148,10 @@ return {
       sign_priority = 20,
       on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
-        local function map(mode, l, r, opts)
+        local function map(mode, l, r, desc, opts)
           opts = opts or {}
           opts.buffer = bufnr
+          opts.desc = desc
           vim.keymap.set(mode, l, r, opts)
         end
 
@@ -180,23 +181,23 @@ return {
 
         -- Actions
         -- These bindings are a backup in case the hydra fails, or in case it hasn't loaded yet
-        map({ "n", "v" }, "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>")
-        map({ "n", "v" }, "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>")
-        map("n", "<leader>gS", gs.stage_buffer)
-        map("n", "<leader>gu", gs.undo_stage_hunk)
-        map("n", "<leader>gR", gs.reset_buffer)
-        map("n", "<leader>gp", gs.preview_hunk)
+        map({ "n", "v" }, "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>", "Stage hunk")
+        map({ "n", "v" }, "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>", "Reset hunk")
+        map("n", "<leader>gS", gs.stage_buffer, "Stage buffer")
+        map("n", "<leader>gu", gs.undo_stage_hunk, "Undo stage")
+        map("n", "<leader>gR", gs.reset_buffer, "Reset buffer")
+        map("n", "<leader>gp", gs.preview_hunk, "Preview hunk")
         map("n", "<leader>gb", function()
           gs.blame_line { full = true }
-        end)
-        map("n", "<leader>gd", gs.diffthis)
+        end, "Blame line")
+        map("n", "<leader>gd", gs.diffthis, "Diff line")
         map("n", "<leader>gD", function()
           gs.diffthis "~"
-        end)
+        end, "Diff buffer")
         -- NOTE: toggle blame and deleted are defined in which-key
 
         -- Text object
-        map({ "o", "x" }, "ih", ":<C-u>Gitsigns select_hunk<cr>")
+        map({ "o", "x" }, "ih", ":<C-u>Gitsigns select_hunk<cr>", "Select hunk")
       end,
     },
   },
@@ -276,7 +277,7 @@ return {
     dependencies = { "nvim-treesitter" },
   },
   { "nvim-treesitter/nvim-treesitter-refactor", dependencies = { "nvim-treesitter" } },
-  { "HiPhish/nvim-ts-rainbow2", dependencies = { "nvim-treesitter" } },
+  { "HiPhish/nvim-ts-rainbow2",                 dependencies = { "nvim-treesitter" } },
 
   -- easy toggle terminal
   {
@@ -425,22 +426,50 @@ return {
   -- kitty terminal configuration syntax highlighting
   { "fladson/vim-kitty", ft = "kitty" },
 
-  -- This configures and sets up LSP using the rust-analyzer found in $PATH.
-  -- Thus, we may not need to `:LspInstall rust` to configure it as part of our
-  -- LSP client setup.
+  -- extended LSP and debugging features for rust
   {
-    -- TODO: update to rustaceanvim
-    "simrat39/rust-tools.nvim",
-    -- mason-lspconfig *should* handle the file type
-    -- ft = "rust",
-    dependencies = {
-      "nvim-lspconfig",
-      "popup.nvim",
-      "plenary.nvim",
-      "telescope.nvim",
-      "nvim-dap",
+    "mrcjkb/rustaceanvim",
+    version = "^4",  -- Recommended
+    ft = { "rust" }, -- this is in readme. What about Cargo.toml?
+    opts = {
+      settings = {
+        ["rust-analyzer"] = {
+          cargo = {
+            allFeatures = true,
+          },
+          checkOnSave = {
+            allFeatures = true,
+            command = "clippy",
+            extraArgs = { "--no-deps" },
+          },
+          procMacro = {
+            enable = true,
+            ignored = {
+              ["async-trait"] = { "async_trait" },
+              ["napi-derive"] = { "napi" },
+              ["async-recursion"] = { "async_recursion" },
+            },
+          },
+        },
+      },
     },
+    config = function(_, opts)
+      vim.g.rustaceanvim = vim.tbl_deep_extend("force", {}, opts or {})
+    end,
   },
+
+  -- Cargo.toml crate version features
+  {
+    "saecki/crates.nvim",
+    event = { "BufRead Cargo.toml" },
+    config = function()
+      require("crates").setup()
+    end,
+  },
+  -- consider for running/debugging tests:
+  -- https://github.com/rouge8/neotest-rust
+
+  -- TODO: molten.nvim for jupyter integration
 
   -- LaTeX (lazy-loaded by default)
   {

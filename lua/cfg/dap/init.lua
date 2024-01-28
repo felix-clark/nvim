@@ -50,7 +50,7 @@ end
 local function configure_debuggers()
   require("cfg.dap.lua").setup()
   require("cfg.dap.python").setup()
-  -- require("cfg.dap.rust").setup() -- the rust/rust-tools setup is done in mason's setup_handlers
+  -- require("cfg.dap.rust").setup() -- the rust/rustaceanvim setup is done in that package
 end
 
 function M.setup()
@@ -59,8 +59,5 @@ function M.setup()
   configure_debuggers() -- Debugger
   require("cfg.dap.keymaps").setup() -- Keymaps
 end
-
--- TODO: Shouldn't this be removed if the model's setup() is called?
--- configure_debuggers()
 
 return M
