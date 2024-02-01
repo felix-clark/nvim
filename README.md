@@ -38,9 +38,19 @@ The leader key is mapped to spacebar. Press it and wait half a second for a pop-
 
 ### Motion
 
-Use lightspeed's `s/S` to jump to any 2-character location on screen.
+Use leap's `s` to jump to any 2-character location on screen.
+
+## Advanced language features
+
+`:Mason` is used to select and install LSPs, formatters, debuggers, etc.
+Language-specific debugging is probably under-implemented at the moment.
+
+## Troubleshooting
+
+If strange errors occur upon updating, try cleaning out `rm -rf ~/.local/share/nvim/*`.
 
 ## Future considerations
 
-* [magma-nvim](https://github.com/WhiteBlackGoose/magma-nvim-goose) for jupyter notebooks
+* [molten-nvim](https://github.com/benlubas/molten-nvim) for jupyter notebooks
 * [typescript-tools](https://github.com/pmizio/typescript-tools.nvim) for web dev
+* [neotest-rust](https://github.com/rouge8/neotest-rust) for even more convenient rust unit tests
