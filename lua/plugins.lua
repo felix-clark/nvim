@@ -399,6 +399,7 @@ return {
     lazy = true,
     event = "BufReadPre",
     dependencies = {
+      "nvim-neotest/nvim-nio",
       -- UI dependencies
       "theHamsta/nvim-dap-virtual-text",
       "rcarriga/nvim-dap-ui",
