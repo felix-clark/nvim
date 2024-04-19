@@ -287,7 +287,7 @@ return {
     dependencies = { "nvim-treesitter" },
   },
   { "nvim-treesitter/nvim-treesitter-refactor", dependencies = { "nvim-treesitter" } },
-  { "HiPhish/nvim-ts-rainbow2",                 dependencies = { "nvim-treesitter" } },
+  { "HiPhish/nvim-ts-rainbow2", dependencies = { "nvim-treesitter" } },
 
   -- easy toggle terminal
   {
@@ -440,7 +440,7 @@ return {
   -- extended LSP and debugging features for rust
   {
     "mrcjkb/rustaceanvim",
-    version = "^4",  -- Recommended
+    version = "^4", -- Recommended
     ft = { "rust" }, -- this is in readme. What about Cargo.toml?
     opts = {
       settings = {
