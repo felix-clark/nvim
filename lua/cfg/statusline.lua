@@ -27,7 +27,8 @@ require("lualine").setup {
 
 -- refresh lualine
 vim.api.nvim_create_augroup("lualine_augroup", {})
-vim.api.nvim_create_autocmd("User LspProgressStatusUpdated", {
+vim.api.nvim_create_autocmd("User", {
   group = "lualine_augroup",
+  pattern = "LspProgressStatusUpdated",
   callback = require("lualine").refresh,
 })
