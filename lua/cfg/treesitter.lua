@@ -1,6 +1,3 @@
--- Need to set up orgmode TS parser first
-require("orgmode").setup_ts_grammar()
-
 -- NOTE: the "ensure_installed" line could be removed in lieu of manual installations.
 require("nvim-treesitter.configs").setup {
   ensure_installed = {
