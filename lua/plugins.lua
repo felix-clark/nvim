@@ -118,23 +118,20 @@ return {
   -- don't find it (e.g. trouble), although lazy.nvim may help this situation
   { "nvim-tree/nvim-web-devicons" },
 
-  -- Allows command line linters and formatters to interact like LSP clients
-  -- A fork of "jose-elias-alvarez/null-ls.nvim".
-  -- This package is fundamentally fragile and it might be preferable to switch to
-  -- mfussenegger/nvim-lint + stevearc/conform.nvim, and potentially mason-tool-installer.
-  {
-    "nvimtools/none-ls.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    config = function()
-      require "cfg.null-ls"
-    end,
-  },
   -- Tie standalone linters into vim.diagnostic.
   {
     "mfussenegger/nvim-lint",
     config = function()
       require "cfg.lint"
     end,
+  },
+  -- Async formatting for non-LSP sources (with fallback)
+  {
+    "stevearc/conform.nvim",
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
+    keys = require("cfg.format").keys,
+    opts = require("cfg.format").opts,
   },
 
   -- Magit clone

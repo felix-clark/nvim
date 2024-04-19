@@ -7,27 +7,29 @@ require("neodev").setup {
 local nvim_lsp = require "lspconfig"
 
 -- Local variable to toggle whether to autoformat on save
-local format_on_save = false
-local toggle_format_on_save = function()
-  if format_on_save then
-    vim.api.nvim_del_augroup_by_name "autofmt"
-    print "Disabled format on save"
-    format_on_save = false
-  else
-    vim.api.nvim_create_augroup("autofmt", {})
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      group = "autofmt",
-      -- 0 refers to the current buffer.
-      -- vim.fn.bufnr() should also work.
-      buffer = 0,
-      callback = function()
-        vim.lsp.buf.format()
-      end,
-    })
-    print "Enabled format on save"
-    format_on_save = true
-  end
-end
+-- This is now handled by conform.nvim, but we'll keep this code commented for
+-- now because it may be a useful reference for handling it manually.
+-- local format_on_save = false
+-- local toggle_format_on_save = function()
+--   if format_on_save then
+--     vim.api.nvim_del_augroup_by_name "autofmt"
+--     print "Disabled format on save"
+--     format_on_save = false
+--   else
+--     vim.api.nvim_create_augroup("autofmt", {})
+--     vim.api.nvim_create_autocmd("BufWritePre", {
+--       group = "autofmt",
+--       -- 0 refers to the current buffer.
+--       -- vim.fn.bufnr() should also work.
+--       buffer = 0,
+--       callback = function()
+--         vim.lsp.buf.format()
+--       end,
+--     })
+--     print "Enabled format on save"
+--     format_on_save = true
+--   end
+-- end
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -129,20 +131,21 @@ local on_attach = function(client, bufnr)
   -- litee-symboltree adjusts this behavior
   buf_map("n", "<leader>ls", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", "open symbol tree [LSP]")
 
-  if client.server_capabilities.documentFormattingProvider then
-    buf_map(
-      "n",
-      "<leader>l=",
-      "<cmd>lua vim.lsp.buf.format({async=true})<CR>",
-      "format buffer (async) [LSP]"
-    )
-    buf_map(
-      "n",
-      "<leader>t=",
-      "<cmd>lua require('cfg.lsp').toggle_format_on_save()<CR>",
-      "toggle format on save [LSP]"
-    )
-  end
+  -- NOTE: formatting, including fallback to LSP, should be handled by conform.nvim now.
+  -- if client.server_capabilities.documentFormattingProvider then
+  --   buf_map(
+  --     "n",
+  --     "<leader>l=",
+  --     "<cmd>lua vim.lsp.buf.format({async=true})<CR>",
+  --     "format buffer (async) [LSP]"
+  --   )
+  --   buf_map(
+  --     "n",
+  --     "<leader>t=",
+  --     "<cmd>lua require('cfg.lsp').toggle_format_on_save()<CR>",
+  --     "toggle format on save [LSP]"
+  --   )
+  -- end
 
   -- Highlight symbol under cursor (if capabilities exist)
   -- Treesitter handles the highlighting of the same symbol elsewhere.
@@ -328,5 +331,5 @@ mason_lsp.setup_handlers {
 local M = {}
 -- export this so it can be passed to null-ls
 M.on_attach = on_attach
-M.toggle_format_on_save = toggle_format_on_save
+-- M.toggle_format_on_save = toggle_format_on_save
 return M
