@@ -18,14 +18,19 @@ require("nvim-treesitter.configs").setup {
     "make",
     "org",
     "python",
+    "query",
     "r",
     "rust",
     "scss",
     "toml",
     "typescript",
     "vim",
+    "vimdoc",
     "yaml",
   },
+  -- This option will auto-install upon opening new filetypes. It is contingent
+  -- on the treesitter CLI, which is installed via Mason.
+  auto_install = true,
   highlight = {
     enable = true,
     disable = { "org" }, -- Remove this to use TS highligher for some highlights (Experimental)

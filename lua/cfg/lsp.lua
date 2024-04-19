@@ -295,7 +295,7 @@ local mason_lsp = require "mason-lspconfig"
 mason_lsp.setup {
   -- bash requires npm/node which may not always be available.
   -- ensure_installed = { "lua_ls", "bashls" },
-  ensure_installed = { "lua_ls" },
+  ensure_installed = { "lua_ls", "ruff_lsp" },
   -- If enabled, this will install servers configured in lspconfig. Can
   -- also be set to exclude specific servers (e.g. "rust-analyzer").
   automatic_installation = false,

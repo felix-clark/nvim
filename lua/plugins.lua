@@ -305,6 +305,13 @@ return {
     "williamboman/mason.nvim",
     config = true,
   },
+  -- auto-install tools that aren't LSP or DAP
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    opts = {
+      ensure_installed = { "tree-sitter-cli", "stylua", "mypy" },
+    },
+  },
   {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "mason.nvim", "nvim-lspconfig" },
