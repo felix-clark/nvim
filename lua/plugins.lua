@@ -477,10 +477,6 @@ return {
       require("crates").setup()
     end,
   },
-  -- consider for running/debugging tests:
-  -- https://github.com/rouge8/neotest-rust
-
-  -- TODO: molten.nvim for jupyter integration
 
   -- LaTeX (lazy-loaded by default)
   {
