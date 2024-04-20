@@ -355,8 +355,8 @@ return {
   -- extended LSP and debugging features for rust
   {
     "mrcjkb/rustaceanvim",
-    version = "^4", -- Recommended
-    ft = { "rust" }, -- this is in readme. What about Cargo.toml?
+    version = "^4", -- Recommended to pin the version explicitly
+    lazy = false, -- readme says it's already lazy
     opts = {
       settings = {
         ["rust-analyzer"] = {
@@ -403,8 +403,8 @@ return {
   -- org-mode emulation
   {
     "nvim-orgmode/orgmode",
-    -- Lazy-loading is not recommended. This package loads quickly and needs to be used before setting up treesitter.
-    -- ft = { "org" },
+    event = "VeryLazy",
+    ft = { "org" },
     opts = {
       -- note: there are more
       org_agenda_files = { "~/org/todo.org", "~/org/felix-agenda.org" },
