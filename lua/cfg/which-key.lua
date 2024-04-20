@@ -26,7 +26,6 @@ wk.register({
   },
   f = {
     name = "+file",
-    g = { "<cmd>find $HOME/.config/nvim/init.vim<cr>", "Open neovim config" },
     n = { "<cmd>enew<cr>", "New file" },
     s = { "<cmd>update<cr>", "Save file" },
   },
