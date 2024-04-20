@@ -46,7 +46,7 @@ vim.diagnostic.config {
 }
 
 -- global diagnostic keymaps independent of a LSP server
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "show line diagnostic [LSP]" })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "show line diagnostic" })
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "goto previous diagnostic" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "goto next diagnostic" })
 vim.keymap.set(
@@ -66,9 +66,7 @@ vim.keymap.set(
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   local function buf_map(mode, lhs, rhs, desc)
-    -- opts = vim.tbl_extend("keep", opts, { silent = true, buffer = bufnr, desc = desc })
     local opts = { buffer = bufnr, silent = true, desc = desc }
-    -- this uses `remap`, which is false by default, over `noremap`.
     vim.keymap.set(mode, lhs, rhs, opts)
   end
 
@@ -77,13 +75,13 @@ local on_attach = function(client, bufnr)
   -- vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_map("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", "goto declaration [LSP]")
-  buf_map("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", "goto definition [LSP]")
+  buf_map("n", "gD", vim.lsp.buf.declaration, "goto declaration [LSP]")
+  buf_map("n", "gd", vim.lsp.buf.definition, "goto definition [LSP]")
   -- Why use telescope for this?
   -- buf_map("n", "gd", "<Cmd>Telescope lsp_definitions<CR>", "goto definition [LSP]")
-  buf_map("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", "hover information [LSP]")
+  buf_map("n", "K", vim.lsp.buf.hover, "hover information [LSP]")
   -- gi overwrites "go to last insertion and insert", so use gI
-  -- buf_set_keymap('n', 'gI', '<cmd>lua vim.lsp.buf.implementation()<CR>', {})
+  -- buf_set_keymap('n', 'gI', vim.lsp.buf.implementation, {})
   buf_map("n", "gI", "<cmd>Telescope lsp_implementations<CR>", "list implementations [LSP]")
   buf_map("n", "<C-k>", vim.lsp.buf.signature_help, "signature help [LSP]")
   buf_map("n", "<leader>lwa", vim.lsp.buf.add_workspace_folder, "add workspace folder [LSP]")
@@ -188,7 +186,6 @@ local on_attach = function(client, bufnr)
     hint_prefix = " ",
     toggle_key = "<C-s>",
   }, bufnr)
-
 end
 
 -- Set the gutter diagnostics to use icons
@@ -310,9 +307,3 @@ mason_lsp.setup_handlers {
     nvim_lsp.pyright.setup(config)
   end,
 }
-
-local M = {}
--- export this so it can be passed to null-ls
-M.on_attach = on_attach
--- M.toggle_format_on_save = toggle_format_on_save
-return M
