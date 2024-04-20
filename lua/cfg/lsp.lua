@@ -31,6 +31,37 @@ local nvim_lsp = require "lspconfig"
 --   end
 -- end
 
+-- Turn off the virtual text diagnostics as there are often false positives and
+-- it is visually noisy.
+vim.diagnostic.config {
+  virtual_text = false,
+  signs = true,
+  underline = true,
+  update_in_insert = true,
+  severity_sort = true,
+  -- use source = "if_many" to only show source when there are multiple. This
+  -- is probably preferable in the long run when I'm not experimenting with
+  -- different providers so much.
+  float = { source = "always" },
+}
+
+-- global diagnostic keymaps independent of a LSP server
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "show line diagnostic [LSP]" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "goto previous diagnostic" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "goto next diagnostic" })
+vim.keymap.set(
+  "n",
+  "<leader>lq",
+  vim.diagnostic.setqflist,
+  { desc = "send diagnostics to quickfix" }
+)
+vim.keymap.set(
+  "n",
+  "<leader>lQ",
+  vim.diagnostic.setloclist,
+  { desc = "send diagnostics to loclist" }
+)
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -234,16 +265,6 @@ local kinds = vim.lsp.protocol.CompletionItemKind
 for i, kind in ipairs(kinds) do
   kinds[i] = comp_icons[kind] or kind
 end
-
--- Turn off the virtual text diagnostics as there are often false positives and
--- it is visually noisy.
-vim.diagnostic.config {
-  virtual_text = false,
-  signs = true,
-  underline = true,
-  update_in_insert = true,
-  severity_sort = true,
-}
 
 -- Lua language server configuration for neovim development
 local function make_lua_settings()
