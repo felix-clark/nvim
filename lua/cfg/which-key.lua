@@ -27,7 +27,6 @@ wk.register({
   },
   f = {
     name = "+file",
-    b = { "<cmd>Telescope file_browser<cr>", "File browser" },
     f = { "<cmd>Telescope find_files<cr>", "Find file" },
     g = { "<cmd>find $HOME/.config/nvim/init.vim<cr>", "Open neovim config" },
     n = { "<cmd>enew<cr>", "New file" },
@@ -68,23 +67,9 @@ wk.register({
     p = { "<cmd>split term://ytop -m<cr>", "ytop" },
     t = { "<cmd>ToggleTerm<cr>", "terminal" },
   },
-  p = {
-    name = "+project",
-    f = { "<cmd>Telescope git_files<cr>", "Open file in project" },
-    p = { "<cmd>lua require'telescope'.extensions.project.project{}<cr>", "Pick project" },
-  },
-  -- See telescope's documentation for other pickers
+  -- Keymaps defined in telescope's config
   s = {
     name = "+search",
-    [":"] = { "<cmd>Telescope commands<cr>", "commands" },
-    b = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "buffer" },
-    c = { "<cmd>Telescope git_commits<cr>", "git commits" },
-    h = { "<cmd>Telescope help_tags<cr>", "help tags" },
-    k = { "<cmd>Telescope marks<cr>", "marks" },
-    m = { "<cmd>Telescope keymaps<cr>", "keymaps" },
-    p = { "<cmd>Telescope live_grep<cr>", "project" },
-    s = { "<cmd>Telescope treesitter<cr>", "treesitter" },
-    t = { "<cmd>Telescope tags<cr>", "tags" },
   },
   t = {
     name = "+toggle",
