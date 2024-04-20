@@ -24,6 +24,7 @@ wk.register({
     r = "Rename (treesitter-refactor)",
     x = { "<cmd>TroubleToggle<cr>", "Show error list" },
   },
+  d = { name = "+debug" },
   f = {
     name = "+file",
     n = { "<cmd>enew<cr>", "New file" },
@@ -33,9 +34,7 @@ wk.register({
     name = "+git",
     -- A hydra is defined for git
   },
-  l = {
-    name = "+lsp",
-  },
+  l = { name = "+lsp" },
   -- specifying this here causes some clunky interactions
   -- m = { "<localleader>", "+local" },
   o = {
