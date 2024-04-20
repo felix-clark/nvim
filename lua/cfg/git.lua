@@ -45,6 +45,7 @@ M.gitsigns_opts = {
     map({ "n", "v" }, "<leader>gr", gs.reset_hunk, "Reset hunk")
     map("n", "<leader>gS", gs.stage_buffer, "Stage buffer")
     map("n", "<leader>gu", gs.undo_stage_hunk, "Undo stage")
+    map("n", "<leader>gc", "<cmd>Neogit commit<cr>", "Commit")
     map("n", "<leader>gR", gs.reset_buffer, "Reset buffer")
     map("n", "<leader>gp", gs.preview_hunk, "Preview hunk")
     map("n", "<leader>gb", function()
@@ -54,7 +55,8 @@ M.gitsigns_opts = {
     map("n", "<leader>gD", function()
       gs.diffthis "~"
     end, "Diff buffer")
-    -- NOTE: toggle blame and deleted are defined in which-key
+    map("n", "<leader>tb", gs.toggle_current_line_blame, "Toggle git blame")
+    map("n", "<leader>tg", gs.toggle_signs, "Toggle git signs")
 
     -- Text object
     map({ "o", "x" }, "ih", ":<C-u>Gitsigns select_hunk<cr>", "Select hunk")
