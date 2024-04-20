@@ -41,8 +41,8 @@ M.gitsigns_opts = {
 
     -- Actions
     -- These bindings are a backup in case the hydra fails, or in case it hasn't loaded yet
-    map({ "n", "v" }, "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>", "Stage hunk")
-    map({ "n", "v" }, "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>", "Reset hunk")
+    map({ "n", "v" }, "<leader>gs", gs.stage_hunk, "Stage hunk")
+    map({ "n", "v" }, "<leader>gr", gs.reset_hunk, "Reset hunk")
     map("n", "<leader>gS", gs.stage_buffer, "Stage buffer")
     map("n", "<leader>gu", gs.undo_stage_hunk, "Undo stage")
     map("n", "<leader>gR", gs.reset_buffer, "Reset buffer")
