@@ -85,37 +85,19 @@ local on_attach = function(client, bufnr)
   -- gi overwrites "go to last insertion and insert", so use gI
   -- buf_set_keymap('n', 'gI', '<cmd>lua vim.lsp.buf.implementation()<CR>', {})
   buf_map("n", "gI", "<cmd>Telescope lsp_implementations<CR>", "list implementations [LSP]")
-  buf_map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", "signature help [LSP]")
-  buf_map(
-    "n",
-    "<leader>lwa",
-    "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",
-    "add workspace folder [LSP]"
-  )
-  buf_map(
-    "n",
-    "<leader>lwr",
-    "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",
-    "remove workspace folder [LSP]"
-  )
-  buf_map(
-    "n",
-    "<leader>lwl",
-    "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
-    "list workspace folders [LSP]"
-  )
+  buf_map("n", "<C-k>", vim.lsp.buf.signature_help, "signature help [LSP]")
+  buf_map("n", "<leader>lwa", vim.lsp.buf.add_workspace_folder, "add workspace folder [LSP]")
+  buf_map("n", "<leader>lwr", vim.lsp.buf.remove_workspace_folder, "remove workspace folder [LSP]")
+  buf_map("n", "<leader>lwl", function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, "list workspace folders [LSP]")
   -- buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', "type definitions [LSP]")
   -- <leader>D conflicts with treesitter "list definitions"
   buf_map("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<CR>", "type definitions [LSP]")
-  buf_map("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", "rename [LSP]")
-  buf_map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", "code actions [LSP]")
-  buf_map(
-    "v",
-    "<leader>ca",
-    "<cmd>lua vim.lsp.buf.range_code_action()<CR>",
-    "range code actions [LSP]"
-  )
-  -- buf_set_keymap('n', '<leader>lgr', '<cmd>lua vim.lsp.buf.references()<CR>', "references [LSP]")
+  buf_map("n", "<leader>lr", vim.lsp.buf.rename, "rename [LSP]")
+  buf_map("n", "<leader>ca", vim.lsp.buf.code_action, "code actions [LSP]")
+  buf_map("v", "<leader>ca", vim.lsp.buf.range_code_action, "range code actions [LSP]")
+  -- buf_set_keymap('n', '<leader>lgr', vim.lsp.buf.references, "references [LSP]")
   buf_map("n", "<leader>lgr", "<cmd>Telescope lsp_references<CR>", "references [LSP]")
   buf_map("n", "<leader>lgs", "<cmd>Telescope lsp_document_symbols<CR>", "document symbols [LSP]")
   -- NOTE: It's not clear what the difference is between the dynamic and
@@ -134,33 +116,13 @@ local on_attach = function(client, bufnr)
     "<cmd>Telescope lsp_workspace_diagnostics<CR>",
     "workspace diagnostics [LSP]"
   )
-  buf_map(
-    "n",
-    "<leader>e",
-    "<cmd>lua vim.diagnostic.open_float(nil, {source='always'})<CR>",
-    "show line diagnostic [LSP]"
-  )
-  buf_map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", "goto previous diagnostic [LSP]")
-  buf_map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", "goto next diagnostic [LSP]")
-  buf_map(
-    "n",
-    "<leader>lq",
-    "<cmd>lua vim.diagnostic.setqflist()<CR>",
-    "send diagnostics to quickfix [LSP]"
-  )
-  buf_map(
-    "n",
-    "<leader>lQ",
-    "<cmd>lua vim.diagnostic.setloclist()<CR>",
-    "send diagnostics to loclist [LSP]"
-  )
   -- These require textDocument/prepareCallHierarchy.
   -- litee-calltree provides these.
   -- TODO: Figure out what document capabilities can be queried to only set these when available.
-  buf_map("n", "<leader>li", "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", "incoming calls [LSP]")
-  buf_map("n", "<leader>lo", "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls [LSP]")
+  buf_map("n", "<leader>li", vim.lsp.buf.incoming_calls, "incoming calls [LSP]")
+  buf_map("n", "<leader>lo", vim.lsp.buf.outgoing_calls, "outgoing calls [LSP]")
   -- litee-symboltree adjusts this behavior
-  buf_map("n", "<leader>ls", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", "open symbol tree [LSP]")
+  buf_map("n", "<leader>ls", vim.lsp.buf.document_symbol, "open symbol tree [LSP]")
 
   -- NOTE: formatting, including fallback to LSP, should be handled by conform.nvim now.
   -- if client.server_capabilities.documentFormattingProvider then
