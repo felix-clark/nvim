@@ -26,10 +26,8 @@ wk.register({
   },
   f = {
     name = "+file",
-    f = { "<cmd>Telescope find_files<cr>", "Find file" },
     g = { "<cmd>find $HOME/.config/nvim/init.vim<cr>", "Open neovim config" },
     n = { "<cmd>enew<cr>", "New file" },
-    p = { "<cmd>Telescope git_files<cr>", "Open file in project" },
     s = { "<cmd>update<cr>", "Save file" },
   },
   g = {
