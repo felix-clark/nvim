@@ -288,7 +288,8 @@ return {
 
   {
     "anuvyklack/hydra.nvim",
-    dependencies = { "anuvyklack/keymap-layer.nvim", "gitsigns.nvim" }, -- needed only for pink hydras
+    dependencies = { "anuvyklack/keymap-layer.nvim" }, -- needed only for pink hydras
+    after = { "gitsigns.nvim" },
     event = "BufWinEnter",
     config = function()
       require "cfg.hydra"
