@@ -22,7 +22,6 @@ wk.register({
     l = { "<cmd>TroubleToggle loclist<cr>", "Location list" },
     q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix list" },
     r = "Rename (treesitter-refactor)",
-    s = { "<cmd>Telescope treesitter<cr>", "Treesitter symbols" },
     x = { "<cmd>TroubleToggle<cr>", "Show error list" },
   },
   f = {
