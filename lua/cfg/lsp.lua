@@ -65,8 +65,11 @@ vim.keymap.set(
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(ev)
+  local bufnr = ev.buf
+  local client = vim.lsp.get_client_by_id(ev.data.client_id)
+
   local function buf_map(mode, lhs, rhs, desc)
-    local opts = { buffer = ev.buf, silent = true, desc = desc }
+    local opts = { buffer = bufnr, silent = true, desc = desc }
     vim.keymap.set(mode, lhs, rhs, opts)
   end
 
@@ -109,21 +112,15 @@ local on_attach = function(ev)
   -- litee-symboltree adjusts this behavior to open a tree
   buf_map("n", "<leader>ls", vim.lsp.buf.document_symbol, "open symbol tree [LSP]")
 
-  -- NOTE: formatting, including fallback to LSP, should be handled by conform.nvim now.
-  -- if client.server_capabilities.documentFormattingProvider then
-  --   buf_map(
-  --     "n",
-  --     "<leader>l=",
-  --     "<cmd>lua vim.lsp.buf.format({async=true})<CR>",
-  --     "format buffer (async) [LSP]"
-  --   )
-  --   buf_map(
-  --     "n",
-  --     "<leader>t=",
-  --     "<cmd>lua require('cfg.lsp').toggle_format_on_save()<CR>",
-  --     "toggle format on save [LSP]"
-  --   )
-  -- end
+  -- NOTE: General formatting is done by <leader>= now, which should fallback
+  -- to LSP formatting if no dedicated CLI program is used. This keybinding is
+  -- left just in case I want to try to force the operation through LSP, for
+  -- some reason.
+  if client.server_capabilities.documentFormattingProvider then
+    buf_map("n", "<leader>l=", function()
+      vim.lsp.buf.format { async = true }
+    end, "format buffer [LSP]")
+  end
 
   -- Highlight symbol under cursor (if capabilities exist)
   -- Treesitter handles the highlighting of the same symbol elsewhere.
