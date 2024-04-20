@@ -89,44 +89,27 @@ local on_attach = function(client, bufnr)
   buf_map("n", "<leader>lwl", function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, "list workspace folders [LSP]")
-  -- buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', "type definitions [LSP]")
+  -- buf_set_keymap('n', '<leader>D', vim.lsp.buf.type_definition, "type definitions [LSP]")
   -- <leader>D conflicts with treesitter "list definitions"
   buf_map("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<CR>", "type definitions [LSP]")
   buf_map("n", "<leader>lr", vim.lsp.buf.rename, "rename [LSP]")
-  buf_map("n", "<leader>ca", vim.lsp.buf.code_action, "code actions [LSP]")
-  buf_map("v", "<leader>ca", vim.lsp.buf.range_code_action, "range code actions [LSP]")
+  buf_map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "code actions [LSP]")
   -- buf_set_keymap('n', '<leader>lgr', vim.lsp.buf.references, "references [LSP]")
-  buf_map("n", "<leader>lgr", "<cmd>Telescope lsp_references<CR>", "references [LSP]")
-  buf_map("n", "<leader>lgs", "<cmd>Telescope lsp_document_symbols<CR>", "document symbols [LSP]")
-  -- NOTE: It's not clear what the difference is between the dynamic and
-  -- vanilla versions of workspace symbols.
-  -- buf_set_keymap('n', '<leader>lgS', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', "workspace symbols [LSP]")
-  buf_map("n", "<leader>lgS", "<cmd>Telescope lsp_workspace_symbols<CR>", "workspace symbols [LSP]")
-  -- NOTE: General formatting is done by <leader>= now, which should fallback
-  -- to LSP formatting if no dedicated CLI program is used. This keybinding is
-  -- left just in case I want to try to force the operation through LSP, for
-  -- some reason.
-  buf_map("n", "<leader>l=", function()
-    vim.lsp.buf.format { async = true }
-  end, "format buffer [LSP]")
-  buf_map(
-    "n",
-    "<leader>ld",
-    "<cmd>Telescope lsp_document_diagnostics<CR>",
-    "document diagnostics [LSP]"
-  )
-  buf_map(
-    "n",
-    "<leader>lD",
-    "<cmd>Telescope lsp_workspace_diagnostics<CR>",
-    "workspace diagnostics [LSP]"
-  )
+  buf_map("n", "<leader>lgr", tele.lsp_references, "references [LSP]")
+  buf_map("n", "<leader>lgs", tele.lsp_document_symbols, "document symbols [LSP]")
+  buf_map("n", "<leader>lgS", tele.lsp_workspace_symbols, "workspace symbols [LSP]")
+  -- TODO: These diagnostic pickers are no longer tied to the LSP so find another mapping
+  buf_map("n", "<leader>ld", function()
+    tele.diagnostics { bufnr = ev.buf }
+  end, "buffer diagnostics")
+  buf_map("n", "<leader>lD", tele.diagnostics, "workspace diagnostics")
   -- These require textDocument/prepareCallHierarchy.
   -- litee-calltree provides these.
   -- TODO: Figure out what document capabilities can be queried to only set these when available.
+  -- NOTE: There are telescope pickers for these.
   buf_map("n", "<leader>li", vim.lsp.buf.incoming_calls, "incoming calls [LSP]")
   buf_map("n", "<leader>lo", vim.lsp.buf.outgoing_calls, "outgoing calls [LSP]")
-  -- litee-symboltree adjusts this behavior
+  -- litee-symboltree adjusts this behavior to open a tree
   buf_map("n", "<leader>ls", vim.lsp.buf.document_symbol, "open symbol tree [LSP]")
 
   -- NOTE: formatting, including fallback to LSP, should be handled by conform.nvim now.

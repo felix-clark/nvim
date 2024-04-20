@@ -41,40 +41,8 @@ return {
   {
     "folke/flash.nvim",
     event = "VeryLazy",
-    opts = {},
-    keys = {
-      {
-        "s",
-        mode = { "n", "x", "o" },
-        function()
-          -- default options: exact mode, multi window, all directions, with a backdrop
-          require("flash").jump()
-        end,
-        desc = "Flash",
-      },
-      {
-        "S",
-        mode = { "n", "x", "o" },
-        function()
-          -- used so select a treesitter node with visual mode. this can be
-          -- quicker and more direct than treesitter-select (mapped to <cr> w/
-          -- <tab>/<S-tab>).
-          require("flash").treesitter()
-        end,
-        desc = "Flash Treesitter",
-      },
-      {
-        "r",
-        mode = "o",
-        function()
-          -- allows some complicated operations, like yanking a textobject
-          -- elsewhere then returning to the current position (yr + <s chars> +
-          -- <textobject>).
-          require("flash").remote()
-        end,
-        desc = "Remote Flash",
-      },
-    },
+    keys = require("cfg.motion").keys,
+    config = true,
   },
 
   -- A more opinionated motion plugin
@@ -308,6 +276,7 @@ return {
   -- auto-install tools that aren't LSP or DAP
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "mason.nvim" },
     opts = {
       ensure_installed = { "tree-sitter-cli", "stylua", "mypy" },
     },
@@ -325,7 +294,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     -- These packages require some configuration in cfg.lsp
-    dependencies = { "nvim-cmp", "lsp_signature.nvim", "mason-lspconfig.nvim", "neodev.nvim" },
+    after = { "nvim-cmp", "lsp_signature.nvim", "mason-lspconfig.nvim", "neodev.nvim" },
     config = function()
       require "cfg.lsp"
     end,
