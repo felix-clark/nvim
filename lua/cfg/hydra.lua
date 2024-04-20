@@ -9,6 +9,7 @@ _]_/_[_: goto next/prev hunk    _s_/_S_: stage hunk/buffer    _r_/_R_: reset hun
 ]]
 
 hydra {
+  name = "git",
   hint = githint,
   config = {
     color = "pink",

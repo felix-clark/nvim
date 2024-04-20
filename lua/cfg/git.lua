@@ -1,4 +1,7 @@
 local M = {}
+
+vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<cr>", { desc = "Neogit" })
+
 M.gitsigns_opts = {
   -- A value of 15 or greater should prioritize gitsigns over diagnostics
   -- (which are also underlined)
