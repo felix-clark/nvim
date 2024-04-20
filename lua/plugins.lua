@@ -74,12 +74,11 @@ return {
 
   {
     "windwp/nvim-autopairs",
+    -- Load after cmp to set up completion integration.
+    after = { "nvim-cmp" },
     config = function()
       require "cfg.autopairs"
     end,
-    -- Load after cmp to set up completion integration.
-    -- NOTE: This might no longer be necessary
-    dependencies = { "nvim-cmp" },
   },
 
   -- ensure devicons are installed. If this isn't made explicit some dependents
