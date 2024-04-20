@@ -32,7 +32,7 @@ hydra {
   },
   -- What about commiting a visual block? Perhaps that can be left in which-key
   mode = { "n", "x" },
-  body = "<leader>g",
+  body = "<leader>G",
   heads = {
     { "[", gitsigns.prev_hunk, { nowait = true } },
     { "]", gitsigns.next_hunk, { nowait = true } },
