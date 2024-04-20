@@ -315,9 +315,6 @@ return {
     end,
   },
 
-  -- Add pre-defined snippets. Should this be a nvim-cmp requirement?
-  "rafamadriz/friendly-snippets",
-
   -- Debugging with DAP
   {
     "mfussenegger/nvim-dap",
