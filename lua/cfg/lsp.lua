@@ -64,11 +64,13 @@ vim.keymap.set(
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+local on_attach = function(ev)
   local function buf_map(mode, lhs, rhs, desc)
-    local opts = { buffer = bufnr, silent = true, desc = desc }
+    local opts = { buffer = ev.buf, silent = true, desc = desc }
     vim.keymap.set(mode, lhs, rhs, opts)
   end
+
+  local tele = require "telescope.builtin"
 
   -- NOTE: Omnifunc should not be used concurrently with nvim-cmp.
   -- Uncomment to enable completion triggered by <c-x><c-o>
@@ -78,11 +80,11 @@ local on_attach = function(client, bufnr)
   buf_map("n", "gD", vim.lsp.buf.declaration, "goto declaration [LSP]")
   buf_map("n", "gd", vim.lsp.buf.definition, "goto definition [LSP]")
   -- Why use telescope for this?
-  -- buf_map("n", "gd", "<Cmd>Telescope lsp_definitions<CR>", "goto definition [LSP]")
+  -- buf_map("n", "gd", tele.lsp_definitions, "goto definition [LSP]")
   buf_map("n", "K", vim.lsp.buf.hover, "hover information [LSP]")
   -- gi overwrites "go to last insertion and insert", so use gI
   -- buf_set_keymap('n', 'gI', vim.lsp.buf.implementation, {})
-  buf_map("n", "gI", "<cmd>Telescope lsp_implementations<CR>", "list implementations [LSP]")
+  buf_map("n", "gI", tele.lsp_implementations, "list implementations [LSP]")
   buf_map("n", "<C-k>", vim.lsp.buf.signature_help, "signature help [LSP]")
   buf_map("n", "<leader>lwa", vim.lsp.buf.add_workspace_folder, "add workspace folder [LSP]")
   buf_map("n", "<leader>lwr", vim.lsp.buf.remove_workspace_folder, "remove workspace folder [LSP]")
@@ -91,18 +93,13 @@ local on_attach = function(client, bufnr)
   end, "list workspace folders [LSP]")
   -- buf_set_keymap('n', '<leader>D', vim.lsp.buf.type_definition, "type definitions [LSP]")
   -- <leader>D conflicts with treesitter "list definitions"
-  buf_map("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<CR>", "type definitions [LSP]")
+  buf_map("n", "<leader>lt", tele.lsp_type_definitions, "type definitions [LSP]")
   buf_map("n", "<leader>lr", vim.lsp.buf.rename, "rename [LSP]")
   buf_map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "code actions [LSP]")
   -- buf_set_keymap('n', '<leader>lgr', vim.lsp.buf.references, "references [LSP]")
   buf_map("n", "<leader>lgr", tele.lsp_references, "references [LSP]")
   buf_map("n", "<leader>lgs", tele.lsp_document_symbols, "document symbols [LSP]")
   buf_map("n", "<leader>lgS", tele.lsp_workspace_symbols, "workspace symbols [LSP]")
-  -- TODO: These diagnostic pickers are no longer tied to the LSP so find another mapping
-  buf_map("n", "<leader>ld", function()
-    tele.diagnostics { bufnr = ev.buf }
-  end, "buffer diagnostics")
-  buf_map("n", "<leader>lD", tele.diagnostics, "workspace diagnostics")
   -- These require textDocument/prepareCallHierarchy.
   -- litee-calltree provides these.
   -- TODO: Figure out what document capabilities can be queried to only set these when available.
@@ -175,8 +172,13 @@ local on_attach = function(client, bufnr)
     floating_window = false,
     hint_prefix = " ",
     toggle_key = "<C-s>",
-  }, bufnr)
+  }, ev.buf)
 end
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+  callback = on_attach,
+})
 
 -- Set the gutter diagnostics to use icons
 -- local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -257,7 +259,7 @@ local function make_config()
   return {
     capabilities = capabilities,
     -- map buffer local keybindings when the language server attaches
-    on_attach = on_attach,
+    -- on_attach = on_attach, -- this is for additional per-server hooks only
   }
 end
 
