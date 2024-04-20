@@ -280,7 +280,7 @@ return {
   -- Keybindings and help
   {
     "folke/which-key.nvim",
-    event = "BufWinEnter",
+    event = "VeryLazy",
     config = function()
       require "cfg.which-key"
     end,
