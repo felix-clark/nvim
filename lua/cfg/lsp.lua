@@ -102,6 +102,13 @@ local on_attach = function(client, bufnr)
   -- vanilla versions of workspace symbols.
   -- buf_set_keymap('n', '<leader>lgS', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', "workspace symbols [LSP]")
   buf_map("n", "<leader>lgS", "<cmd>Telescope lsp_workspace_symbols<CR>", "workspace symbols [LSP]")
+  -- NOTE: General formatting is done by <leader>= now, which should fallback
+  -- to LSP formatting if no dedicated CLI program is used. This keybinding is
+  -- left just in case I want to try to force the operation through LSP, for
+  -- some reason.
+  buf_map("n", "<leader>l=", function()
+    vim.lsp.buf.format { async = true }
+  end, "format buffer [LSP]")
   buf_map(
     "n",
     "<leader>ld",
