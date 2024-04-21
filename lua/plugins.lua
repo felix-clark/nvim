@@ -75,7 +75,7 @@ return {
   {
     "windwp/nvim-autopairs",
     -- Load after cmp to set up completion integration.
-    after = { "nvim-cmp" },
+    dependencies = { "nvim-cmp" },
     config = function()
       require "cfg.autopairs"
     end,
@@ -104,7 +104,11 @@ return {
   -- Magit clone
   {
     "NeogitOrg/neogit",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
     -- lazy-load only when called
     cmd = "Neogit",
     config = true,
@@ -236,7 +240,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     -- These packages require some configuration in cfg.lsp
-    after = { "nvim-cmp", "lsp_signature.nvim", "mason-lspconfig.nvim", "neodev.nvim" },
+    dependencies = { "nvim-cmp", "lsp_signature.nvim", "mason-lspconfig.nvim", "neodev.nvim" },
     config = function()
       require "cfg.lsp"
     end,
@@ -288,8 +292,10 @@ return {
 
   {
     "anuvyklack/hydra.nvim",
-    dependencies = { "anuvyklack/keymap-layer.nvim" }, -- needed only for pink hydras
-    after = { "gitsigns.nvim" },
+    dependencies = {
+      "anuvyklack/keymap-layer.nvim", -- needed only for pink hydras
+      "gitsigns.nvim",
+    },
     event = "BufWinEnter",
     config = function()
       require "cfg.hydra"
