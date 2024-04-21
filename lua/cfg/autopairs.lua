@@ -1,10 +1,10 @@
-local npairs = require('nvim-autopairs')
-local Rule = require('nvim-autopairs.rule')
-local cond = require('nvim-autopairs.conds')
+local npairs = require "nvim-autopairs"
+local Rule = require "nvim-autopairs.rule"
+local cond = require "nvim-autopairs.conds"
 -- Additional treesitter configurations can be added here.
-local ts_conds = require('nvim-autopairs.ts-conds')
+local ts_conds = require "nvim-autopairs.ts-conds"
 
-npairs.setup({
+npairs.setup {
   -- check treesitter
   check_ts = true,
   ts_config = {
@@ -16,25 +16,24 @@ npairs.setup({
   -- key like $ to indicate where to place the closing character
   fast_wrap = {
     -- The default mapping is <M-e>
-    map = '<M-e>',
+    map = "<M-e>",
   },
-})
-npairs.add_rules({
+}
+npairs.add_rules {
   -- If immediately after a word character, assume it's a template expression
-  Rule("<", ">", {"c", "cpp", "rust"})
-    :with_pair(cond.before_regex("%w"))
-    :with_pair(cond.not_after_text(">"))
-  ,
+  Rule("<", ">", { "c", "cpp", "rust" })
+    :with_pair(cond.before_regex "%w")
+    :with_pair(cond.not_after_text ">"),
   -- Some treesitter node might be a better specification
   -- Rule("<", ">", "rust"):with_pair(ts_conds.is_ts_node({"type_arguments", "bounded_type"})),
-})
+}
 -- Don't complete single-quotes within a type argument e.g. <'a>
-npairs.get_rule("'")[2]:with_pair(ts_conds.is_not_ts_node({"type_arguments", "bounded_type"}))
+npairs.get_rule("'")[2]:with_pair(ts_conds.is_not_ts_node { "type_arguments", "bounded_type" })
 
 -- cmp integration
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-local cmp = require('cmp')
-cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } } ))
+local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+local cmp = require "cmp"
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
 
 local M = {}
 M.toggle_autopairs = function()
@@ -42,13 +41,18 @@ M.toggle_autopairs = function()
   if ok then
     if autopairs.state.disabled then
       autopairs.enable()
-      print("autopairs on")
+      print "autopairs on"
     else
       autopairs.disable()
-      print("autopairs off")
+      print "autopairs off"
     end
   else
-    print("autopairs not available")
+    print "autopairs not available"
   end
 end
+
+-- This map won't be set until InsertEnter occurs, but I can probably live with that.
+-- As this is currently written, there's not actually a need to export it.
+vim.keymap.set("n", "<leader>tp", M.toggle_autopairs, { desc = "Toggle autopairs" })
+
 return M

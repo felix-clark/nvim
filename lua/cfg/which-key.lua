@@ -66,7 +66,6 @@ wk.register({
   t = {
     name = "+toggle",
     l = { "<cmd>set relativenumber!<cr>", "Switch line number style" },
-    p = { "<cmd>lua require('cfg.autopairs').toggle_autopairs()<cr>", "Toggle autopairs" },
     t = { "<cmd>NvimTreeToggle<cr>", "Project tree" },
   },
   w = {

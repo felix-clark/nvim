@@ -76,8 +76,9 @@ return {
 
   {
     "windwp/nvim-autopairs",
+    event = "InsertEnter",
     -- Load after cmp to set up completion integration.
-    dependencies = { "nvim-cmp" },
+    -- dependencies = { "nvim-cmp" },
     config = function()
       require "cfg.autopairs"
     end,
