@@ -37,6 +37,7 @@ local function tele_map(mode, lhs, rhs, desc)
   vim.keymap.set(mode, lhs, rhs, { desc = desc })
 end
 
+tele_map("n", "<leader>bb", builtin.buffers, "Switch buffer")
 tele_map("n", "<leader>s:", builtin.commands, "commands")
 tele_map("n", "<leader>sb", builtin.current_buffer_fuzzy_find, "buffer")
 tele_map("n", "<leader>sc", builtin.git_commits, "git commits")
@@ -51,6 +52,9 @@ tele_map("n", "<leader>sp", builtin.live_grep, "project")
 tele_map("n", "<leader>ss", builtin.treesitter, "treesitter")
 tele_map("n", "<leader>st", builtin.tags, "tags")
 tele_map("n", "<leader>s*", builtin.grep_string, "find this word")
+tele_map("n", "<leader>s?", builtin.help_tags, "help")
 tele_map("n", "<leader>ff", builtin.find_files, "find file")
 tele_map("n", "<leader>fg", builtin.git_files, "find file in repo")
+-- NOTE: perhaps this is redundant with frecency (mapped to "<leader>fr" in
+-- lazy)
 tele_map("n", "<leader>fp", builtin.oldfiles, "find previously opened file")

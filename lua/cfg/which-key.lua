@@ -4,7 +4,6 @@ local wk = require "which-key"
 wk.register({
   b = {
     name = "+buffer",
-    b = { "<cmd>Telescope buffers<cr>", "Switch buffer" },
     d = { "<cmd>bd<cr>", "delete-buffer" },
     h = { "<cmd>bfirst<cr>", "first-buffer" },
     j = { "<cmd>bnext<cr>", "next-buffer" },
