@@ -111,8 +111,8 @@ return {
       "sindrets/diffview.nvim",
       "nvim-telescope/telescope.nvim",
     },
-    -- lazy-load only when called
     cmd = "Neogit",
+    keys = require("cfg.git").neogit_keys,
     config = true,
   },
 
@@ -120,8 +120,7 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-    -- Lazy-loading can easily cause problems, particularly with the git hydra
-    -- event = "BufRead",
+    event = "BufRead",
     opts = require("cfg.git").gitsigns_opts,
   },
 
@@ -296,9 +295,10 @@ return {
     "anuvyklack/hydra.nvim",
     dependencies = {
       "anuvyklack/keymap-layer.nvim", -- needed only for pink hydras
-      "gitsigns.nvim",
     },
-    event = "BufWinEnter",
+    -- it's a bit awkward to manually specify the hydra trigger keys but this
+    -- will allow for lazier loading
+    keys = { "<leader>G" },
     config = function()
       require "cfg.hydra"
     end,
@@ -317,8 +317,7 @@ return {
       -- For neovim lua API completion
       "hrsh7th/cmp-nvim-lua",
     },
-    -- Don't lazy-load since we configure LSP based on completion capabilities.
-    -- event = 'InsertEnter *',
+    event = "InsertEnter *",
     config = function()
       require "cfg.complete"
     end,
@@ -328,6 +327,9 @@ return {
   {
     "mfussenegger/nvim-dap",
     lazy = true,
+    -- NOTE: This could probably be refactored to be lazier by defining
+    -- keybingings that require("dap") as needed, but it would take some
+    -- refactoring.
     event = "BufReadPre",
     dependencies = {
       "nvim-neotest/nvim-nio",

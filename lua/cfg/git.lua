@@ -1,6 +1,21 @@
 local M = {}
 
-vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<cr>", { desc = "Neogit" })
+M.neogit_keys = {
+  {
+    "<leader>gg",
+    function()
+      require("neogit").open()
+    end,
+    desc = "Neogit",
+  },
+  {
+    "<leader>gc",
+    function()
+      require("neogit").open { "commit" }
+    end,
+    desc = "Commit",
+  },
+}
 
 M.gitsigns_opts = {
   -- A value of 15 or greater should prioritize gitsigns over diagnostics
@@ -45,7 +60,6 @@ M.gitsigns_opts = {
     map({ "n", "v" }, "<leader>gr", gs.reset_hunk, "Reset hunk")
     map("n", "<leader>gS", gs.stage_buffer, "Stage buffer")
     map("n", "<leader>gu", gs.undo_stage_hunk, "Undo stage")
-    map("n", "<leader>gc", "<cmd>Neogit commit<cr>", "Commit")
     map("n", "<leader>gR", gs.reset_buffer, "Reset buffer")
     map("n", "<leader>gp", gs.preview_hunk, "Preview hunk")
     map("n", "<leader>gb", function()

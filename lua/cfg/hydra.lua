@@ -1,5 +1,6 @@
 local hydra = require "hydra"
 local gitsigns = require "gitsigns"
+local neogit = require "neogit"
 
 local githint = [[
 _]_/_[_: goto next/prev hunk    _s_/_S_: stage hunk/buffer    _r_/_R_: reset hunk/buffer
@@ -56,13 +57,26 @@ hydra {
       "D",
       function()
         gitsigns.diffthis "~"
-      end, {exit = true}
+      end,
+      { exit = true },
     },
-    { "c", "<cmd>Neogit commit<cr>", { exit = true } },
-    -- { "g", "<cmd>Neogit kind=split<cr>", { exit = true } },
-    { "g", "<cmd>Neogit<cr>", { exit = true } },
-    { "l", "<cmd>Neogit log<cr>", { exit = true } },
-    { "/", gitsigns.show, { exit = true } },
+    {
+      "c",
+      function()
+        neogit.open { "commit" }
+      end,
+      { exit_before = true, nowait = true },
+    },
+    -- { "g", function() neogit.open { kind = "split" } end, { exit = true } },
+    { "g", neogit.open, { exit = true, nowait = true } },
+    {
+      "l",
+      function()
+        neogit.open { "log" }
+      end,
+      { exit_before = true, nowait = true },
+    },
+    { "/", gitsigns.show, { exit = true, nowait = true } },
     { "q", nil, { exit = true, nowait = true } },
     -- TODO: silent exits when other keys are pressed? Potentially use
     -- "foreign" option.

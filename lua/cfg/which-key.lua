@@ -30,10 +30,8 @@ wk.register({
     n = { "<cmd>enew<cr>", "New file" },
     s = { "<cmd>update<cr>", "Save file" },
   },
-  g = {
-    name = "+git",
-    -- A hydra is defined for git
-  },
+  g = { name = "+git" },
+  G = { name = "[Hydra] git" }, -- manually specify this so it shows before hydra is lazily-loaded
   l = { name = "+lsp" },
   -- specifying this here causes some clunky interactions
   -- m = { "<localleader>", "+local" },
