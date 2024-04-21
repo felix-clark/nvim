@@ -2,7 +2,7 @@ local M = {}
 
 -- NOTE: the conform.nvim wiki shows how to implement a global/buffer
 -- distinction for autoformatting, but I haven't really needed this.
-local enable_format_on_save = false
+local enable_format_on_save = true
 local get_fos_args = function()
   if enable_format_on_save then
     return { timeout_ms = 500, lsp_fallback = true }
@@ -30,7 +30,7 @@ M.keys = {
     desc = "Format buffer",
   },
   -- toggle format-on-save
-  { "<leader>t=", toggle_format_on_save, mode = "n", "Toggle format-on-save" },
+  { "<leader>t=", toggle_format_on_save, mode = "n", desc = "Toggle format on save" },
 }
 -- everything in opts is passed to conform's setup()
 M.opts = {
