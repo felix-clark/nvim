@@ -1,4 +1,16 @@
 return {
+  -- theme should be loaded first
+  {
+    "rebelot/kanagawa.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      -- No need to call setup if the defaults are satisfactory
+      -- require("kanagawa").setup {}
+      vim.cmd "colorscheme kanagawa"
+    end,
+  },
+
   -- Repeat plugin commands
   "tpope/vim-repeat",
   -- For compilation commands
@@ -25,16 +37,6 @@ return {
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = true,
-  },
-
-  -- theme
-  {
-    "rebelot/kanagawa.nvim",
-    config = function()
-      -- No need to call setup if the defaults are satisfactory
-      -- require("kanagawa").setup {}
-      vim.cmd "colorscheme kanagawa"
-    end,
   },
 
   -- improved search, f/F/t/T, treesitter motions, remote actions
