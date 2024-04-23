@@ -116,13 +116,18 @@ return {
     keys = require("cfg.git").neogit_keys,
     config = true,
   },
-
   -- Git gutter
   {
     "lewis6991/gitsigns.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     event = "BufRead",
     opts = require("cfg.git").gitsigns_opts,
+  },
+  -- Blame history more in-depth than seems available in neogit/gitgutter.
+  {
+    "FabijanZulj/blame.nvim",
+    keys = { { "<leader>tb", "<cmd>BlameToggle window<cr>", desc = "Toggle git blame" } },
+    config = true,
   },
 
   -- Status line

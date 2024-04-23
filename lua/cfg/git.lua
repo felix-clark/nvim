@@ -69,7 +69,8 @@ M.gitsigns_opts = {
     map("n", "<leader>gD", function()
       gs.diffthis "~"
     end, "Diff buffer")
-    map("n", "<leader>tb", gs.toggle_current_line_blame, "Toggle git blame")
+    -- defer to blame.nvim for this
+    -- map("n", "<leader>tb", gs.toggle_current_line_blame, "Toggle git blame")
     map("n", "<leader>tg", gs.toggle_signs, "Toggle git signs")
 
     -- Text object
