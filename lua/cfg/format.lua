@@ -1,3 +1,6 @@
+-- define formatexpr for compatability with `gq`
+vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+
 local M = {}
 
 -- NOTE: the conform.nvim wiki shows how to implement a global/buffer
