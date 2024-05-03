@@ -49,10 +49,9 @@ require("nvim-treesitter.configs").setup {
       node_decremental = "<s-tab>",
     },
   },
-  -- This is experimental and seems to do poorly at times, particularly in python.
-  -- Perhaps in the future it should be re-enabled.
   indent = {
-    enable = false,
+    -- This changes indentexpr; it's unclear to me if it does more than that.
+    enable = true,
   },
   -- Integration with nvim-autopairs
   autopairs = { enable = true },
