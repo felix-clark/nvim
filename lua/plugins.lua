@@ -372,22 +372,27 @@ return {
     version = "^4", -- Recommended to pin the version explicitly
     lazy = false, -- readme says it's already lazy
     opts = {
-      settings = {
-        ["rust-analyzer"] = {
-          cargo = {
-            allFeatures = true,
-          },
-          checkOnSave = {
-            allFeatures = true,
-            command = "clippy",
-            extraArgs = { "--no-deps" },
-          },
-          procMacro = {
-            enable = true,
-            ignored = {
-              ["async-trait"] = { "async_trait" },
-              ["napi-derive"] = { "napi" },
-              ["async-recursion"] = { "async_recursion" },
+      server = {
+        default_settings = {
+          ["rust-analyzer"] = {
+            cargo = {
+              -- NOTE: sometimes features are mutually exclusive, which can
+              -- lock up check/clippy, so --all-features shouldn't be enabled
+              -- by default.
+              -- allFeatures = true,
+              allTargets = true,
+            },
+            checkOnSave = {
+              command = "clippy",
+              extraArgs = { "--no-deps" },
+            },
+            procMacro = {
+              enable = true,
+              ignored = {
+                ["async-trait"] = { "async_trait" },
+                ["napi-derive"] = { "napi" },
+                ["async-recursion"] = { "async_recursion" },
+              },
             },
           },
         },
