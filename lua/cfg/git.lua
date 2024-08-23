@@ -31,28 +31,36 @@ M.gitsigns_opts = {
     end
 
     -- Navigation
-    map("n", "]g", function()
-      if vim.wo.diff then
-        return "]g"
-      end
-      vim.schedule(function()
-        gs.next_hunk()
-      end)
-      return "<Ignore>"
-    end, {
-      expr = true,
-    })
-    map("n", "[g", function()
-      if vim.wo.diff then
-        return "[g"
-      end
-      vim.schedule(function()
-        gs.prev_hunk()
-      end)
-      return "<Ignore>"
-    end, {
-      expr = true,
-    })
+    map(
+      "n",
+      "]g",
+      function()
+        if vim.wo.diff then
+          vim.cmd.normal { "]g", bang = true }
+        else
+          gs.nav_hunk "next"
+        end
+      end,
+      "Next hunk",
+      {
+        expr = true,
+      }
+    )
+    map(
+      "n",
+      "[g",
+      function()
+        if vim.wo.diff then
+          vim.cmd.normal { "[g", bang = true }
+        else
+          gs.nav_hunk "prev"
+        end
+      end,
+      "Previous hunk",
+      {
+        expr = true,
+      }
+    )
 
     -- Actions
     -- These bindings are a backup in case the hydra fails, or in case it hasn't loaded yet
