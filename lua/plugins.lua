@@ -254,7 +254,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     -- These packages require some configuration in cfg.lsp
-    dependencies = { "nvim-cmp", "lsp_signature.nvim", "mason-lspconfig.nvim", "neodev.nvim" },
+    dependencies = { "nvim-cmp", "lsp_signature.nvim", "mason-lspconfig.nvim" },
     config = function()
       require "cfg.lsp"
     end,
