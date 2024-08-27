@@ -19,6 +19,12 @@ local sources = cmp.config.sources {
   -- For neovim lua files
   { name = "nvim_lua" },
 
+  -- Lua require statements and module annotations
+  {
+    name = "lazydev",
+    group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+  },
+
   -- Words already in buffer
   { name = "buffer" },
 
