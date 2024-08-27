@@ -1,8 +1,3 @@
--- neodev (for neovim lua) must be set up before LSP
-require("neodev").setup {
-  library = { plugins = { "nvim-dap-ui" }, types = true },
-}
-
 -- Most of this config is taken from wiki for nvim-lspinstall.
 local nvim_lsp = require "lspconfig"
 
@@ -235,9 +230,6 @@ local function make_lua_settings()
       workspace = {
         -- Make the server aware of Neovim runtime files
         library = vim.api.nvim_get_runtime_file("", true),
-        -- workaround to suppress configuration prompts every time
-        -- see e.g. https://github.com/folke/neodev.nvim/issues/88
-        checkThirdParty = false,
       },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {

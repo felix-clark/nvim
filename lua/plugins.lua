@@ -214,12 +214,19 @@ return {
     config = true,
   },
 
-  -- better development of neovim lua configuration
-  -- must be setup before lspconfig is, but after loading it.
+  -- Configure LuaLS
   {
-    "folke/neodev.nvim",
-    config = true,
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "luvit-meta/library", words = { "vim%.uv" } },
+      },
+    },
   },
+  { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
 
   -- Mason for easy install of 3rd-party dependencies
   {
