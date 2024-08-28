@@ -210,7 +210,7 @@ return {
   },
   { "nvim-treesitter/nvim-treesitter-refactor", dependencies = { "nvim-treesitter" } },
 
-  -- Refactoring using treesitter
+  -- More powerful refactoring using treesitter
   {
     "ThePrimeagen/refactoring.nvim",
     dependencies = {
@@ -219,6 +219,11 @@ return {
     },
     cmd = "Refactor",
     config = true,
+  },
+
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    dependencies = { "nvim-treesitter" },
   },
 
   -- easy toggle terminal
