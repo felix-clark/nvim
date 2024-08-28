@@ -18,6 +18,7 @@ return {
     "tpope/vim-dispatch",
     lazy = true,
     cmd = { "Dispatch", "Make", "Focus", "Start" },
+    keys = { { "<leader>cc", "<cmd>Dispatch<cr>", desc = "Compile" } },
   },
   -- Expanded text objects
   "wellle/targets.vim",
@@ -297,6 +298,7 @@ return {
   -- Keybindings and help
   {
     "folke/which-key.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     event = "VeryLazy",
     config = function()
       require "cfg.which-key"
@@ -304,13 +306,7 @@ return {
   },
 
   {
-    "anuvyklack/hydra.nvim",
-    dependencies = {
-      "anuvyklack/keymap-layer.nvim", -- needed only for pink hydras
-    },
-    -- it's a bit awkward to manually specify the hydra trigger keys but this
-    -- will allow for lazier loading
-    keys = { "<leader>G" },
+    "nvimtools/hydra.nvim",
     config = function()
       require "cfg.hydra"
     end,
