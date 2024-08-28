@@ -289,10 +289,9 @@ return {
   {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    -- NOTE: We can't lazy-load because the telescope configuration sets up
-    -- integration w/ Trouble
-    -- cmd = { "Trouble", "TroubleToggle", "TroubleClose", "TroubleRefresh" },
+    cmd = "Trouble",
     config = true,
+    keys = require("cfg.trouble").keys,
   },
 
   -- Keybindings and help
