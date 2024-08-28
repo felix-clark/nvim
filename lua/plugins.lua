@@ -48,28 +48,6 @@ return {
     config = true,
   },
 
-  -- A more opinionated motion plugin
-  -- {
-  --   "ggandor/leap.nvim",
-  --   dependencies = { "tpope/vim-repeat" },
-  --   config = function()
-  --     -- NOTE: jump across windows (gs) is now overridden by helix-like
-  --     -- motions; this would need to be re-incorporated somehow.
-  --     require("leap").add_default_mappings()
-  --   end,
-  -- },
-  -- improved f/F/t/T motions that extend leap.nvim for single-character jumps
-  -- {
-  --   "ggandor/flit.nvim",
-  --   dependencies = { "leap.nvim" },
-  --   opts = {
-  --     -- default is only in visual mode
-  --     labeled_modes = "nv",
-  --   },
-  -- },
-  -- NOTE: there is a leap-ast plugin as well but it is very incomplete; should
-  -- be covered by flash.nvim now
-
   {
     "numToStr/Comment.nvim",
     config = true,

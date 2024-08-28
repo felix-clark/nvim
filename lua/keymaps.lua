@@ -43,7 +43,6 @@ vim.keymap.set(
   { desc = "Switch line number style" }
 )
 
--- 
 vim.keymap.set("n", "<leader>/", "<cmd>nohlsearch<cr>", { desc = "Clear search highlight" })
 
 vim.keymap.set("n", "]c", "<cmd>cnext<cr>", { desc = "Next quickfix" })
