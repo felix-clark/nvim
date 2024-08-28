@@ -50,11 +50,14 @@ cmp.setup {
     ["<C-k>"] = cmp.mapping.select_prev_item(),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete({
-      config = {
-        sources = sources,
+    ["<C-Space>"] = cmp.mapping(
+      cmp.mapping.complete {
+        config = {
+          sources = sources,
+        },
       },
-    }), { "i", "c" }),
+      { "i", "c" }
+    ),
     ["<C-e>"] = cmp.mapping {
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
