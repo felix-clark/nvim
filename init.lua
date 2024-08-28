@@ -23,7 +23,7 @@ vim.opt.shiftwidth = 2
 vim.opt.linebreak = true
 
 -- Set absolute and relative line numbers both on (current line gives absolute).
--- See the vim-numbertoggle plugin for a better way of toggling between options
+-- A keybinding is set to toggle between the two.
 vim.opt.number = true
 vim.opt.relativenumber = true
 
@@ -45,21 +45,6 @@ vim.opt.timeoutlen = 400
 -- as well.
 vim.opt.updatetime = 600
 
--- use 'jk' combination to quit insert mode
-vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode" })
--- something similar for terminal (?)
--- This messes with fzf windows, although telescope seems fine so far
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
-
--- try helix-inspired bindings
--- a more ergonomic 0 which overrides starting select mode ("get highlighted").
-vim.keymap.set({ "n", "x", "o" }, "gh", "0", { desc = "Go to first character in line" })
--- a more ergonomic ^ which overrides "goto sleep". leap.nvim uses this to jump
--- across windows, but shouldn't override the existing keymap.
-vim.keymap.set({ "n", "x", "o" }, "gs", "^", { desc = "Go to start of text in line" })
--- a more ergonomic $
-vim.keymap.set({ "n", "x", "o" }, "gl", "<End>", { desc = "Go to end of line" })
-
 -- Leader key should be set before plugins in case they use leader key mappings
 -- map the leader to space (default is '\')
 vim.g.mapleader = " "
@@ -70,6 +55,7 @@ require "keymaps"
 
 -- create a group for terminal usage. by default this clears autocommands in
 -- the group if the group already exists.
+-- Note that terminals handled by ToggleTerm should be handled by that plugin.
 vim.api.nvim_create_augroup("term", {})
 vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, {
   group = "term",

@@ -1,3 +1,18 @@
+-- use 'jk' combination to quit insert mode
+vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode" })
+-- something similar for terminal (?)
+-- This messes with fzf windows, although telescope seems fine so far
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
+-- try helix-inspired bindings
+-- a more ergonomic 0 which overrides starting select mode ("get highlighted").
+vim.keymap.set({ "n", "x", "o" }, "gh", "0", { desc = "Go to first character in line" })
+-- a more ergonomic ^ which overrides "goto sleep". leap.nvim uses this to jump
+-- across windows, but shouldn't override the existing keymap.
+vim.keymap.set({ "n", "x", "o" }, "gs", "^", { desc = "Go to start of text in line" })
+-- a more ergonomic $
+vim.keymap.set({ "n", "x", "o" }, "gl", "<End>", { desc = "Go to end of line" })
+
 -- Quick window motion with Alt+<direction>
 vim.keymap.set("n", "<M-h>", "<C-w>h")
 vim.keymap.set("n", "<M-j>", "<C-w>j")
