@@ -66,15 +66,7 @@ vim.g.mapleader = " "
 -- Use <SPC>m for local leader, although this is seldom used right now.
 vim.g.maplocalleader = " m"
 
--- Quick window motion with Alt+<direction>
-vim.keymap.set("n", "<M-h>", "<C-w>h")
-vim.keymap.set("n", "<M-j>", "<C-w>j")
-vim.keymap.set("n", "<M-k>", "<C-w>k")
-vim.keymap.set("n", "<M-l>", "<C-w>l")
-vim.keymap.set("t", "<M-h>", "<C-\\><C-n><C-w>h")
-vim.keymap.set("t", "<M-j>", "<C-\\><C-n><C-w>j")
-vim.keymap.set("t", "<M-k>", "<C-\\><C-n><C-w>k")
-vim.keymap.set("t", "<M-l>", "<C-\\><C-n><C-w>l")
+require "keymaps"
 
 -- create a group for terminal usage. by default this clears autocommands in
 -- the group if the group already exists.
