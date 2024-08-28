@@ -147,7 +147,7 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     -- NOTE: There are several more commands from this package but we really
     -- only use Toggle.
-    cmd = { "NvimTreeToggle", "NvimTreeRefresh", "NvimTreeFindFile" },
+    cmd = { "NvimTreeToggle", "NvimTreeRefresh", "NvimTreeFindFile", "NvimTreeOpen" },
     config = function()
       require "cfg.explorer"
     end,
