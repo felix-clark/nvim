@@ -91,13 +91,13 @@ local on_attach = function(ev)
   end, "list workspace folders [LSP]")
   -- buf_set_keymap('n', '<leader>D', vim.lsp.buf.type_definition, "type definitions [LSP]")
   -- <leader>D conflicts with treesitter "list definitions"
-  buf_map("n", "<leader>lt", tele.lsp_type_definitions, "type definitions [LSP]")
+  buf_map("n", "<leader>lT", tele.lsp_type_definitions, "type definitions [LSP]")
   buf_map("n", "<leader>lr", vim.lsp.buf.rename, "rename [LSP]")
   buf_map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "code actions [LSP]")
   -- buf_set_keymap('n', '<leader>lgr', vim.lsp.buf.references, "references [LSP]")
-  buf_map("n", "<leader>lgr", tele.lsp_references, "references [LSP]")
-  buf_map("n", "<leader>lgs", tele.lsp_document_symbols, "document symbols [LSP]")
-  buf_map("n", "<leader>lgS", tele.lsp_workspace_symbols, "workspace symbols [LSP]")
+  buf_map("n", "<leader>sr", tele.lsp_references, "references [LSP]")
+  buf_map("n", "<leader>ss", tele.lsp_document_symbols, "document symbols [LSP]")
+  buf_map("n", "<leader>sS", tele.lsp_workspace_symbols, "workspace symbols [LSP]")
   -- These require textDocument/prepareCallHierarchy.
   -- litee-calltree provides these.
   -- TODO: Figure out what document capabilities can be queried to only set these when available.

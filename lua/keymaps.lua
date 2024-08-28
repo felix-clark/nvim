@@ -48,3 +48,24 @@ vim.keymap.set("n", "<leader>/", "<cmd>nohlsearch<cr>", { desc = "Clear search h
 
 vim.keymap.set("n", "]c", "<cmd>cnext<cr>", { desc = "Next quickfix" })
 vim.keymap.set("n", "[c", "<cmd>cprevious<cr>", { desc = "Previous quickfix" })
+
+-- plugin-specific bindings, defined here for lazy loading.
+
+-- refactoring.nvim
+-- The space at the end of some mappings is intentional because those mappings
+-- expect an additional argument (all of these mappings leave the user in
+-- command mode to utilize the preview command feature).
+-- There are lua API alternatives if we don't want this preview feature.
+vim.keymap.set("x", "<leader>re", ":Refactor extract ")
+vim.keymap.set("x", "<leader>rf", ":Refactor extract_to_file ")
+vim.keymap.set("x", "<leader>rv", ":Refactor extract_var ")
+vim.keymap.set({ "n", "x" }, "<leader>ri", ":Refactor inline_var")
+vim.keymap.set("n", "<leader>rI", ":Refactor inline_func")
+vim.keymap.set("n", "<leader>rb", ":Refactor extract_block")
+vim.keymap.set("n", "<leader>rbf", ":Refactor extract_block_to_file")
+-- prompt for a refactor to apply when the remap is triggered
+-- There is also a telescope picker option, but the benefit of that coupling is
+-- not clear.
+vim.keymap.set({ "n", "x" }, "<leader>rr", function()
+  require("refactoring").select_refactor()
+end, { desc = "Select refactor" })

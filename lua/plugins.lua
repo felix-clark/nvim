@@ -145,12 +145,15 @@ return {
   {
     "kyazdani42/nvim-tree.lua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    -- NOTE: There are several more commands from this package but we really
-    -- only use Toggle.
+    -- NOTE: There are several more commands from this package; these are meant
+    -- to cover the ones that are called first.
     cmd = { "NvimTreeToggle", "NvimTreeRefresh", "NvimTreeFindFile", "NvimTreeOpen" },
     config = function()
       require "cfg.explorer"
     end,
+    keys = {
+      { "<leader>ot", "<cmd>NvimTreeOpen<cr>", desc = "Project tree" },
+    },
   },
 
   -- Telescope for quickly searching things
@@ -206,7 +209,17 @@ return {
     dependencies = { "nvim-treesitter" },
   },
   { "nvim-treesitter/nvim-treesitter-refactor", dependencies = { "nvim-treesitter" } },
-  { "HiPhish/nvim-ts-rainbow2", dependencies = { "nvim-treesitter" } },
+
+  -- Refactoring using treesitter
+  {
+    "ThePrimeagen/refactoring.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    cmd = "Refactor",
+    config = true,
+  },
 
   -- easy toggle terminal
   {

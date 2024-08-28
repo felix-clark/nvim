@@ -15,6 +15,7 @@ wk.add {
   { "<leader>s", group = "search" },
   { "<leader>t", group = "toggle" },
   { "<leader>w", proxy = "<C-w>", group = "windows" },
+  { "<leader>x", group = "trouble" },
   { "g", group = "goto" },
   { "]", group = "next" },
   { "[", group = "previous" },
