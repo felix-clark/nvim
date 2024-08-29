@@ -55,14 +55,6 @@ require("nvim-treesitter.configs").setup {
   },
   -- Integration with nvim-autopairs
   autopairs = { enable = true },
-  -- Use nvim-ts-rainbow2 for rainbow delimiters.
-  rainbow = {
-    enable = true,
-    max_file_lines = 2048,
-    -- try to speed things up by only highlighting the current sub-tree.
-    -- default is global.
-    strategy = require "ts-rainbow.strategy.local",
-  },
   -- This configuration if for the extension plugin nvim-treesitter-textobjects.
   -- There are many more text objects possible, check
   -- nvim-treesitter-textobjects documentation.
