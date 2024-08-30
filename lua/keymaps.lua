@@ -2,7 +2,9 @@
 vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode" })
 -- something similar for terminal (?)
 -- This messes with fzf windows, although telescope seems fine so far
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+-- It makes using "Esc" in a lazygit terminal awkward. As long as we can leave
+-- the window, perhaps we don't need to exit terminal mode often.
+-- vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- try helix-inspired bindings
 -- a more ergonomic 0 which overrides starting select mode ("get highlighted").
