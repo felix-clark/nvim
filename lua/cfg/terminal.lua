@@ -1,3 +1,5 @@
+vim.keymap.set("n", "<leader>tt", "<cmd>ToggleTerm<cr>", { desc = "terminal" })
+
 local Terminal = require("toggleterm.terminal").Terminal
 
 -- Possible executables to use for monitoring, in order of priority
@@ -11,3 +13,9 @@ for _, top_exec in pairs(top_execs) do
     break
   end
 end
+
+local lg_term =
+  Terminal:new { cmd = "lazygit", display_name = "lazygit", direction = "float", hidden = true }
+vim.keymap.set("n", "<leader>gg", function()
+  lg_term:toggle()
+end, { desc = "lazygit" })

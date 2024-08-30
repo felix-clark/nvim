@@ -208,7 +208,20 @@ return {
   {
     "akinsho/toggleterm.nvim",
     version = "*",
-    config = true,
+    -- This plugin loads pretty quickly so there's no need to lazify it
+    -- (which would complicate the setup significantly).
+    config = function()
+      require("toggleterm").setup {
+        size = function(term)
+          if term.direction == "horizontal" then
+            return 18
+          elseif term.direction == "vertical" then
+            return vim.o.columns * 0.4
+          end
+        end,
+      }
+      require "cfg.terminal"
+    end,
   },
 
   -- Configure LuaLS

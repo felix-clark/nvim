@@ -45,8 +45,8 @@ vim.keymap.set(
 
 vim.keymap.set("n", "<leader>/", "<cmd>nohlsearch<cr>", { desc = "Clear search highlight" })
 
-vim.keymap.set("n", "]c", "<cmd>cnext<cr>", { desc = "Next quickfix" })
-vim.keymap.set("n", "[c", "<cmd>cprevious<cr>", { desc = "Previous quickfix" })
+vim.keymap.set("n", "]x", "<cmd>cnext<cr>", { desc = "Next quickfix" })
+vim.keymap.set("n", "[x", "<cmd>cprevious<cr>", { desc = "Previous quickfix" })
 
 -- plugin-specific bindings, defined here for lazy loading.
 

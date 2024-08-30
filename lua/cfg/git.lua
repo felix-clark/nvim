@@ -2,7 +2,7 @@ local M = {}
 
 M.neogit_keys = {
   {
-    "<leader>gg",
+    "<leader>gn",
     function()
       require("neogit").open()
     end,
