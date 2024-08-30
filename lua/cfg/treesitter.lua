@@ -82,9 +82,7 @@ require("nvim-treesitter.configs").setup {
         -- it's used to go to the next file, which is redundant.
         -- ["]m"] = "@function.outer",
         ["]f"] = "@function.outer",
-        -- ]c is used by default for git naviation; we have it set to quickfix navigation.
-        -- So ]] is used for class naviation.
-        ["]]"] = "@class.outer",
+        ["]c"] = "@class.outer",
         ["]a"] = "@parameter.inner",
         ["]o"] = "@comment.outer",
         ["]b"] = "@block.outer",
@@ -94,7 +92,7 @@ require("nvim-treesitter.configs").setup {
       goto_next_end = {
         -- ["]M"] = "@function.outer",
         ["]F"] = "@function.outer",
-        ["]["] = "@class.outer",
+        ["]C"] = "@class.outer",
         ["]A"] = "@parameter.inner",
         ["]O"] = "@comment.outer",
         ["]B"] = "@block.outer",
@@ -102,7 +100,7 @@ require("nvim-treesitter.configs").setup {
       goto_previous_start = {
         -- ["[m"] = "@function.outer",
         ["[f"] = "@function.outer",
-        ["[["] = "@class.outer",
+        ["[c"] = "@class.outer",
         ["[a"] = "@parameter.inner",
         ["[o"] = "@comment.outer",
         ["[b"] = "@block.outer",
@@ -110,7 +108,7 @@ require("nvim-treesitter.configs").setup {
       goto_previous_end = {
         -- ["[M"] = "@function.outer",
         ["[F"] = "@function.outer",
-        ["[]"] = "@class.outer",
+        ["[C"] = "@class.outer",
         ["[A"] = "@parameter.inner",
         ["[O"] = "@comment.outer",
         ["[B"] = "@block.outer",
