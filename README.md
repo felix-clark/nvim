@@ -10,6 +10,12 @@ git clone git@github.com:felix-clark/nvim.git ~/.config/nvim
 In principle, execute `./setup.sh` to install and set up the pre-requisites.
 This is undertested, however, so follow directions below.
 
+### Neovim installation
+
+If not already available, [this
+link](https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz)
+points to the latest stable linux release of neovim.
+
 ### Install fonts
 
 * Download a [nerd font](https://www.nerdfonts.com/) such as Fira Code.
