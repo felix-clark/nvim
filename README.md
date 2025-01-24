@@ -60,4 +60,5 @@ If strange errors occur upon updating, try cleaning out `rm -rf ~/.local/share/n
 * [molten-nvim](https://github.com/benlubas/molten-nvim) for jupyter notebooks
 * [typescript-tools](https://github.com/pmizio/typescript-tools.nvim) for web dev
 * [neotest-rust](https://github.com/rouge8/neotest-rust) for even more convenient rust unit tests
+* [remote-nvim](https://github.com/amitds1997/remote-nvim.nvim) remote servers over ssh and dev containers
 * [nvim-dev-container](https://codeberg.org/esensar/nvim-dev-container) to develop inside remote container using local client
