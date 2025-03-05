@@ -99,7 +99,8 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-    event = "BufRead",
+    -- lazy loading gitsigns can cause occasional errors
+    -- event = "BufRead",
     opts = require("cfg.git").gitsigns_opts,
   },
   -- Blame history more in-depth than seems available in neogit/gitgutter.
