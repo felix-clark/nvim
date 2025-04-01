@@ -1,49 +1,46 @@
--- Most of this config is taken from wiki for nvim-lspinstall.
 local nvim_lsp = require "lspconfig"
 
--- Local variable to toggle whether to autoformat on save
--- This is now handled by conform.nvim, but we'll keep this code commented for
--- now because it may be a useful reference for handling it manually.
--- local format_on_save = false
--- local toggle_format_on_save = function()
---   if format_on_save then
---     vim.api.nvim_del_augroup_by_name "autofmt"
---     print "Disabled format on save"
---     format_on_save = false
---   else
---     vim.api.nvim_create_augroup("autofmt", {})
---     vim.api.nvim_create_autocmd("BufWritePre", {
---       group = "autofmt",
---       -- 0 refers to the current buffer.
---       -- vim.fn.bufnr() should also work.
---       buffer = 0,
---       callback = function()
---         vim.lsp.buf.format()
---       end,
---     })
---     print "Enabled format on save"
---     format_on_save = true
---   end
--- end
-
--- Turn off the virtual text diagnostics as there are often false positives and
--- it is visually noisy.
 vim.diagnostic.config {
+  -- Turn off the virtual text diagnostics as there are often false positives
+  -- and it is visually noisy.
   virtual_text = false,
-  signs = true,
+  signs = {
+    -- define icons in the gutter
+    text = {
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.HINT] = " ",
+      [vim.diagnostic.severity.INFO] = " ",
+    },
+    -- numhl colors the line number of the line as well
+    numhl = {
+      [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+      [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+      [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+      [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+    },
+    -- The linehl map changes the color of the entire line, which feels too heavy
+    -- linehl = {...}
+  },
   underline = true,
   update_in_insert = true,
   severity_sort = true,
   -- use source = "if_many" to only show source when there are multiple. This
   -- is probably preferable in the long run when I'm not experimenting with
   -- different providers so much.
-  float = { source = "always" },
+  float = { source = "if_many" },
+  -- Show the floating error message when moving to the next diagnostic
+  jump = { float = true },
 }
 
 -- global diagnostic keymaps independent of a LSP server
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "show line diagnostic" })
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "goto previous diagnostic" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "goto next diagnostic" })
+vim.keymap.set("n", "[d", function()
+  vim.diagnostic.jump { count = -1 }
+end, { desc = "goto previous diagnostic" })
+vim.keymap.set("n", "]d", function()
+  vim.diagnostic.jump { count = 1 }
+end, { desc = "goto next diagnostic" })
 vim.keymap.set(
   "n",
   "<leader>lq",
@@ -171,14 +168,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
   callback = on_attach,
 })
-
--- Set the gutter diagnostics to use icons
--- local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
 
 -- Completion icons
 local comp_icons = {
