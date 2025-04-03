@@ -16,7 +16,6 @@ require("nvim-treesitter.configs").setup {
     "latex",
     "lua",
     "make",
-    "org",
     "python",
     "query",
     "r",
@@ -28,17 +27,18 @@ require("nvim-treesitter.configs").setup {
     "vimdoc",
     "yaml",
   },
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
   -- This option will auto-install upon opening new filetypes. It is contingent
   -- on the treesitter CLI, which is installed via Mason.
   auto_install = true,
   highlight = {
     enable = true,
-    disable = { "org" }, -- Remove this to use TS highligher for some highlights (Experimental)
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = { "org" }, -- Required since TS highlighter doesn't support all syntax features (conceal)
+    additional_vim_regex_highlighting = false,
   },
   incremental_selection = {
     enable = true,
