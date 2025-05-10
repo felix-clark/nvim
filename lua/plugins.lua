@@ -203,6 +203,8 @@ return {
   {
     "HiPhish/rainbow-delimiters.nvim",
     dependencies = { "nvim-treesitter" },
+    submodules = false,
+    main = "rainbow-delimiters.setup",
   },
 
   -- easy toggle terminal
