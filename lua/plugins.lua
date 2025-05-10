@@ -257,6 +257,13 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "mason.nvim", "nvim-lspconfig" },
+    opts = {
+      ensure_installed = { "lua_ls", "ruff" },
+      -- If enabled, this will install servers configured in lspconfig. Can
+      -- also be set to exclude specific servers (e.g. "rust-analyzer").
+      automatic_installation = false,
+      automatic_enable = true,
+    },
   },
   {
     "linrongbin16/lsp-progress.nvim",
@@ -267,7 +274,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     -- These packages require some configuration in cfg.lsp
-    dependencies = { "nvim-cmp", "lsp_signature.nvim", "mason-lspconfig.nvim" },
+    dependencies = { "nvim-cmp", "lsp_signature.nvim" },
     config = function()
       require "cfg.lsp"
     end,
@@ -324,6 +331,48 @@ return {
         desc = "Buffer Local Keymaps (which-key)",
       },
     },
+  },
+
+  {
+    "mikavilpas/yazi.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "folke/snacks.nvim",
+    },
+    keys = {
+      {
+        "<leader>f.",
+        mode = { "n", "v" },
+        "<cmd>Yazi<cr>",
+        desc = "Open yazi at the current file",
+      },
+      {
+        -- Open in the current working directory
+        "<leader>fd",
+        "<cmd>Yazi cwd<cr>",
+        desc = "Open the file manager in nvim's working directory",
+      },
+      {
+        "<leader>te",
+        "<cmd>Yazi toggle<cr>",
+        desc = "Resume the last yazi session",
+      },
+    },
+    opts = {
+      -- if you want to open yazi instead of netrw, see below for more info
+      open_for_directories = true,
+      keymaps = {
+        show_help = "<f1>",
+      },
+    },
+    -- if you use `open_for_directories=true`, this is recommended.
+    -- However, we already manually set both these variables to 1 in init.vim,
+    -- due to recommendations of other plugins (nvim-tree).
+    -- init = function()
+    --   -- More details: https://github.com/mikavilpas/yazi.nvim/issues/802
+    --   -- vim.g.loaded_netrw = 1
+    --   vim.g.loaded_netrwPlugin = 1
+    -- end,
   },
 
   {
@@ -392,7 +441,7 @@ return {
   -- extended LSP and debugging features for rust
   {
     "mrcjkb/rustaceanvim",
-    version = "^4", -- Recommended to pin the version explicitly
+    version = "^6", -- Recommended to pin the version explicitly
     lazy = false, -- readme says it's already lazy
     opts = {
       server = {
@@ -431,7 +480,7 @@ return {
     "saecki/crates.nvim",
     event = { "BufRead Cargo.toml" },
     config = function()
-      require("crates").setup()
+      require("crates").setup {}
     end,
   },
 

@@ -1,5 +1,3 @@
-local nvim_lsp = require "lspconfig"
-
 vim.diagnostic.config {
   -- Turn off the virtual text diagnostics as there are often false positives
   -- and it is visually noisy.
@@ -198,82 +196,12 @@ for i, kind in ipairs(kinds) do
   kinds[i] = comp_icons[kind] or kind
 end
 
--- Lua language server configuration for neovim development
-local function make_lua_settings()
-  local runtime_path = vim.split(package.path, ";")
-  table.insert(runtime_path, "lua/?.lua")
-  table.insert(runtime_path, "lua/?/init.lua")
+-- These are the default capabilities. They should be included in the nvim_cmp
+-- function below. If we migrate away from nvim_cmp, make sure these are
+-- included.
+-- local default_capabilities = vim.lsp.protocol.make_client_capabilities()
+local default_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-  local lua_settings = {
-    Lua = {
-      runtime = {
-        -- LuaJIT in the case of Neovim
-        version = "LuaJIT",
-        -- Setup your lua path
-        path = runtime_path,
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = { "vim" },
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
-    },
-  }
-  return lua_settings
-end
-
--- config that activates keymaps and enables snippet support
-local function make_config()
-  -- advertise completion capabilities.
-  -- This includes snippet support.
-  local capabilities = require("cmp_nvim_lsp").default_capabilities()
-  return {
-    capabilities = capabilities,
-    -- map buffer local keybindings when the language server attaches
-    -- on_attach = on_attach, -- this is for additional per-server hooks only
-  }
-end
-
-local mason_lsp = require "mason-lspconfig"
-mason_lsp.setup {
-  -- bash requires npm/node which may not always be available.
-  -- ensure_installed = { "lua_ls", "bashls" },
-  ensure_installed = { "lua_ls", "ruff" },
-  -- If enabled, this will install servers configured in lspconfig. Can
-  -- also be set to exclude specific servers (e.g. "rust-analyzer").
-  automatic_installation = false,
-}
-
--- Package installation folder
-local mason_install_root_dir = vim.fn.stdpath "data" .. "/mason"
-
--- This setup_handlers API is used in place of looping through
--- mason-lspconfig.get_installed_servers().
-mason_lsp.setup_handlers {
-  -- The first entry (without a key) will be the default handler and will be
-  -- called for each installed server that doesn't have a dedicated handler.
-  function(server_name)
-    local config = make_config()
-    nvim_lsp[server_name].setup(config)
-  end,
-  -- Targetted overrides are provided with keys for specific servers.
-  -- Now leaning on lazydev to set up lua LS, but the pre-existing settings are
-  -- still useful
-  ["lua_ls"] = function()
-    local config = make_config()
-    config.settings = make_lua_settings()
-    nvim_lsp.lua_ls.setup(config)
-  end,
-  ["pyright"] = function()
-    local config = make_config()
-    config.settings = { python = { workspaceSymbols = { enabled = true } } }
-    nvim_lsp.pyright.setup(config)
-  end,
-}
+-- In 0.11 we can set up all clients with the same capabilities at once.
+-- Language-specific options can be added in after/lsp/<server>.lua.
+vim.lsp.config("*", { capabilities = default_capabilities })
