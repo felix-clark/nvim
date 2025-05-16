@@ -62,3 +62,5 @@ If strange errors occur upon updating, try cleaning out `rm -rf ~/.local/share/n
 * [neotest-rust](https://github.com/rouge8/neotest-rust) for even more convenient rust unit tests
 * [remote-nvim](https://github.com/amitds1997/remote-nvim.nvim) remote servers over ssh and dev containers
 * [nvim-dev-container](https://codeberg.org/esensar/nvim-dev-container) to develop inside remote container using local client
+* [smart-splits.nvim](https://github.com/mrjones2014/smart-splits.nvim) for
+integration of splitting windows with terminal
