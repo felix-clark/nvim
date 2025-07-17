@@ -64,3 +64,6 @@ If strange errors occur upon updating, try cleaning out `rm -rf ~/.local/share/n
 * [nvim-dev-container](https://codeberg.org/esensar/nvim-dev-container) to develop inside remote container using local client
 * [smart-splits.nvim](https://github.com/mrjones2014/smart-splits.nvim) for
 integration of splitting windows with terminal
+* [avante.nvim](https://github.com/yetone/avante.nvim),
+[magenta.nvim](https://github.com/dlants/magenta.nvim), or
+[goose.nvim](https://github.com/azorng/goose.nvim) for LLM integration
