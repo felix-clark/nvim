@@ -18,8 +18,9 @@ points to the latest stable linux release of neovim.
 
 ### Install fonts
 
-* Download a [nerd font](https://www.nerdfonts.com/) such as Fira Code.
-* Unpack into `~/.local/share/fonts`.
+* Download a [nerd font](https://www.nerdfonts.com/) such as Fira Code and
+unpack into `~/.local/share/fonts`.
+* Alternatively, they may be available as a package (e.g. `pacman -Syu nerd-fonts`)
 * Run `fc-cache -fv` to rebuild the font cache.
 * Adjust your terminal's preferences to use the nerd font.
 
