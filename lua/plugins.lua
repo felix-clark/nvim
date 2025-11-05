@@ -401,6 +401,29 @@ return {
     end,
   },
 
+  -- Unified testing framework
+  {
+    "nvim-neotest/neotest",
+    event = "VeryLazy",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    -- We can't require something from neotest when defining opts directly,
+    -- but we can use a function to return the table when it's needed.
+    opts = function()
+      return {
+        adapters = {
+          require "neotest-python",
+          require "rustaceanvim.neotest",
+        },
+      }
+    end,
+  },
+  { "nvim-neotest/neotest-python", dependences = { "nvim-neotest/neotest" } },
+
   -- Debugging with DAP
   {
     "mfussenegger/nvim-dap",
