@@ -421,6 +421,7 @@ return {
         },
       }
     end,
+    keys = require("cfg.test").keys,
   },
   { "nvim-neotest/neotest-python", dependences = { "nvim-neotest/neotest" } },
 
