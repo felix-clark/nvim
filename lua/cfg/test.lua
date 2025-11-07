@@ -30,6 +30,13 @@ M.keys = {
     desc = "Stop nearest test",
   },
   {
+    "<leader>Ta",
+    function()
+      require("neotest").run.attach()
+    end,
+    desc = "Attach to nearest test",
+  },
+  {
     "<leader>Ts",
     function()
       require("neotest").summary.toggle()
