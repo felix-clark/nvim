@@ -4,7 +4,7 @@ return {
     "rebelot/kanagawa.nvim",
     lazy = false,
     priority = 1000,
-    config = function()
+    init = function()
       -- No need to call setup if the defaults are satisfactory
       -- require("kanagawa").setup {}
       vim.cmd "colorscheme kanagawa"
@@ -486,10 +486,11 @@ return {
               -- allFeatures = true,
               allTargets = true,
             },
-            checkOnSave = {
+            check = {
               command = "clippy",
               extraArgs = { "--no-deps" },
             },
+            checkOnSave = true,
             procMacro = {
               enable = true,
               ignored = {
