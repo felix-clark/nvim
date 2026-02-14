@@ -8,6 +8,7 @@ wk.add {
       return require("which-key.extras").expand.buf()
     end,
   },
+  { "<leader>a", group = "ai" },
   { "<leader>d", group = "debug" },
   { "<leader>f", group = "file" },
   { "<leader>l", group = "lsp" },
