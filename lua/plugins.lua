@@ -519,6 +519,14 @@ return {
     end,
   },
 
+  -- extended clangd features for C/C++
+  {
+    "p00f/clangd_extensions.nvim",
+    ft = { "c", "cpp", "objc", "objcpp" },
+    dependencies = { "nvim-lspconfig" },
+    opts = {},
+  },
+
   -- LaTeX (lazy-loaded by default)
   {
     "lervag/vimtex",
