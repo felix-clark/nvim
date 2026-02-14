@@ -18,7 +18,24 @@ return {
     "tpope/vim-dispatch",
     lazy = true,
     cmd = { "Dispatch", "Make", "Focus", "Start" },
-    keys = { { "<leader>cc", "<cmd>Dispatch<cr>", desc = "Compile" } },
+    keys = {
+      {
+        "<leader>cc",
+        function()
+          local build = vim.fs.find("build", {
+            upward = true,
+            type = "directory",
+            path = vim.fn.expand("%:p:h"),
+          })[1]
+          if build then
+            vim.cmd("Dispatch make -C " .. vim.fn.fnameescape(build))
+          else
+            vim.cmd("Dispatch")
+          end
+        end,
+        desc = "Compile",
+      },
+    },
   },
   -- Expanded text objects
   "wellle/targets.vim",
