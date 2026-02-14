@@ -251,14 +251,14 @@ return {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     dependencies = { "mason.nvim" },
     opts = {
-      ensure_installed = { "tree-sitter-cli", "stylua", "mypy" },
+      ensure_installed = { "tree-sitter-cli", "stylua", "mypy", "clang-format" },
     },
   },
   {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "mason.nvim", "nvim-lspconfig" },
     opts = {
-      ensure_installed = { "lua_ls", "ruff" },
+      ensure_installed = { "lua_ls", "ruff", "clangd" },
       -- If enabled, this will install servers configured in lspconfig. Can
       -- also be set to exclude specific servers (e.g. "rust-analyzer").
       automatic_installation = false,
@@ -445,6 +445,8 @@ return {
       "nvim-neotest/nvim-nio",
       -- UI dependencies
       "theHamsta/nvim-dap-virtual-text",
+      -- TODO: consider replacing dap-ui with
+      -- https://github.com/igorlfs/nvim-dap-view
       "rcarriga/nvim-dap-ui",
       "nvim-telescope/telescope-dap.nvim",
       -- language-specific dependencies

@@ -42,6 +42,8 @@ M.opts = {
     -- now using ruff for python formatting, but sequential formatters can be done like so:
     -- python = { "isort", "black" },
     -- with a sublist, the first option will be tried and the remainder are fallbacks.
+    c = { "clang-format" },
+    cpp = { "clang-format" },
     javascript = { { "prettierd", "prettier" } },
   },
   -- formatter cli options can be added with the `formatters` key.
