@@ -420,7 +420,12 @@ return {
       -- For neovim lua API completion
       "hrsh7th/cmp-nvim-lua",
     },
-    event = "InsertEnter *",
+    -- NOTE: Lazy-loading can cause problems with the LSP capability
+    -- configuration, as it can cause the LSP to have to re-load and thus
+    -- override some local settings (e.g. via rust-analyzer.toml). The other
+    -- workarounds will add complication and this isn't an important
+    -- optimization anyway.
+    -- event = "InsertEnter *",
     config = function()
       require "cfg.complete"
     end,
@@ -498,13 +503,16 @@ return {
       server = {
         default_settings = {
           ["rust-analyzer"] = {
-            cargo = {
-              -- NOTE: sometimes features are mutually exclusive, which can
-              -- lock up check/clippy, so --all-features shouldn't be enabled
-              -- by default.
-              -- allFeatures = true,
-              allTargets = true,
-            },
+            -- NOTE: Don't include the cargo configuration here at all. Just
+            -- rely on local .rust-analyzer.toml files to specify the targets
+            -- and features that make sense for that project.
+            -- cargo = {
+            --   -- NOTE: sometimes features are mutually exclusive, which can
+            --   -- lock up check/clippy, so --all-features shouldn't be enabled
+            --   -- by default.
+            --   -- allFeatures = true,
+            --   allTargets = true,
+            -- },
             check = {
               command = "clippy",
               extraArgs = { "--no-deps" },
