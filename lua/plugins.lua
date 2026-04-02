@@ -25,12 +25,12 @@ return {
           local build = vim.fs.find("build", {
             upward = true,
             type = "directory",
-            path = vim.fn.expand("%:p:h"),
+            path = vim.fn.expand "%:p:h",
           })[1]
           if build then
             vim.cmd("Dispatch make -C " .. vim.fn.fnameescape(build))
           else
-            vim.cmd("Dispatch")
+            vim.cmd "Dispatch"
           end
         end,
         desc = "Compile",
@@ -204,8 +204,6 @@ return {
     "nvim-treesitter/nvim-treesitter-textobjects",
     dependencies = { "nvim-treesitter" },
   },
-  { "nvim-treesitter/nvim-treesitter-refactor", dependencies = { "nvim-treesitter" } },
-
   -- More powerful refactoring using treesitter
   {
     "ThePrimeagen/refactoring.nvim",
