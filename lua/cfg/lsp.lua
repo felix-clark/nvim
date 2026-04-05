@@ -116,34 +116,26 @@ local on_attach = function(ev)
     end, "format buffer [LSP]")
   end
 
-  -- Highlight symbol under cursor (if capabilities exist)
-  -- Treesitter handles the highlighting of the same symbol elsewhere.
-  if client.server_capabilities.documentHighlightProvider then
-    -- The colors can be adjusted here, but LightYellow is too bright.
-    -- These groups must be defined for buf.document_highlight to work, but
-    -- they appear to be defined elsewhere because the CursorHold aucmd does
-    -- function.
-    -- vim.cmd [[
-    --   hi! LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-    --   hi! LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
-    --   hi! LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
-    -- ]]
-    vim.api.nvim_create_augroup("lsp_document_highlight", {
-      clear = false,
-    })
-    vim.api.nvim_clear_autocmds {
-      buffer = bufnr,
-      group = "lsp_document_highlight",
-    }
+  -- Highlight symbol under cursor
+  if client:supports_method("textDocument/documentHighlight") then
+    local group = vim.api.nvim_create_augroup("lsp_document_highlight_" .. bufnr, { clear = true })
     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-      group = "lsp_document_highlight",
+      group = group,
       buffer = bufnr,
       callback = vim.lsp.buf.document_highlight,
     })
     vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-      group = "lsp_document_highlight",
+      group = group,
       buffer = bufnr,
       callback = vim.lsp.buf.clear_references,
+    })
+    vim.api.nvim_create_autocmd("LspDetach", {
+      group = group,
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.clear_references()
+        vim.api.nvim_del_augroup_by_name("lsp_document_highlight_" .. bufnr)
+      end,
     })
   end
 
