@@ -21,7 +21,7 @@ vim.diagnostic.config {
     -- linehl = {...}
   },
   underline = true,
-  update_in_insert = true,
+  update_in_insert = false,
   severity_sort = true,
   -- use source = "if_many" to only show source when there are multiple. This
   -- is probably preferable in the long run when I'm not experimenting with

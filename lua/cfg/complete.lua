@@ -17,10 +17,7 @@ local sources = cmp.config.sources {
   -- orgmode
   { name = "orgmode" },
 
-  -- For neovim lua files
-  { name = "nvim_lua" },
-
-  -- Lua require statements and module annotations
+  -- Lua require statements and module annotations (lazydev supersedes nvim_lua source)
   {
     name = "lazydev",
     group_index = 0, -- set group index to 0 to skip loading LuaLS completions

@@ -139,7 +139,7 @@ return {
 
   -- This config is migrating from vimscript to lua
   {
-    "kyazdani42/nvim-tree.lua",
+    "nvim-tree/nvim-tree.lua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     -- NOTE: There are several more commands from this package; these are meant
     -- to cover the ones that are called first.
@@ -155,7 +155,7 @@ return {
   -- Telescope for quickly searching things
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim" },
+    dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       require "cfg.telescope"
     end,
@@ -172,16 +172,26 @@ return {
     "nvim-telescope/telescope-fzf-native.nvim",
     build = "make",
     dependencies = { "telescope.nvim" },
+    -- Only load if the native library was successfully built; silently skips
+    -- on systems where make/cc are unavailable.
+    cond = function()
+      local lib = vim.fn.stdpath("data") .. "/lazy/telescope-fzf-native.nvim/build/libfzf.so"
+      return vim.uv.fs_stat(lib) ~= nil
+    end,
     config = function()
       require("telescope").load_extension "fzf"
     end,
   },
   {
     "nvim-telescope/telescope-frecency.nvim",
-    dependencies = { "telescope.nvim", "tami5/sqlite.lua", "nvim-web-devicons" },
+    dependencies = { "telescope.nvim", "kkharji/sqlite.lua", "nvim-web-devicons" },
     keys = { { "<leader>fr", "<cmd>Telescope frecency<cr>", desc = "Open recent file" } },
     config = function()
-      require("telescope").load_extension "frecency"
+      -- sqlite.lua requires the system libsqlite3; skip gracefully if unavailable.
+      local ok, err = pcall(require("telescope").load_extension, "frecency")
+      if not ok then
+        vim.notify("telescope-frecency disabled: " .. err, vim.log.levels.WARN)
+      end
     end,
   },
   -- use telescope for `vim.ui.select`, so neovim core selections can fill telescope picker.
@@ -415,8 +425,6 @@ return {
       "hrsh7th/cmp-path",
       -- Consider vim commandline completion
       -- "hrsh7th/cmp-cmdline",
-      -- For neovim lua API completion
-      "hrsh7th/cmp-nvim-lua",
     },
     -- NOTE: Lazy-loading can cause problems with the LSP capability
     -- configuration, as it can cause the LSP to have to re-load and thus
@@ -436,7 +444,6 @@ return {
     dependencies = {
       "nvim-neotest/nvim-nio",
       "nvim-lua/plenary.nvim",
-      "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
     -- We can't require something from neotest when defining opts directly,
@@ -451,7 +458,7 @@ return {
     end,
     keys = require("cfg.test").keys,
   },
-  { "nvim-neotest/neotest-python", dependences = { "nvim-neotest/neotest" } },
+  { "nvim-neotest/neotest-python", dependencies = { "nvim-neotest/neotest" } },
 
   -- Debugging with DAP
   {

@@ -1,32 +1,48 @@
+local parsers = {
+  "bash",
+  "c",
+  "cpp",
+  "css",
+  "dockerfile",
+  "fish",
+  "go",
+  "haskell",
+  "html",
+  "javascript",
+  -- NOTE: there's also json5
+  "json",
+  "lua",
+  "make",
+  "python",
+  "query",
+  "r",
+  "rust",
+  "scss",
+  "toml",
+  "typescript",
+  "vim",
+  "vimdoc",
+  "yaml",
+}
+
+-- The latex parser has known installation issues on some systems (missing
+-- pre-built binary, cross-compilation failures, etc.). Include it only if
+-- already installed (so updates still work) or if a C compiler is available
+-- to build it from source.
+local latex_installed = vim.uv.fs_stat(
+  vim.fn.stdpath("data") .. "/lazy/nvim-treesitter/parser/latex.so"
+) ~= nil
+if latex_installed
+  or vim.fn.executable("cc") == 1
+  or vim.fn.executable("gcc") == 1
+  or vim.fn.executable("clang") == 1
+then
+  table.insert(parsers, "latex")
+end
+
 -- NOTE: the "ensure_installed" line could be removed in lieu of manual installations.
 require("nvim-treesitter.configs").setup {
-  ensure_installed = {
-    "bash",
-    "c",
-    "cpp",
-    "css",
-    "dockerfile",
-    "fish",
-    "go",
-    "haskell",
-    "html",
-    "javascript",
-    -- NOTE: there's also json5
-    "json",
-    "latex",
-    "lua",
-    "make",
-    "python",
-    "query",
-    "r",
-    "rust",
-    "scss",
-    "toml",
-    "typescript",
-    "vim",
-    "vimdoc",
-    "yaml",
-  },
+  ensure_installed = parsers,
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
   -- This option will auto-install upon opening new filetypes. It is contingent
