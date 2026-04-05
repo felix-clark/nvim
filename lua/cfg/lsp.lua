@@ -146,9 +146,14 @@ local on_attach = function(ev)
   -- vim.api.nvim_command[[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]]
   -- end
 
-  -- <C-s> in insert mode shows signature help on demand.
-  -- Using the built-in rather than lsp_signature.nvim avoids a bug where
-  -- the float persists after a fast InsertLeave.
+  -- Auto-show signature help while typing; the built-in shows/hides as you
+  -- enter and leave function argument positions. <C-s> re-triggers manually.
+  if client:supports_method("textDocument/signatureHelp") then
+    vim.api.nvim_create_autocmd("TextChangedI", {
+      buffer = bufnr,
+      callback = vim.lsp.buf.signature_help,
+    })
+  end
   buf_map("i", "<C-s>", vim.lsp.buf.signature_help, "signature help [LSP]")
 end
 
