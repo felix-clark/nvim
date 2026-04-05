@@ -22,7 +22,6 @@
   "litee-symboltree.nvim": { "branch": "main", "commit": "488a660afcfd54644e6b755256907d3c7d8cf8d0" },
   "litee.nvim": { "branch": "main", "commit": "4efaf373322d9e71eaff31164abb393417cc6f6a" },
   "lsp-progress.nvim": { "branch": "main", "commit": "f6d5af10563b895ff846346f57cbd4451439f4c1" },
-  "lsp_signature.nvim": { "branch": "master", "commit": "a381eb443cae078541297dc71674fa9c95e52a9e" },
   "lualine.nvim": { "branch": "master", "commit": "8811f3f3f4dc09d740c67e9ce399e7a541e2e5b2" },
   "luvit-meta": { "branch": "main", "commit": "cc9b2d412d2fbd30b94a70cfc214c2a3be27a0a2" },
   "mason-lspconfig.nvim": { "branch": "main", "commit": "25f609e7fca78af7cede4f9fa3af8a94b1c4950b" },

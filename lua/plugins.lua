@@ -299,7 +299,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     -- These packages require some configuration in cfg.lsp
-    dependencies = { "nvim-cmp", "lsp_signature.nvim" },
+    dependencies = { "nvim-cmp" },
     config = function()
       require "cfg.lsp"
     end,
@@ -326,10 +326,6 @@ return {
     config = true,
     main = "litee.symboltree",
   },
-
-  -- Show LSP call signature in completion window.
-  -- Toggle with <C-s> (configured in cfg/lsp.lua)
-  "ray-x/lsp_signature.nvim",
 
   {
     "folke/trouble.nvim",

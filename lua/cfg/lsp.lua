@@ -146,16 +146,10 @@ local on_attach = function(ev)
   -- vim.api.nvim_command[[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]]
   -- end
 
-  -- Set up lsp_signature for the buffer.
-  -- This must be done in here in order to use toggle_key.
-  require("lsp_signature").on_attach({
-    bind = true,
-    -- This should be toggled by toggle_key. Default to false because it's
-    -- invasive, but allow C-s to turn it on.
-    floating_window = false,
-    hint_prefix = " ",
-    toggle_key = "<C-s>",
-  }, ev.buf)
+  -- <C-s> in insert mode shows signature help on demand.
+  -- Using the built-in rather than lsp_signature.nvim avoids a bug where
+  -- the float persists after a fast InsertLeave.
+  buf_map("i", "<C-s>", vim.lsp.buf.signature_help, "signature help [LSP]")
 end
 
 vim.api.nvim_create_autocmd("LspAttach", {
