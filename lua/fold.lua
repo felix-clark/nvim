@@ -1,5 +1,5 @@
 vim.o.foldmethod = "expr"
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 
 function _G.my_fold_text ()
   -- NOTE: If tabs are in the foldline, they may be rendered as single-width.
