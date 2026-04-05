@@ -32,11 +32,13 @@ local parsers = {
 local latex_installed = vim.uv.fs_stat(
   vim.fn.stdpath("data") .. "/lazy/nvim-treesitter/parser/latex.so"
 ) ~= nil
-if latex_installed
-  or vim.fn.executable("cc") == 1
-  or vim.fn.executable("gcc") == 1
-  or vim.fn.executable("clang") == 1
-then
+local can_build_latex = vim.fn.executable("tree-sitter") == 1
+  and (
+    vim.fn.executable("cc") == 1
+    or vim.fn.executable("gcc") == 1
+    or vim.fn.executable("clang") == 1
+  )
+if latex_installed or can_build_latex then
   table.insert(parsers, "latex")
 end
 
