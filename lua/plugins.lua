@@ -175,7 +175,7 @@ return {
     -- Only load if the native library was successfully built; silently skips
     -- on systems where make/cc are unavailable.
     cond = function()
-      local lib = vim.fn.stdpath("data") .. "/lazy/telescope-fzf-native.nvim/build/libfzf.so"
+      local lib = vim.fn.stdpath "data" .. "/lazy/telescope-fzf-native.nvim/build/libfzf.so"
       return vim.uv.fs_stat(lib) ~= nil
     end,
     config = function()
