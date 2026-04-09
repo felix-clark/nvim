@@ -25,20 +25,12 @@ local parsers = {
   "yaml",
 }
 
--- The latex parser has known installation issues on some systems (missing
--- pre-built binary, cross-compilation failures, etc.). Include it only if
--- already installed (so updates still work) or if a C compiler is available
--- to build it from source.
-local latex_installed = vim.uv.fs_stat(
-  vim.fn.stdpath("data") .. "/lazy/nvim-treesitter/parser/latex.so"
-) ~= nil
-local can_build_latex = vim.fn.executable("tree-sitter") == 1
-  and (
-    vim.fn.executable("cc") == 1
-    or vim.fn.executable("gcc") == 1
-    or vim.fn.executable("clang") == 1
-  )
-if latex_installed or can_build_latex then
+-- The latex parser has known build failures on some systems (Node.js version
+-- mismatches, incompatible tree-sitter CLI, etc.) that can't be detected
+-- reliably ahead of time. Only include it if already installed so that
+-- updates still work on systems where it succeeded. To install fresh on a
+-- new system, run :TSInstall latex manually after verifying it works.
+if vim.uv.fs_stat(vim.fn.stdpath("data") .. "/lazy/nvim-treesitter/parser/latex.so") then
   table.insert(parsers, "latex")
 end
 
