@@ -155,25 +155,30 @@ local on_attach = function(ev)
     floating_window = true,
     toggle_key = "<C-s>",
   }, bufnr)
-  vim.api.nvim_create_autocmd("ModeChanged", {
-    buffer = bufnr,
-    pattern = "i*:*",
-    callback = function()
-      for _, win in ipairs(vim.api.nvim_list_wins()) do
-        if vim.api.nvim_win_is_valid(win) then
-          local cfg = vim.api.nvim_win_get_config(win)
-          if cfg.relative ~= "" and not cfg.focusable then
-            pcall(vim.api.nvim_win_close, win, true)
-          end
-        end
-      end
-    end,
-  })
 end
 
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
   callback = on_attach,
+})
+
+-- lsp_signature sometimes misses fast InsertLeave events, leaving its float
+-- open. Force-close non-focusable floats on any exit from insert mode.
+-- Registered once globally rather than per-buffer since pattern and buffer
+-- are mutually exclusive in nvim_create_autocmd.
+vim.api.nvim_create_autocmd("ModeChanged", {
+  group = vim.api.nvim_create_augroup("LspSignatureClose", {}),
+  pattern = "i*:*",
+  callback = function()
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if vim.api.nvim_win_is_valid(win) then
+        local cfg = vim.api.nvim_win_get_config(win)
+        if cfg.relative ~= "" and not cfg.focusable then
+          pcall(vim.api.nvim_win_close, win, true)
+        end
+      end
+    end
+  end,
 })
 
 -- Completion icons
