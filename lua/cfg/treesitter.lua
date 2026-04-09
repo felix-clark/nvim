@@ -30,7 +30,7 @@ local parsers = {
 -- reliably ahead of time. Only include it if already installed so that
 -- updates still work on systems where it succeeded. To install fresh on a
 -- new system, run :TSInstall latex manually after verifying it works.
-if vim.uv.fs_stat(vim.fn.stdpath("data") .. "/lazy/nvim-treesitter/parser/latex.so") then
+if vim.uv.fs_stat(vim.fn.stdpath "data" .. "/lazy/nvim-treesitter/parser/latex.so") then
   table.insert(parsers, "latex")
 end
 
@@ -44,10 +44,10 @@ require("nvim-treesitter.configs").setup {
   auto_install = true,
   highlight = {
     enable = true,
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
+    -- org: treesitter highlighter triggers a 0.12 nil-node bug in the
+    -- conceal_line decoration provider; orgmode provides its own highlighting
+    -- anyway. Re-enable once fixed upstream.
+    disable = { "org" },
     additional_vim_regex_highlighting = false,
   },
   incremental_selection = {
