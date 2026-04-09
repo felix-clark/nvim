@@ -299,7 +299,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     -- These packages require some configuration in cfg.lsp
-    dependencies = { "nvim-cmp" },
+    dependencies = { "nvim-cmp", "lsp_signature.nvim" },
     config = function()
       require "cfg.lsp"
     end,
@@ -326,6 +326,8 @@ return {
     config = true,
     main = "litee.symboltree",
   },
+
+  "ray-x/lsp_signature.nvim",
 
   {
     "folke/trouble.nvim",
