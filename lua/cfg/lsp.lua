@@ -1,3 +1,13 @@
+-- Make signature help non-focusable (prevents cursor jumping in) and ensure
+-- it closes on InsertLeave so it never persists after exiting insert mode.
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+  vim.lsp.handlers.signature_help,
+  {
+    focusable = false,
+    close_events = { "InsertLeave", "CursorMoved", "BufHidden" },
+  }
+)
+
 vim.diagnostic.config {
   -- Turn off the virtual text diagnostics as there are often false positives
   -- and it is visually noisy.
@@ -146,12 +156,26 @@ local on_attach = function(ev)
   -- vim.api.nvim_command[[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]]
   -- end
 
-  -- Auto-show signature help while typing; the built-in shows/hides as you
-  -- enter and leave function argument positions. <C-s> re-triggers manually.
+  -- Auto-show signature help while typing. Debounced so it doesn't fire on
+  -- every keypress, which would cause window flicker and corrupt treesitter
+  -- extmarks. The handler override above keeps it non-focusable and ensures
+  -- it closes cleanly on InsertLeave.
   if client:supports_method("textDocument/signatureHelp") then
+    local sig_timer = nil
     vim.api.nvim_create_autocmd("TextChangedI", {
       buffer = bufnr,
-      callback = vim.lsp.buf.signature_help,
+      callback = function()
+        if sig_timer then
+          sig_timer:stop()
+          sig_timer:close()
+        end
+        sig_timer = vim.uv.new_timer()
+        sig_timer:start(150, 0, vim.schedule_wrap(function()
+          sig_timer:close()
+          sig_timer = nil
+          vim.lsp.buf.signature_help()
+        end))
+      end,
     })
   end
   buf_map("i", "<C-s>", vim.lsp.buf.signature_help, "signature help [LSP]")
