@@ -34,6 +34,20 @@ if vim.uv.fs_stat(vim.fn.stdpath "data" .. "/lazy/nvim-treesitter/parser/latex.s
   table.insert(parsers, "latex")
 end
 
+-- Workaround for Neovim 0.12 upstream bug: the conceal_line decoration
+-- provider calls vim.treesitter.get_range() with a stale/invalid node
+-- (non-nil userdata but dead underlying TSNode), making node:range() fail.
+-- Neovim catches the provider error but has already stopped highlighting
+-- mid-run, leaving the buffer dark. Wrap get_range in a pcall so the bad
+-- node is silently skipped and the provider finishes cleanly instead.
+-- Remove once the upstream nil-node guard lands in the runtime.
+local _orig_get_range = vim.treesitter.get_range
+vim.treesitter.get_range = function(node, source, metadata)
+  local ok, result = pcall(_orig_get_range, node, source, metadata)
+  if ok then return result end
+  return { 0, 0, 0, 0, 0, 0 }
+end
+
 -- NOTE: the "ensure_installed" line could be removed in lieu of manual installations.
 require("nvim-treesitter.configs").setup {
   ensure_installed = parsers,
