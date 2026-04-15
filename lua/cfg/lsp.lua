@@ -153,6 +153,8 @@ local on_attach = function(ev)
   require("lsp_signature").on_attach({
     bind = true,
     floating_window = true,
+    hint_enable = false, -- disable virtual-text hint; floating_window is the only popup
+    handler_opts = { border = "rounded", focusable = false },
     toggle_key = "<C-s>",
   }, bufnr)
 end
